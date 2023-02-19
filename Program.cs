@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MasterEFCore.Data;
+using MasterEFCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -14,11 +15,13 @@ static class Program
         //GapDoEnsureCreated();
         //HealthCheckDatabase();
 
-        new ApplicationContext().departments.AsNoTracking().Any();
-        _count = 0;
-        GerenciarEstadoDaConexao(false);
-        _count = 0;
-        GerenciarEstadoDaConexao(true);
+        //new ApplicationContext().departments.AsNoTracking().Any();
+        //_count = 0;
+        //GerenciarEstadoDaConexao(false);
+        //_count = 0;
+        //GerenciarEstadoDaConexao(true);
+
+        SqlInjection();
     }
 
 
@@ -116,6 +119,39 @@ static class Program
 
         //terceira opção
         db.Database.ExecuteSqlInterpolated($"UPDATE Departments SET description={description} WHERE id=1");
+    }
+
+    static void SqlInjection()
+    {
+        using var db = new ApplicationContext();
+
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        db.departments.AddRange(
+            new Department
+            {
+                Description = "Departamento 01"
+            },
+            new Department
+            {
+                Description = "Departamento 02"
+            }); ;
+
+        db.SaveChanges();
+
+
+        //var description = "Departamento 01";
+        //db.Database.ExecuteSqlRaw("update Departments set description='DepartamentoAlterado' where description={0}", description);
+
+        //injetando
+        var description = "Teste 'or 1='1";
+        db.Database.ExecuteSqlRaw($"update Departments set description='AtaqueSqlInjection' where description='{description}'");
+
+        foreach (var departament in db.departments.AsNoTracking())
+        {
+            Console.WriteLine($"Id: {departament.Id}, Descrição: {departament.Description}");
+        }
     }
 
 }
