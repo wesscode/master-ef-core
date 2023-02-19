@@ -16,11 +16,11 @@ namespace MasterEFCore.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True";
+            const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True;pooling=True";
             optionsBuilder
-                .UseSqlServer(strConnection)
-                .EnableSensitiveDataLogging()
-                .LogTo(Console.WriteLine, LogLevel.Information);
+                .UseSqlServer(strConnection);
+                //.EnableSensitiveDataLogging()
+                //.LogTo(Console.WriteLine, LogLevel.Information);
         }
     }
 }
