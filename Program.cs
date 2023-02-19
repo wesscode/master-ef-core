@@ -99,7 +99,24 @@ static class Program
         Console.WriteLine(mensagem);
     }
 
+    static void ExecuteSQL()
+    {
+        using var db = new ApplicationContext();
 
+        //primeira opção
+        using (var cmd = db.Database.GetDbConnection().CreateCommand())
+        {
+            cmd.CommandText = "SELECT 1";
+            cmd.ExecuteNonQuery();
+        }
+
+        string description = "teste";
+        //segunda opção, parametros segue a ideia de sqlParameter para evitar sqlinjection
+        db.Database.ExecuteSqlRaw("UPDATE Departments SET description={0} WHERE id =1", description);
+
+        //terceira opção
+        db.Database.ExecuteSqlInterpolated($"UPDATE Departments SET description={description} WHERE id=1");
+    }
 
 }
 
