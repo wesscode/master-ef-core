@@ -1,11 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MasterEFCore.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq.Expressions;
 
 Console.WriteLine("Hello, World!");
+HealthCheckDatabase();
 //EnsureCreatedAndDelete();
-GapDoEnsureCreated();
+//GapDoEnsureCreated();
 
 static void EnsureCreatedAndDelete()
 {
@@ -27,4 +30,31 @@ static void GapDoEnsureCreated()
     //solução para forçar execução do segundo contexto.
     var databaseCreator = db2.GetService<IRelationalDatabaseCreator>();
     databaseCreator.CreateTables();
+}
+
+static void HealthCheckDatabase()
+{
+    using var db = new ApplicationContext();
+    //3atual
+    //faz um select 1, para saber se existe conecção com o banco.
+    var canConnect = db.Database.CanConnect();
+    if (canConnect)
+        Console.WriteLine("Posso me conectar!");
+   
+
+    try
+    {
+        //1 legado
+        var connection = db.Database.GetDbConnection();
+        connection.Open();
+
+        //2 legado
+        db.departments.Any();
+        Console.WriteLine("Posso me conectar!");
+    }
+    catch(Exception)
+    {
+
+        Console.WriteLine("Não posso me conectar!");
+    }
 }
