@@ -25,7 +25,9 @@ static class Program
 
         //SqlInjection();
 
-        MigracoesPendentes();
+        //MigracoesPendentes();
+
+        AplicarMigracaoEmTempoDeExecucao();
 
     }
 
@@ -172,6 +174,13 @@ static class Program
         {
             Console.WriteLine($"Migração: {migracao}");
         }
+    }
+
+    static void AplicarMigracaoEmTempoDeExecucao()
+    {
+        //ao executar o projeto, consulta as migracoes pendentes e aplica todas as migrações pendentes(update database em tempo de execução).
+        var db = new ApplicationContext();
+        db.Database.Migrate();
     }
 
 }
