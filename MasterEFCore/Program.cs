@@ -37,7 +37,9 @@ static class Program
 
         //CarregamentoAdiantado();
 
-        CarregamentoExplicito();
+        //CarregamentoExplicito();
+
+        CarregamentoLento();
 
     }
 
@@ -229,6 +231,7 @@ static class Program
         Console.WriteLine(script);
     }
 
+    #region TIPO DE CARREGAMENTOS
     static void SetupTiposCarregamentos(ApplicationContext db)
     {
         if (!db.Departments.Any())
@@ -336,5 +339,43 @@ static class Program
 
     }
 
-}
+    static void CarregamentoLento()
+    {
+        /// <summary>
+        /// Lazy loading carrega as entidades de navegação por demanda, quando a mesma for acessada ou consultada.
+        /// no exemplo é => department.EmployeeList?.Any() ?? false
+        /// nesse momento ele carrega a prop.
+        /// o problema disso é que nesse ex de lista se tivessemos 10mil departamentos ele faria a primeira consulta so da entidade
+        /// e depois 10mil consulta para cada interação do novo departamento. 10mil conexoes, 10mil interações.
+        /// </summary>
 
+        using var db = new ApplicationContext();
+        SetupTiposCarregamentos(db);
+
+        //desabilita lazy loading
+        //db.ChangeTracker.LazyLoadingEnabled= false;
+
+        var departmentList = db
+            .Departments
+            .ToList();
+
+        foreach (var department in departmentList)
+        {
+            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine($"Departamento: {department.Description}");
+
+            if (department.EmployeeList?.Any() ?? false)
+            {
+                foreach (var employee in department.EmployeeList)
+                {
+                    Console.WriteLine($"\tFuncionarios: {employee.Name}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\tNenhum funcionario encontrado!");
+            }
+        }
+    }
+    #endregion
+}
