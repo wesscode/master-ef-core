@@ -31,7 +31,10 @@ static class Program
 
         //ObterTodasMigracoes();
 
-        ObterMigracoesJaAplicadas();
+        //ObterMigracoesJaAplicadas();
+
+        ScriptGeralDoBancoDeDados();
+
     }
 
 
@@ -212,6 +215,14 @@ static class Program
         {
             Console.WriteLine($"Migração: {migracao}");
         }
+    }
+
+    static void ScriptGeralDoBancoDeDados()
+    {
+        using var db = new ApplicationContext();
+        var script = db.Database.GenerateCreateScript();
+
+        Console.WriteLine(script);
     }
 
 }
