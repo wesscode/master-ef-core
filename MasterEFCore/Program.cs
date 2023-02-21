@@ -29,7 +29,9 @@ static class Program
 
         //AplicarMigracaoEmTempoDeExecucao();
 
-        ObterTodasMigracoes();
+        //ObterTodasMigracoes();
+
+        ObterMigracoesJaAplicadas();
     }
 
 
@@ -189,6 +191,20 @@ static class Program
         //traz todas as migrações existentes na sua aplicação em tempo de execução.
         using var db = new ApplicationContext();
         var migracoesPendentes = db.Database.GetMigrations();
+
+        Console.WriteLine($"Total: {migracoesPendentes.Count()}");
+
+        foreach (var migracao in migracoesPendentes)
+        {
+            Console.WriteLine($"Migração: {migracao}");
+        }
+    }
+
+    static void ObterMigracoesJaAplicadas()
+    {
+        //traz todas as migrações existentes na sua aplicação em tempo de execução.
+        using var db = new ApplicationContext();
+        var migracoesPendentes = db.Database.GetAppliedMigrations();
 
         Console.WriteLine($"Total: {migracoesPendentes.Count()}");
 
