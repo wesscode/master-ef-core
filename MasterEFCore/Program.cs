@@ -25,10 +25,11 @@ static class Program
 
         //SqlInjection();
 
-        //MigracoesPendentes();
+        //ObterMigracoesPendentes();
 
-        AplicarMigracaoEmTempoDeExecucao();
+        //AplicarMigracaoEmTempoDeExecucao();
 
+        ObterTodasMigracoes();
     }
 
 
@@ -162,7 +163,7 @@ static class Program
         }
     }
 
-    static void MigracoesPendentes()
+    static void ObterMigracoesPendentes()
     {
         //migração que foi gerada mas ainda não foi aplicada ao banco.
         using var db = new ApplicationContext();
@@ -181,6 +182,20 @@ static class Program
         //ao executar o projeto, consulta as migracoes pendentes e aplica todas as migrações pendentes(update database em tempo de execução).
         var db = new ApplicationContext();
         db.Database.Migrate();
+    }
+
+    static void ObterTodasMigracoes()
+    {
+        //traz todas as migrações existentes na sua aplicação em tempo de execução.
+        using var db = new ApplicationContext();
+        var migracoesPendentes = db.Database.GetMigrations();
+
+        Console.WriteLine($"Total: {migracoesPendentes.Count()}");
+
+        foreach (var migracao in migracoesPendentes)
+        {
+            Console.WriteLine($"Migração: {migracao}");
+        }
     }
 
 }
