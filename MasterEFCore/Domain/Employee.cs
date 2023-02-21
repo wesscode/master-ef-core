@@ -15,6 +15,6 @@ namespace MasterEFCore.Domain
 
 
         public int DepartmentId { get; set; }
-        public virtual Department Department { get; set; }
+        public virtual Department Department { get; set; } /// com o VIRTUAL o entity consegue sobrescrever a prop de navegação
     }
 }

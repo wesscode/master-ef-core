@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,21 @@ namespace MasterEFCore.Domain
         public string Description { get; set; }
         public bool Active { get; set; }
 
-        /// <summary>
-        /// com o virtual o entity consegue sobrescrever a prop de navegação
-        /// </summary>
-        public virtual List<Employee> EmployeeList { get; set; }
+        public Department()
+        {
+        }
+
+        private ILazyLoader _lazyLoader { get; set; }
+        public Department(ILazyLoader lazyLoader)
+        {
+            _lazyLoader = lazyLoader;
+        }
+
+        private List<Employee> _employeeList;
+        public List<Employee> EmployeeList
+        {
+            get => _lazyLoader.Load(this, ref _employeeList);
+            set => _employeeList = value;
+        }
     }
 }
