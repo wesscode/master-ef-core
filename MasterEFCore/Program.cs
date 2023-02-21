@@ -35,7 +35,9 @@ static class Program
 
         //ScriptGeralDoBancoDeDados();
 
-        CarregamentoAdiantado();
+        //CarregamentoAdiantado();
+
+        CarregamentoExplicito();
 
     }
 
@@ -283,6 +285,41 @@ static class Program
         {
             Console.WriteLine("------------------------------------------------------");
             Console.WriteLine($"Departamento: {department.Description}");
+
+            if (department.EmployeeList?.Any() ?? false)
+            {
+                foreach (var employee in department.EmployeeList)
+                {
+                    Console.WriteLine($"\tFuncionarios: {employee.Name}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\tNenhum funcionario encontrado!");
+            }
+        }
+
+    }
+
+    static void CarregamentoExplicito()
+    {
+        using var db = new ApplicationContext();
+        SetupTiposCarregamentos(db);
+
+        var departmentList = db
+            .Departments
+            .ToList();
+
+        foreach (var department in departmentList)
+        {
+            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine($"Departamento: {department.Description}");
+
+            if (department.Id == 2)
+            {
+                //db.Entry(department).Collection(e => e.EmployeeList).Load();
+                db.Entry(department).Collection(e => e.EmployeeList).Query().Where(e => e.Id > 2).ToList();
+            }
 
             if (department.EmployeeList?.Any() ?? false)
             {
