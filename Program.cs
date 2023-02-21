@@ -47,6 +47,7 @@ static class Program
         databaseCreator.CreateTables();
     }
 
+    //checando se estar conectando ao banco
     static void HealthCheckDatabase()
     {
         using var db = new ApplicationContext();
@@ -56,7 +57,7 @@ static class Program
         if (canConnect)
             Console.WriteLine("Posso me conectar!");
 
-
+        #region dessas formas ou a forma acima
         try
         {
             //1 legado
@@ -69,9 +70,9 @@ static class Program
         }
         catch (Exception)
         {
-
             Console.WriteLine("Não posso me conectar!");
         }
+        #endregion
     }
 
 
