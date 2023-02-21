@@ -11,8 +11,8 @@ namespace MasterEFCore.Data
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<Department> departments { get; set; }
-        public DbSet<Employee> employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

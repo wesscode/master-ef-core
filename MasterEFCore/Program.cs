@@ -17,7 +17,7 @@ static class Program
 
         //HealthCheckDatabase();
 
-        //new ApplicationContext().departments.AsNoTracking().Any();
+        //new ApplicationContext().Departments.AsNoTracking().Any();
         //_count = 0;
         //GerenciarEstadoDaConexao(false);
         //_count = 0;
@@ -33,7 +33,9 @@ static class Program
 
         //ObterMigracoesJaAplicadas();
 
-        ScriptGeralDoBancoDeDados();
+        //ScriptGeralDoBancoDeDados();
+
+        CarregamentoAdiantado();
 
     }
 
@@ -78,7 +80,7 @@ static class Program
             connection.Open();
 
             //2 legado
-            db.departments.Any();
+            db.Departments.Any();
             Console.WriteLine("Posso me conectar!");
         }
         catch (Exception)
@@ -107,7 +109,7 @@ static class Program
 
         for (var i = 0; i < 200; i++)
         {
-            db.departments.AsNoTracking().Any();
+            db.Departments.AsNoTracking().Any();
         }
         time.Stop();
 
@@ -142,7 +144,7 @@ static class Program
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
 
-        db.departments.AddRange(
+        db.Departments.AddRange(
             new Department
             {
                 Description = "Departamento 01"
@@ -162,7 +164,7 @@ static class Program
         var description = "Teste 'or 1='1";
         db.Database.ExecuteSqlRaw($"update Departments set description='AtaqueSqlInjection' where description='{description}'");
 
-        foreach (var departament in db.departments.AsNoTracking())
+        foreach (var departament in db.Departments.AsNoTracking())
         {
             Console.WriteLine($"Id: {departament.Id}, Descrição: {departament.Description}");
         }
@@ -223,6 +225,78 @@ static class Program
         var script = db.Database.GenerateCreateScript();
 
         Console.WriteLine(script);
+    }
+
+    static void SetupTiposCarregamentos(ApplicationContext db)
+    {
+        if (!db.Departments.Any())
+        {
+            db.Departments.AddRange(
+            new Department
+            {
+                Description = "Departamento 01",
+                EmployeeList = new List<Employee>
+                {
+                    new Employee
+                    {
+                        Name = "Junior Silveira",
+                        CPF = "85545569989",
+                        RG = "2100062"
+                    }
+                }
+            },
+            new Department
+            {
+                Description = "Departamento 02",
+                EmployeeList = new List<Employee>
+                {
+                    new Employee
+                    {
+                        Name = "Bruno Mesquita",
+                        CPF = "555555533333",
+                        RG = "8997778"
+                    },
+                    new Employee
+                    {
+                        Name = "João Gomes",
+                        CPF = "77777777777",
+                        RG = "445454544"
+                    }
+                }
+            });
+        }
+
+        db.SaveChanges();
+        db.ChangeTracker.Clear();
+    }
+
+    static void CarregamentoAdiantado()
+    {
+        using var db = new ApplicationContext();
+        SetupTiposCarregamentos(db);
+
+        var departmentList = db
+            .Departments
+            .Include(e => e.EmployeeList);
+
+        foreach (var department in departmentList)
+        {
+            Console.WriteLine("------------------------------------------------------");
+            Console.WriteLine($"Departamento: {department.Description}");
+
+            if (department.EmployeeList?.Any() ?? false)
+            {
+                foreach (var employee in department.EmployeeList)
+                {
+                    Console.WriteLine($"\tFuncionarios: {employee.Name}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\tNenhum funcionario encontrado!");
+            }
+        }
+
     }
 
 }

@@ -13,6 +13,6 @@ namespace MasterEFCore.Domain
         public bool Active { get; set; }
 
 
-        public List<Employee> employeeList { get; set; }
+        public List<Employee> EmployeeList { get; set; }
     }
 }
