@@ -12,7 +12,9 @@ static class Program
     static void Main(string[] args)
     {
         //EnsureCreatedAndDelete();
+
         //GapDoEnsureCreated();
+
         //HealthCheckDatabase();
 
         //new ApplicationContext().departments.AsNoTracking().Any();
@@ -21,7 +23,10 @@ static class Program
         //_count = 0;
         //GerenciarEstadoDaConexao(true);
 
-        SqlInjection();
+        //SqlInjection();
+
+        MigracoesPendentes();
+
     }
 
 
@@ -152,6 +157,20 @@ static class Program
         foreach (var departament in db.departments.AsNoTracking())
         {
             Console.WriteLine($"Id: {departament.Id}, Descrição: {departament.Description}");
+        }
+    }
+
+    static void MigracoesPendentes()
+    {
+        //migração que foi gerada mas ainda não foi aplicada ao banco.
+        using var db = new ApplicationContext();
+        var migracoesPendentes = db.Database.GetPendingMigrations();
+
+        Console.WriteLine($"Total: {migracoesPendentes.Count()}");
+
+        foreach (var migracao in migracoesPendentes)
+        {
+            Console.WriteLine($"Migração: {migracao}");
         }
     }
 
