@@ -17,8 +17,9 @@ namespace MasterEFCore.Domain
         {
         }
 
-        private ILazyLoader _lazyLoader { get; set; }
-        public Department(ILazyLoader lazyLoader)
+        //Lazy loading sem proxies Com Action
+        private Action<object, string> _lazyLoader { get; set; }
+        public Department(Action<object, string> lazyLoader)
         {
             _lazyLoader = lazyLoader;
         }
@@ -26,8 +27,27 @@ namespace MasterEFCore.Domain
         private List<Employee> _employeeList;
         public List<Employee> EmployeeList
         {
-            get => _lazyLoader.Load(this, ref _employeeList);
+            get
+            {
+                _lazyLoader?.Invoke(this, nameof(EmployeeList));
+                return _employeeList;
+            }
             set => _employeeList = value;
         }
+
+
+        //lazy Loading sem proxies
+        //private ILazyLoader _lazyLoader { get; set; }
+        //public Department(ILazyLoader lazyLoader)
+        //{
+        //    _lazyLoader = lazyLoader;
+        //}
+
+        //private List<Employee> _employeeList;
+        //public List<Employee> EmployeeList
+        //{
+        //    get => _lazyLoader.Load(this, ref _employeeList);
+        //    set => _employeeList = value;
+        //}
     }
 }
