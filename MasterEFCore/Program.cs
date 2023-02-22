@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MasterEFCore.Data;
 using MasterEFCore.Domain;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -48,7 +49,9 @@ static class Program
 
         // IgnoreFiltroGlobal();
 
-        ConsultaProjetada();
+        //ConsultaProjetada();
+
+        ConsultaParametrizada();
     }
 
     #region PRIMEIRO MODULO
@@ -389,6 +392,34 @@ static class Program
 
     #endregion
 
+    static void ConsultaParametrizada()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        //passar parametros assim
+        //int id = 0;
+
+        //OU
+        var id = new SqlParameter
+        {
+            Value = 1,
+            SqlDbType = System.Data.SqlDbType.Int
+        };
+
+        var departamentList = db
+            .Departments
+            //.FromSqlRaw("SELECT * FROM Departments WITH(NOLOCK)") //WITH(NOLOCK) traz leitura suja misturados com dados confirmados, ajuda na peformance.
+            .FromSqlRaw("SELECT * FROM Departments WHERE id >{0}", id)
+            .Where(x =>!x.IsDeleted) //consulta raw, fazendo composição com o Linq
+            .ToList();
+
+        foreach (var department in departamentList)
+        {
+            Console.WriteLine($"Descrição: {department.Description}");
+            
+        }
+    }
     static void ConsultaProjetada()
     {
         using var db = new ApplicationContext();

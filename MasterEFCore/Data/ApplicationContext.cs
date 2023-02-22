@@ -24,9 +24,9 @@ namespace MasterEFCore.Data
                 .LogTo(Console.WriteLine, LogLevel.Information);
         }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Department>().HasQueryFilter(p => !p.IsDeleted);
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Department>().HasQueryFilter(p => !p.IsDeleted);
+        //}
     }
 }
