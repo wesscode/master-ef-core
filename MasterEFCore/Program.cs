@@ -46,9 +46,9 @@ static class Program
 
         //FiltroGlobal();
 
-        IgnoreFiltroGlobal();
+        // IgnoreFiltroGlobal();
 
-
+        ConsultaProjetada();
     }
 
     #region PRIMEIRO MODULO
@@ -388,6 +388,31 @@ static class Program
     #endregion
 
     #endregion
+
+    static void ConsultaProjetada()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        var departamentList = db
+            .Departments
+            .Where(x => x.Id > 0)
+            .Select(p => new
+            {
+                p.Description,
+                Funcionarios = p.EmployeeList.Select(n => n.Name)
+            })
+            .ToList();
+
+        foreach (var department in departamentList)
+        {
+            Console.WriteLine($"Descrição: {department.Description}");
+            foreach (var funcionario in department.Funcionarios)
+            {
+                Console.WriteLine($"Nome: {funcionario}");
+            }
+        }
+    }
 
     static void IgnoreFiltroGlobal()
     {
