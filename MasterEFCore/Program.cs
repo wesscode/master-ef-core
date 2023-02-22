@@ -44,7 +44,9 @@ static class Program
 
         #endregion
 
-        FiltroGlobal();
+        //FiltroGlobal();
+
+        IgnoreFiltroGlobal();
 
 
     }
@@ -387,6 +389,18 @@ static class Program
 
     #endregion
 
+    static void IgnoreFiltroGlobal()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        var departamentList = db.Departments.IgnoreQueryFilters().Where(x => x.Id > 0).ToList();
+
+        foreach (var department in departamentList)
+        {
+            Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
+        }
+    }
 
     static void FiltroGlobal()
     {
