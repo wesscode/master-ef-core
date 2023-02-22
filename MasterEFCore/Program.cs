@@ -51,7 +51,9 @@ static class Program
 
         //ConsultaProjetada();
 
-        ConsultaParametrizada();
+        //ConsultaParametrizada();
+
+        ConsultaInterpolada();
     }
 
     #region PRIMEIRO MODULO
@@ -392,6 +394,22 @@ static class Program
 
     #endregion
 
+    static void ConsultaInterpolada()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        var id = 1;
+        var departamentList = db
+            .Departments
+            .FromSqlInterpolated($"SELECT * FROM Departments WHERE id >{id}")
+            .ToList();
+
+        foreach (var department in departamentList)
+        {
+            Console.WriteLine($"Descrição: {department.Description}");
+        }
+    }
     static void ConsultaParametrizada()
     {
         using var db = new ApplicationContext();
