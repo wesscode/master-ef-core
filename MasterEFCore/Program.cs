@@ -55,7 +55,9 @@ static class Program
 
         //ConsultaInterpolada();
 
-        ConsultaComTag();
+        //ConsultaComTag();
+
+        EntendendoConsulta1NN1();
     }
 
     #region PRIMEIRO MODULO
@@ -396,6 +398,38 @@ static class Program
 
     #endregion
 
+    static void EntendendoConsulta1NN1()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        var funcionarioList = db
+           .Employees
+           .Include(e => e.Department)
+           .ToList();
+
+        foreach (var employee in funcionarioList)
+        {
+            Console.WriteLine($"Descrição: {employee.Name} / Descrição Dep: {employee.Department.Description}");
+        }
+
+
+        //var departamentList = db
+        //    .Departments
+        //    .Include(e => e.EmployeeList)
+        //    .ToList();
+
+        //foreach (var department in departamentList)
+        //{
+        //    Console.WriteLine($"Descrição: {department.Description}");
+
+        //    foreach (var employee in department.EmployeeList)
+        //    {
+        //        Console.WriteLine($"\tName: {employee.Name}");
+        //    }
+        //}
+    }
+
     static void ConsultaComTag()
     {
         using var db = new ApplicationContext();
@@ -404,7 +438,7 @@ static class Program
         var departamentList = db
             .Departments
             .TagWith(@"Estou Enviando um comentário para o servidor!
-                       Segundo comentári!
+                       Segundo comentário!
                        Terceiro comentário!")
             .ToList();
 
@@ -449,13 +483,13 @@ static class Program
             .Departments
             //.FromSqlRaw("SELECT * FROM Departments WITH(NOLOCK)") //WITH(NOLOCK) traz leitura suja misturados com dados confirmados, ajuda na peformance.
             .FromSqlRaw("SELECT * FROM Departments WHERE id >{0}", id)
-            .Where(x =>!x.IsDeleted) //consulta raw, fazendo composição com o Linq
+            .Where(x => !x.IsDeleted) //consulta raw, fazendo composição com o Linq
             .ToList();
 
         foreach (var department in departamentList)
         {
             Console.WriteLine($"Descrição: {department.Description}");
-            
+
         }
     }
     static void ConsultaProjetada()
