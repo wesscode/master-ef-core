@@ -53,7 +53,9 @@ static class Program
 
         //ConsultaParametrizada();
 
-        ConsultaInterpolada();
+        //ConsultaInterpolada();
+
+        ConsultaComTag();
     }
 
     #region PRIMEIRO MODULO
@@ -393,6 +395,24 @@ static class Program
     #endregion
 
     #endregion
+
+    static void ConsultaComTag()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        var departamentList = db
+            .Departments
+            .TagWith(@"Estou Enviando um comentário para o servidor!
+                       Segundo comentári!
+                       Terceiro comentário!")
+            .ToList();
+
+        foreach (var department in departamentList)
+        {
+            Console.WriteLine($"Descrição: {department.Description}");
+        }
+    }
 
     static void ConsultaInterpolada()
     {
