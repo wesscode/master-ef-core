@@ -23,5 +23,10 @@ namespace MasterEFCore.Data
                 //.UseLazyLoadingProxies()
                 .LogTo(Console.WriteLine, LogLevel.Information);
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Department>().HasQueryFilter(p => !p.IsDeleted);
+        }
     }
 }

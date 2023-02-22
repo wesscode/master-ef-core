@@ -44,6 +44,7 @@ static class Program
 
         #endregion
 
+        FiltroGlobal();
 
 
     }
@@ -386,10 +387,62 @@ static class Program
 
     #endregion
 
-    #region MODULO CONSULTAS
 
-  
+    static void FiltroGlobal()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
 
+        var departamentList = db.Departments.Where(x => x.Id > 0).ToList();
 
-    #endregion
+        foreach (var department in departamentList)
+        {
+            Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
+        }
+    }
+    static void Setup(ApplicationContext db)
+    {
+        if (db.Database.EnsureCreated())
+        {
+            db.Departments.AddRange(
+            new Department
+            {
+                Description = "Departamento 01",
+                Active = true,
+                IsDeleted = true,
+
+                EmployeeList = new List<Employee>
+                {
+                    new Employee
+                    {
+                        Name = "Junior Silveira",
+                        CPF = "85545569989",
+                        RG = "2100062"
+                    }
+                }
+            },
+            new Department
+            {
+                Description = "Departamento 02",
+                Active = true,
+                EmployeeList = new List<Employee>
+                {
+                    new Employee
+                    {
+                        Name = "Bruno Mesquita",
+                        CPF = "555555533333",
+                        RG = "8997778"
+                    },
+                    new Employee
+                    {
+                        Name = "João Gomes",
+                        CPF = "77777777777",
+                        RG = "445454544"
+                    }
+                }
+            });
+            db.SaveChanges();
+            db.ChangeTracker.Clear();
+        }
+    }
 }
