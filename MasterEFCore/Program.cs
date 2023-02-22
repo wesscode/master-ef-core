@@ -11,6 +11,7 @@ static class Program
 {
     static void Main(string[] args)
     {
+        #region PRIMEIRO MODULO
         //EnsureCreatedAndDelete();
 
         //GapDoEnsureCreated();
@@ -39,17 +40,21 @@ static class Program
 
         //CarregamentoExplicito();
 
-        CarregamentoLento();
+        //CarregamentoLento();
+
+        #endregion
+
+
 
     }
 
-
+    #region PRIMEIRO MODULO
     static void EnsureCreatedAndDelete()
     {
-        //cria e dropa o banco
+        //cria e dropa o banco em tempo de execução.
         using var db = new ApplicationContext();
-        db.Database.EnsureCreated();
-        //db.Database.EnsureDeleted();
+        //db.Database.EnsureCreated();
+        db.Database.EnsureDeleted();
     }
 
     static void GapDoEnsureCreated()
@@ -231,7 +236,7 @@ static class Program
         Console.WriteLine(script);
     }
 
-    #region TIPO DE CARREGAMENTOS
+    #region TIPOS DE CARREGAMENTOS
     static void SetupTiposCarregamentos(ApplicationContext db)
     {
         if (!db.Departments.Any())
@@ -377,5 +382,14 @@ static class Program
             }
         }
     }
+    #endregion
+
+    #endregion
+
+    #region MODULO CONSULTAS
+
+  
+
+
     #endregion
 }
