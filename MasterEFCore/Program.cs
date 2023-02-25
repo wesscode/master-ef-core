@@ -65,7 +65,9 @@ static class Program
 
         //InserirDadosViaProcedure();
 
-        CriarStoreProcedureDeConsulta();
+        //CriarStoreProcedureDeConsulta();
+
+        ConsultaViaProcedure();
     }
 
     #region PRIMEIRO MODULO
@@ -406,9 +408,25 @@ static class Program
 
     #endregion
 
+    static void ConsultaViaProcedure()
+    {
+
+        using var db = new ApplicationContext();
+
+        var dep = new SqlParameter("@dep", "Departamento");
+        var departamentos = db.Departments
+            //.FromSqlRaw("EXECUTE GetDepartments @dep", dep)
+            .FromSqlInterpolated($"EXECUTE GetDepartments {dep}")
+            .ToList();
+        foreach (var departamento in departamentos)
+        {
+            Console.WriteLine($"Descricao: {departamento.Description}");
+        }
+    }
+
     static void CriarStoreProcedureDeConsulta()
     {
-        var obterDepartamentos = @"
+        var criaConsultaDepartamentos = @"
             CREATE OR ALTER PROCEDURE GetDepartments
                 @Description VARCHAR(50)
             AS 
@@ -418,7 +436,7 @@ static class Program
             ";
 
         using var db = new ApplicationContext();
-        db.Database.ExecuteSqlRaw(obterDepartamentos);
+        db.Database.ExecuteSqlRaw(criaConsultaDepartamentos);
     }
     static void InserirDadosViaProcedure()
     {
