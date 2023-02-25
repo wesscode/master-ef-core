@@ -59,7 +59,7 @@ static class Program
 
         //EntendendoConsulta1NN1();
 
-        DivisaoDeConsulta();
+        //DivisaoDeConsulta();
     }
 
     #region PRIMEIRO MODULO
@@ -409,7 +409,7 @@ static class Program
             .Include(e => e.EmployeeList)
             .Where(p => p.Id < 3)
             //.AsSplitQuery() //splitQuery Local
-            .AsSingleQuery() //desativa splitQueyGlobal
+            //.AsSingleQuery() //desativa splitQueyGlobal
             .ToList();
 
         foreach (var department in departaments)
