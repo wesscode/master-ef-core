@@ -60,6 +60,8 @@ static class Program
         //EntendendoConsulta1NN1();
 
         //DivisaoDeConsulta();
+
+        CriarStoreProcedure();
     }
 
     #region PRIMEIRO MODULO
@@ -400,6 +402,25 @@ static class Program
 
     #endregion
 
+
+    static void CriarStoreProcedure()
+    {
+        var criarDepartamento = @"
+            CREATE OR ALTER PROCEDURE CreateDepartament
+                @Description VARCHAR(50),
+                @Active bit
+            AS 
+            BEGIN
+                INSERT INTO 
+                    Departments(Description, Active, IsDeleted) 
+                VALUES (@Description, @Active, 0);
+            END
+            ";
+
+        using var db = new ApplicationContext();
+        db.Database.ExecuteSqlRaw(criarDepartamento);
+    }
+
     static void DivisaoDeConsulta()
     {
         using var db = new ApplicationContext();
@@ -421,7 +442,6 @@ static class Program
             }
         }
     }
-
     static void EntendendoConsulta1NN1()
     {
         using var db = new ApplicationContext();
@@ -453,7 +473,6 @@ static class Program
         //    }
         //}
     }
-
     static void ConsultaComTag()
     {
         using var db = new ApplicationContext();
@@ -471,7 +490,6 @@ static class Program
             Console.WriteLine($"Descrição: {department.Description}");
         }
     }
-
     static void ConsultaInterpolada()
     {
         using var db = new ApplicationContext();
@@ -540,7 +558,6 @@ static class Program
             }
         }
     }
-
     static void IgnoreFiltroGlobal()
     {
         using var db = new ApplicationContext();
@@ -553,7 +570,6 @@ static class Program
             Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
         }
     }
-
     static void FiltroGlobal()
     {
         using var db = new ApplicationContext();
