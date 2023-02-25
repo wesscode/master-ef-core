@@ -61,7 +61,9 @@ static class Program
 
         //DivisaoDeConsulta();
 
-        CriarStoreProcedure();
+        //CriarStoreProcedure();
+
+        InserirDadosViaProcedure();
     }
 
     #region PRIMEIRO MODULO
@@ -402,11 +404,16 @@ static class Program
 
     #endregion
 
+    static void InserirDadosViaProcedure()
+    {
+        using var db = new ApplicationContext();
+        db.Database.ExecuteSqlRaw("EXECUTE CreateDepartment @p0, @p1", "Departamento via Procedure II", true);
+    }
 
     static void CriarStoreProcedure()
     {
         var criarDepartamento = @"
-            CREATE OR ALTER PROCEDURE CreateDepartament
+            CREATE OR ALTER PROCEDURE CreateDepartment
                 @Description VARCHAR(50),
                 @Active bit
             AS 
