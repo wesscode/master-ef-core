@@ -57,7 +57,9 @@ static class Program
 
         //ConsultaComTag();
 
-        EntendendoConsulta1NN1();
+        //EntendendoConsulta1NN1();
+
+        DivisaoDeConsulta();
     }
 
     #region PRIMEIRO MODULO
@@ -397,6 +399,28 @@ static class Program
     #endregion
 
     #endregion
+
+    static void DivisaoDeConsulta()
+    {
+        using var db = new ApplicationContext();
+        Setup(db);
+
+        var departaments = db.Departments
+            .Include(e => e.EmployeeList)
+            .Where(p => p.Id < 3)
+            //.AsSplitQuery() //splitQuery Local
+            .AsSingleQuery() //desativa splitQueyGlobal
+            .ToList();
+
+        foreach (var department in departaments)
+        {
+            Console.WriteLine($"Descrição: {department.Description}");
+            foreach (var employee in department.EmployeeList)
+            {
+                Console.WriteLine($"\tNome: {employee.Name}");
+            }
+        }
+    }
 
     static void EntendendoConsulta1NN1()
     {

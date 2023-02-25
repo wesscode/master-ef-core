@@ -18,7 +18,7 @@ namespace MasterEFCore.Data
         {
             const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True;pooling=True"; //MultipleActiveResultSets=true (habilita mais de uma conexao aberta com o banco, outra opção é utilizar .ToList() pra fechar a consulta.)
             optionsBuilder
-                .UseSqlServer(strConnection)
+                .UseSqlServer(strConnection, p => p.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery)) //split query global
                 .EnableSensitiveDataLogging()
                 //.UseLazyLoadingProxies()
                 .LogTo(Console.WriteLine, LogLevel.Information);
