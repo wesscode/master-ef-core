@@ -78,8 +78,24 @@ static class Program
 
         //HabilitandoBatchSize();
 
-        TempoComandoGeral();
+        //TempoComandoGeral();
 
+    }
+
+    static void ExecutarEstrategiaResiliencia()
+    {
+        using var db = new ApplicationContext();
+
+        var strategy = db.Database.CreateExecutionStrategy();
+        strategy.Execute(() =>
+        {
+            using var transaction = db.Database.BeginTransaction();
+
+            db.Departments.Add(new Department { Description = "Departamento Transacao" });
+            db.SaveChanges();
+
+            transaction.Commit();
+        });
     }
 
     static void TempoComandoGeral()
