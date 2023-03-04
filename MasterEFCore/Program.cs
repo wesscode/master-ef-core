@@ -76,8 +76,17 @@ static class Program
 
         //DadosSensiveis();
 
-        HabilitandoBatchSize();
+        //HabilitandoBatchSize();
 
+        TempoComandoGeral();
+
+    }
+
+    static void TempoComandoGeral()
+    {
+        //TEMPO LIMITE DE UM COMANDO.
+        using var db = new ApplicationContext();
+        db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
     }
     
     static void HabilitandoBatchSize()
