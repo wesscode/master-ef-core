@@ -17,11 +17,12 @@ namespace MasterEFCore.Data
 
             optionsBuilder
                 .UseSqlServer(strConnection)
-                //.LogTo(Console.WriteLine, LogLevel.Information);
+                .LogTo(Console.WriteLine, LogLevel.Information)
                 //.LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
                 //LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
                 //.LogTo(_writer.WriteLine, LogLevel.Information);
-                .EnableDetailedErrors(); //prop para detalhar erros das entidades e descobrir erros na aplicação.
+                //.EnableDetailedErrors(); //prop para detalhar erros das entidades e descobrir erros na aplicação. aconselhavel somente em modo debug
+                .EnableSensitiveDataLogging(); //prop para ver dados sensiveis, ex: parametros enviados na consulta. aconselhavel somente em modo debug
         }
 
         public override void Dispose()

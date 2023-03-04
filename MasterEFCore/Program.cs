@@ -72,10 +72,19 @@ static class Program
         #endregion
 
 
-        ConsultarDepartamentos();
+        // ConsultarDepartamentos();
+
+        DadosSensiveis();
 
     }
 
+    static void DadosSensiveis()
+    {
+        using var db = new ApplicationContext();
+        var descricao = "Departamento";
+        var departamentos = db.Departments.Where(x => x.Description == descricao).ToArray();
+    } 
+    
     static void ConsultarDepartamentos()
     {
         using var db = new ApplicationContext();
