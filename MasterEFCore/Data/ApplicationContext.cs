@@ -16,24 +16,10 @@ namespace MasterEFCore.Data
             const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True;pooling=True";
 
             optionsBuilder
-                .UseSqlServer(
-                    strConnection,
-                        x => x
-                        .MaxBatchSize(100) //por default batchSize max é 42, se passar de 42, ex:50 o entity vai no banco 2x. não aconselhavel aumentar o batchsize se a internet for instavel.
-                        .CommandTimeout(5) //configurando timeout global. Default é 30seg
-                        .EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null)) //Resiliencia conexão, config default ao habilitar ele tentará 6x por 30seg até falhar. 
+                .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging(); //prop para ver dados sensiveis, ex: parametros enviados na consulta. aconselhavel somente em modo debug
-                //.LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
-                //LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
-                //.LogTo(_writer.WriteLine, LogLevel.Information);
-                //.EnableDetailedErrors(); //prop para detalhar erros das entidades e descobrir erros na aplicação. aconselhavel somente em modo debug
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
-            _writer.Dispose();
+                .EnableSensitiveDataLogging(); 
+                                            
         }
 
         #region MODULO INICIAL ATE PROCEDURES
@@ -51,6 +37,33 @@ namespace MasterEFCore.Data
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{
         //    modelBuilder.Entity<Department>().HasQueryFilter(p => !p.IsDeleted);
+        //}
+        #endregion
+
+        #region MODULO INFRAESTRUTURA
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True;pooling=True";
+
+        //    optionsBuilder
+        //        .UseSqlServer(
+        //            strConnection,
+        //                x => x
+        //                .MaxBatchSize(100) //por default batchSize max é 42, se passar de 42, ex:50 o entity vai no banco 2x. não aconselhavel aumentar o batchsize se a internet for instavel.
+        //                .CommandTimeout(5) //configurando timeout global. Default é 30seg
+        //                .EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null)) //Resiliencia conexão, config default ao habilitar ele tentará 6x por 30seg até falhar. 
+        //        .LogTo(Console.WriteLine, LogLevel.Information)
+        //        .EnableSensitiveDataLogging(); //prop para ver dados sensiveis, ex: parametros enviados na consulta. aconselhavel somente em modo debug
+        //        //.LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
+        //        //LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
+        //        //.LogTo(_writer.WriteLine, LogLevel.Information);
+        //        //.EnableDetailedErrors(); //prop para detalhar erros das entidades e descobrir erros na aplicação. aconselhavel somente em modo debug
+        //}
+
+        //public override void Dispose()
+        //{
+        //    base.Dispose();
+        //    _writer.Dispose();
         //}
         #endregion
     }

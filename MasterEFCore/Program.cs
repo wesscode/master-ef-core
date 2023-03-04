@@ -12,7 +12,7 @@ static class Program
 {
     static void Main(string[] args)
     {
-        #region PRIMEIRO MODULO ATE TIPO DE CARREGAMENTO
+        #region MODULO INICIAL ATÉ TIPO DE CARREGAMENTO
         //EnsureCreatedAndDelete();
 
         //GapDoEnsureCreated();
@@ -71,73 +71,16 @@ static class Program
         //ConsultaViaProcedure();
         #endregion
 
-
+        #region MODULO INFRAESTRUTURA
         // ConsultarDepartamentos();
-
         //DadosSensiveis();
-
         //HabilitandoBatchSize();
-
         //TempoComandoGeral();
+        #endregion
 
     }
 
-    static void ExecutarEstrategiaResiliencia()
-    {
-        using var db = new ApplicationContext();
-
-        var strategy = db.Database.CreateExecutionStrategy();
-        strategy.Execute(() =>
-        {
-            using var transaction = db.Database.BeginTransaction();
-
-            db.Departments.Add(new Department { Description = "Departamento Transacao" });
-            db.SaveChanges();
-
-            transaction.Commit();
-        });
-    }
-
-    static void TempoComandoGeral()
-    {
-        //TEMPO LIMITE DE UM COMANDO.
-        using var db = new ApplicationContext();
-
-        db.Database.SetCommandTimeout(10);
-        db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
-    }
-    
-    static void HabilitandoBatchSize()
-    {
-        using var db = new ApplicationContext();
-        db.Database.EnsureDeleted();
-        db.Database.EnsureCreated();
-
-        for (var i=0; i<50; i++)
-        {
-            db.Departments.Add( new Department
-            {
-                Description= "Departamento " + i
-            });
-        }
-        db.SaveChanges();
-    }
-
-    static void DadosSensiveis()
-    {
-        using var db = new ApplicationContext();
-        var descricao = "Departamento";
-        var departamentos = db.Departments.Where(x => x.Description == descricao).ToArray();
-    } 
-    
-    static void ConsultarDepartamentos()
-    {
-        using var db = new ApplicationContext();
-
-        var departamentos = db.Departments.Where(x => x.Id > 0).ToArray();
-    }
-
-    #region PRIMEIRO MODULO ATE TIPO DE CARREGAMENTO
+    #region MODULO INICIAL ATÉ TIPO DE CARREGAMENTO
     static void EnsureCreatedAndDelete()
     {
         //cria e dropa o banco em tempo de execução.
@@ -735,5 +678,62 @@ static class Program
         }
     }
 
+    #endregion
+
+    #region MODULO INFRAESTRUTURA
+    static void ExecutarEstrategiaResiliencia()
+    {
+        using var db = new ApplicationContext();
+
+        var strategy = db.Database.CreateExecutionStrategy();
+        strategy.Execute(() =>
+        {
+            using var transaction = db.Database.BeginTransaction();
+
+            db.Departments.Add(new Department { Description = "Departamento Transacao" });
+            db.SaveChanges();
+
+            transaction.Commit();
+        });
+    }
+
+    static void TempoComandoGeral()
+    {
+        //TEMPO LIMITE DE UM COMANDO.
+        using var db = new ApplicationContext();
+
+        db.Database.SetCommandTimeout(10);
+        db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
+    }
+
+    static void HabilitandoBatchSize()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        for (var i = 0; i < 50; i++)
+        {
+            db.Departments.Add(new Department
+            {
+                Description = "Departamento " + i
+            });
+        }
+        db.SaveChanges();
+    }
+
+    static void DadosSensiveis()
+    {
+        using var db = new ApplicationContext();
+        var descricao = "Departamento";
+        var departamentos = db.Departments.Where(x => x.Description == descricao).ToArray();
+    }
+
+    static void ConsultarDepartamentos()
+    {
+        using var db = new ApplicationContext();
+
+        var departamentos = db.Departments.Where(x => x.Id > 0).ToArray();
+    }
     #endregion
 }
