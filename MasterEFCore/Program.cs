@@ -12,7 +12,7 @@ static class Program
 {
     static void Main(string[] args)
     {
-        #region PRIMEIRO MODULO
+        #region PRIMEIRO MODULO ATE TIPO DE CARREGAMENTO
         //EnsureCreatedAndDelete();
 
         //GapDoEnsureCreated();
@@ -45,6 +45,7 @@ static class Program
 
         #endregion
 
+        #region MODULO CONSULTA E PROCEDURES
         //FiltroGlobal();
 
         // IgnoreFiltroGlobal();
@@ -68,9 +69,12 @@ static class Program
         //CriarStoreProcedureDeConsulta();
 
         ConsultaViaProcedure();
+        #endregion
+
+
     }
 
-    #region PRIMEIRO MODULO
+    #region PRIMEIRO MODULO ATE TIPO DE CARREGAMENTO
     static void EnsureCreatedAndDelete()
     {
         //cria e dropa o banco em tempo de execução.
@@ -408,6 +412,7 @@ static class Program
 
     #endregion
 
+    #region MODULO CONSULTAS E PROCEDURES
     static void ConsultaViaProcedure()
     {
 
@@ -423,7 +428,6 @@ static class Program
             Console.WriteLine($"Descricao: {departamento.Description}");
         }
     }
-
     static void CriarStoreProcedureDeConsulta()
     {
         var criaConsultaDepartamentos = @"
@@ -667,4 +671,6 @@ static class Program
             db.ChangeTracker.Clear();
         }
     }
+
+    #endregion
 }
