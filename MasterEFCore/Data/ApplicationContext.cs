@@ -7,6 +7,7 @@ namespace MasterEFCore.Data
 {
     public class ApplicationContext : DbContext
     {
+        private readonly StreamWriter _writer = new StreamWriter(@"C:\Users\wesll\source\desenvolvedor-io\master-ef-core\MasterEFCore\meu_log_do_ef_core.txt", append: true);
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
@@ -17,9 +18,15 @@ namespace MasterEFCore.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 //.LogTo(Console.WriteLine, LogLevel.Information);
-                .LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
-                LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
+                //.LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
+                //LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
+                .LogTo(_writer.WriteLine, LogLevel.Information);
+        }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+            _writer.Dispose();
         }
 
         #region MODULO INICIAL ATE PROCEDURES

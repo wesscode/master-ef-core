@@ -1,0 +1,7 @@
+info: 04/03/2023 11:12:11.266 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 6.0.14 initialized 'ApplicationContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.9' with options: None
+info: 04/03/2023 11:12:11.945 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (23ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [d].[Id], [d].[Active], [d].[Description], [d].[IsDeleted]
+      FROM [Departments] AS [d]
+      WHERE [d].[Id] > 0
