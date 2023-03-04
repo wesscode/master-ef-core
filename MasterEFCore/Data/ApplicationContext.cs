@@ -16,7 +16,12 @@ namespace MasterEFCore.Data
             const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True;pooling=True";
 
             optionsBuilder
-                .UseSqlServer(strConnection, x => x.MaxBatchSize(100).CommandTimeout(5)) //por default batchSize max é 42, se passar de 42, ex:50 o entity vai no banco 2x. não aconselhavel aumentar o batchsize se a internet for instavel.
+                .UseSqlServer(
+                    strConnection,
+                        x => x
+                        .MaxBatchSize(100) //por default batchSize max é 42, se passar de 42, ex:50 o entity vai no banco 2x. não aconselhavel aumentar o batchsize se a internet for instavel.
+                        .CommandTimeout(5) //configurando timeout global. Default é 30seg
+                        .EnableRetryOnFailure(4, TimeSpan.FromSeconds(10), null)) //config default ao habilitar ele tentará 6x por 30seg até falhar. 
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging(); //prop para ver dados sensiveis, ex: parametros enviados na consulta. aconselhavel somente em modo debug
                 //.LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
