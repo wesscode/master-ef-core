@@ -20,7 +20,8 @@ namespace MasterEFCore.Data
                 //.LogTo(Console.WriteLine, LogLevel.Information);
                 //.LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
                 //LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
-                .LogTo(_writer.WriteLine, LogLevel.Information);
+                //.LogTo(_writer.WriteLine, LogLevel.Information);
+                .EnableDetailedErrors(); //prop para detalhar erros das entidades e descobrir erros na aplicação.
         }
 
         public override void Dispose()
