@@ -1,5 +1,6 @@
 ﻿using MasterEFCore.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
 namespace MasterEFCore.Data
@@ -15,7 +16,9 @@ namespace MasterEFCore.Data
 
             optionsBuilder
                 .UseSqlServer(strConnection)
-                .LogTo(Console.WriteLine, LogLevel.Information);
+                //.LogTo(Console.WriteLine, LogLevel.Information);
+                .LogTo(Console.WriteLine, new[] { CoreEventId.ContextInitialized, RelationalEventId.CommandExecuted },
+                LogLevel.Information, DbContextLoggerOptions.LocalTime | DbContextLoggerOptions.SingleLine);
 
         }
 
