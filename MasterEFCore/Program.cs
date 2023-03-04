@@ -68,10 +68,19 @@ static class Program
 
         //CriarStoreProcedureDeConsulta();
 
-        ConsultaViaProcedure();
+        //ConsultaViaProcedure();
         #endregion
 
 
+        ConsultarDepartamentos();
+
+    }
+
+    static void ConsultarDepartamentos()
+    {
+        using var db = new ApplicationContext();
+
+        var departamentos = db.Departments.Where(x => x.Id > 0).ToArray();
     }
 
     #region PRIMEIRO MODULO ATE TIPO DE CARREGAMENTO
