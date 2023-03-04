@@ -74,8 +74,26 @@ static class Program
 
         // ConsultarDepartamentos();
 
-        DadosSensiveis();
+        //DadosSensiveis();
 
+        HabilitandoBatchSize();
+
+    }
+    
+    static void HabilitandoBatchSize()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        for (var i=0; i<50; i++)
+        {
+            db.Departments.Add( new Department
+            {
+                Description= "Departamento " + i
+            });
+        }
+        db.SaveChanges();
     }
 
     static void DadosSensiveis()
