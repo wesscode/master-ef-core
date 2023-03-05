@@ -86,7 +86,9 @@ static class Program
 
         //PropagarDados();
 
-        Esquema();
+        //Esquema();
+
+        Conversor();
 
         #endregion
 
@@ -825,6 +827,8 @@ static class Program
         var script = db.Database.GenerateCreateScript();
         Console.WriteLine(script);
     }
+
+    static void Conversor() => Esquema();
 
     #endregion
 }

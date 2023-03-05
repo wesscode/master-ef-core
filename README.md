@@ -40,3 +40,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Propagação de dados
   * Pode ser feita em tempo de execução ou tempo migrações.
   * HasData habilita Indentity insert, onde posso passar valor pra minha chave primaria mesmo a mesma sendo auto increment.
+- Esquema
+  * Aplica-se globalmente ou especificamente no onmodelcreating.
