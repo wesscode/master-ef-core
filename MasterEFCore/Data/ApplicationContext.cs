@@ -1,4 +1,5 @@
-﻿using MasterEFCore.Domain;
+﻿using MasterEFCore.Conversores;
+using MasterEFCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -80,6 +81,7 @@ namespace MasterEFCore.Data
             modelBuilder.Entity<Estate>().ToTable("Estates", "SegundoEsquema");
             */
 
+           
             var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
             //Microsoft.EntityFrameworkCore.Storage.ValueConversion.MetodoDeConversao, local com vários conversores já definido.
             var conversao1 = new EnumToStringConverter<Versao>();
@@ -87,10 +89,16 @@ namespace MasterEFCore.Data
                 .Entity<Conversor>()
                 .Property(x => x.Versao)
                 .HasConversion(conversao1); //expressao externa utilizando um converter já definido.
-                //.HasConversion(conversao); //expressão externa
-                //.HasConversion(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p)); //expressão inline
-                //.HasConversion<string>(); //forma de conversão para salvar no banco simples enum em string.
+                                            //.HasConversion(conversao); //expressão externa customizada.
+                                            //.HasConversion(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p)); //expressão inline
+                                            //.HasConversion<string>(); //forma de conversão para salvar no banco simples enum em string.
 
+
+            //UTILIZANDO CONVERSOR CUSTOMIZADO
+            modelBuilder
+               .Entity<Conversor>()
+               .Property(x => x.Status)
+               .HasConversion(new ConversorCustomizado());
         }
 
         #region MODULO INICIAL ATE PROCEDURES

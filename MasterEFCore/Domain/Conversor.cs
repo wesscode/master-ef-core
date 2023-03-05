@@ -9,6 +9,7 @@ namespace MasterEFCore.Domain
         public bool IsDeleted { get; set; }
         public Versao Versao { get; set; }
         public IPAddress IPAdress { get; set; }
+        public Status Status { get; set; }
     }
 
     public enum Versao
@@ -18,5 +19,12 @@ namespace MasterEFCore.Domain
         EFCore3,
         EFCore4,
         EFCore5
+    }
+
+    public enum Status
+    {
+        Analise,
+        Enviado,
+        Devolvido
     }
 }

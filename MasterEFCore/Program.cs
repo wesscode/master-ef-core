@@ -81,14 +81,11 @@ static class Program
         #region MODULO MODELO DE DADOS
 
         //Collations();
-
         //TesteCollations();
-
         //PropagarDados();
-
         //Esquema();
-
-        Conversor();
+        //ConversorDeValor();
+        ConversorCustomizado();
 
         #endregion
 
@@ -828,7 +825,26 @@ static class Program
         Console.WriteLine(script);
     }
 
-    static void Conversor() => Esquema();
+    static void ConversorDeValor() => Esquema();
+
+    static void ConversorCustomizado()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        db.Conversores.Add(
+            new Conversor
+            {
+                Status = Status.Devolvido
+            });
+
+        db.SaveChanges();
+
+        var conversorEmAnalise = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Analise);
+
+        var conversorDevolvido = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Devolvido);
+    }
 
     #endregion
 }

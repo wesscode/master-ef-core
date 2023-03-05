@@ -41,4 +41,12 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Pode ser feita em tempo de execução ou tempo migrações.
   * HasData habilita Indentity insert, onde posso passar valor pra minha chave primaria mesmo a mesma sendo auto increment.
 - Esquema
-  * Aplica-se globalmente ou especificamente no onmodelcreating.
+  * Definir esquema no banco de dados.
+  * Aplica-se globalmente ou especificamente no onmodelcreating. 
+- Conversores de valor 
+  * Capacidade de um tipo de dado na classe, e armazena no banco com outro tipo.
+  * Capacidade de converter ao inserir e coverter ao buscar dados.
+  * Existe vários conversores pré definido no using Microsoft.EntityFrameworkCore.Storage.ValueConversion
+  * ValueConverter<> da a possibilidade de fazer conversores customizados.
+
+- 
