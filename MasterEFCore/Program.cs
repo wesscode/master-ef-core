@@ -85,7 +85,8 @@ static class Program
         //PropagarDados();
         //Esquema();
         //ConversorDeValor();
-        ConversorCustomizado();
+        //ConversorCustomizado();
+        PropriedadeDeSombra();
 
         #endregion
 
@@ -844,6 +845,13 @@ static class Program
         var conversorEmAnalise = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Analise);
 
         var conversorDevolvido = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Devolvido);
+    }
+
+    static void PropriedadeDeSombra()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
     }
 
     #endregion

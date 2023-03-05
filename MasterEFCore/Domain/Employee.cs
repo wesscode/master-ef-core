@@ -14,7 +14,7 @@ namespace MasterEFCore.Domain
         public string RG { get; set; }
         public bool IsDeleted { get; set; }
 
-        public int DepartmentId { get; set; }
+        //public int DepartmentId { get; set; } //Propriedade de sombra: Ao Omitir a FK e deixar somente a prop de navegação o entity entende o relacionamento e cria a coluna DepartamentId
         public virtual Department Department { get; set; } /// com o VIRTUAL o entity consegue sobrescrever a prop de navegação
     }
 }
