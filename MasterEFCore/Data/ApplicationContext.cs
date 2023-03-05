@@ -10,6 +10,7 @@ namespace MasterEFCore.Data
         private readonly StreamWriter _writer = new StreamWriter(@"C:\Users\wesll\source\desenvolvedor-io\master-ef-core\MasterEFCore\meu_log_do_ef_core.txt", append: true);
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Estate> Estates { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,6 +50,8 @@ namespace MasterEFCore.Data
             modelBuilder.Entity<Department>().Property(p => p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencia.MinhaSequencia");
             */
 
+            /*
+            *INDICES*
             modelBuilder
                 .Entity<Department>()
                 //.HasIndex(d => d.Description); //indice simples
@@ -57,6 +60,14 @@ namespace MasterEFCore.Data
                 .HasFilter("Description IS NOT NULL") //Filtro para criar indice
                 .HasFillFactor(80) //Fator de preenchimento, armazenamento max de uma pág no sql é de 8k
                 .IsUnique(); 
+            */
+
+            //HasData habilita Indentity insert, onde posso passar valor pra minha chave primaria mesmo a mesma sendo auto increment.
+            modelBuilder.Entity<Estate>().HasData(new[]
+            {
+                new Estate { Id= 1, Name="São Paulo"},
+                new Estate { Id= 2, Name="Sergipe"},
+            });
         }
 
         #region MODULO INICIAL ATE PROCEDURES

@@ -79,8 +79,13 @@ static class Program
         #endregion
 
         #region MODULO MODELO DE DADOS
-        Collations();
+
+        //Collations();
+
         //TesteCollations();
+
+        PropagarDados();
+
         #endregion
 
     }
@@ -799,6 +804,16 @@ static class Program
 
         }
 
+    }
+
+    static void PropagarDados()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        var script = db.Database.GenerateCreateScript();
+        Console.WriteLine(script);
     }
     #endregion
 }
