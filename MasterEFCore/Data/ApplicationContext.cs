@@ -14,6 +14,7 @@ namespace MasterEFCore.Data
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Estate> Estates { get; set; }
         public DbSet<Conversor> Conversores { get; set; }
+        public DbSet<Client> Clients { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -22,8 +23,8 @@ namespace MasterEFCore.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging(); 
-                                            
+                .EnableSensitiveDataLogging();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,7 +82,7 @@ namespace MasterEFCore.Data
             modelBuilder.Entity<Estate>().ToTable("Estates", "SegundoEsquema");
             */
 
-           
+
             /*
              * CONVERSION
             var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
@@ -108,6 +109,16 @@ namespace MasterEFCore.Data
               * CONFIG PROPRIEDADE DE SOMBRA
             modelBuilder.Entity<Department>().Property<DateTime>("LastUpdate");
             */
+
+            modelBuilder.Entity<Client>(p =>
+            {
+                p.OwnsOne(x => x.Adress, end =>
+                {
+                    end.Property(p => p.District).HasColumnName("District"); //Seleciono a property para da um nome de coluna.
+
+                    end.ToTable("Adress"); //Criar tabela adress com fk para client. Sem essa config Adress vira props em client.
+                });
+            });
 
         }
 

@@ -88,6 +88,7 @@ static class Program
         //ConversorCustomizado();
         //PropriedadeDeSombra();
         //TrabalhandoComPropriedadeDeSombra();
+        TiposDePropriedades();
 
         #endregion
 
@@ -877,6 +878,23 @@ static class Program
 
         //GET SHADOW PROPERTY
         var departamentos = db.Departments.Where(p => EF.Property<DateTime>(p, "LastUpdate") < DateTime.Now).ToArray();
+    }
+
+    static void TiposDePropriedades()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        var client = new Client
+        {
+            Name = "Fulano de tal",
+            Tel = "(85) 98945-9898",
+            Adress = new Adress { District = "Centro", City = "Fortaleza" }
+        };
+
+        db.Clients.Add(client);
+        db.SaveChanges();
     }
 
     #endregion

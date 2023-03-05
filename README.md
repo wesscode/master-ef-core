@@ -28,20 +28,20 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 
 ## Módulo Modelo de dados:
 - Collations: 
-   * A forma que banco de dados interpreta os dados.
+   * A forma que banco de dados interpretar os dados.
 - Sequences: 
-   * Sequencia de registros customizadas via efcore.
+   * Sequência de registros customizadas via efcore.
    * tipo suportados: int, long, byte, decimal.
    * Drop sequence Name_Sequence
-   * Consultar sequences sqlserver: select * from sys.sequence .
-- Indices:
+   * Consultar sequences sqlserver: select * from sys.sequence
+- Índices:
   * simples e compostos
-  * aplicar filtro para criar o indice
+  * aplicar filtros para criar o índice
   * aplicar fator de preenchimento
-  * definir se o index é UNICO
+  * definir se o index é ÚNICO
 - Propagação de dados:
-  * Pode ser feita em tempo de execução ou tempo migrações.
-  * HasData habilita Indentity insert, onde posso passar valor pra minha chave primaria mesmo a mesma sendo auto increment.
+  * Pode ser feita em tempo de execução ou em migração.
+  * HasData habilita Indentity insert, onde posso passar valor pra minha chave primaria mesmo a prop sendo auto increment.
 - Esquema:
   * Definir esquema no banco de dados.
   * Aplica-se globalmente ou especificamente no onmodelcreating. 
@@ -51,8 +51,10 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Existe vários conversores pré definido no using Microsoft.EntityFrameworkCore.Storage.ValueConversion
   * ValueConverter<> da a possibilidade de fazer conversores customizados.
 - Propriedade de sombra/Shadow Property:
-  * Ao Omitir a FK e deixar somente a prop de navegação o entity entende o relacionamento e cria a coluna DepartamentId
+  * Ao Omitir a FK e deixar somente a prop de navegação o entity entende o relacionamento e cria a coluna relacional(DepartamentId)
   * Configurando fluent api shadow property
   * Insert e consulta Shadow Property
 - Owned Types/Tipos de propriedade
-  * 
+  * Configurada no FluentAPI, criando um modelo de dado(classe) complexa.
+  * EX: Referência classeA a ClasseB onde a ClasseB passa a ser propriedades da classeA.
+  * Config .ToTable("ClasseB") é criada classe com as prop com fk para ClasseA. Tabela essa criada pelo o entity com o conceito Shadow Property.
