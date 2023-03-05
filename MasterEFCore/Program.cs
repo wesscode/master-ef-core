@@ -87,7 +87,7 @@ static class Program
         //ConversorDeValor();
         //ConversorCustomizado();
         //PropriedadeDeSombra();
-        TrabalhandoComPropriedadeDeSombra();
+        //TrabalhandoComPropriedadeDeSombra();
 
         #endregion
 
@@ -875,6 +875,7 @@ static class Program
         db.SaveChanges();
         */
 
+        //GET SHADOW PROPERTY
         var departamentos = db.Departments.Where(p => EF.Property<DateTime>(p, "LastUpdate") < DateTime.Now).ToArray();
     }
 

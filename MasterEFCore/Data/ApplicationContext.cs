@@ -82,6 +82,8 @@ namespace MasterEFCore.Data
             */
 
            
+            /*
+             * CONVERSION
             var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
             //Microsoft.EntityFrameworkCore.Storage.ValueConversion.MetodoDeConversao, local com vários conversores já definido.
             var conversao1 = new EnumToStringConverter<Versao>();
@@ -92,16 +94,21 @@ namespace MasterEFCore.Data
                 //.HasConversion(conversao); //expressão externa customizada.
                 //.HasConversion(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p)); //expressão inline
                 //.HasConversion<string>(); //forma de conversão para salvar no banco simples enum em string.
+            /*
 
-
-            //UTILIZANDO CONVERSOR CUSTOMIZADO
+            /*
+              * UTILIZANDO CONVERSOR CUSTOMIZADO
             modelBuilder
                .Entity<Conversor>()
                .Property(x => x.Status)
                .HasConversion(new ConversorCustomizado());
+            /*
 
-            //CONFIG PROPRIEDADE DE SOMBRA
+            /*
+              * CONFIG PROPRIEDADE DE SOMBRA
             modelBuilder.Entity<Department>().Property<DateTime>("LastUpdate");
+            */
+
         }
 
         #region MODULO INICIAL ATE PROCEDURES

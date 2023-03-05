@@ -26,7 +26,7 @@ carregamento explícito => ( carregamento em um momento posterior. )
 carregamento lento => ( dados relacionados são carregados por demanda, quando a propriedade de navegação for acessado.)
 ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 
-## Modulo Modelo de dados:
+## Módulo Modelo de dados:
 - Collations: 
    * A forma que banco de dados interpreta os dados.
 - Sequences: 
@@ -45,12 +45,14 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Esquema:
   * Definir esquema no banco de dados.
   * Aplica-se globalmente ou especificamente no onmodelcreating. 
-- Conversores de valor :
+- Conversores de valor:
   * Capacidade de um tipo de dado na classe, e armazena no banco com outro tipo.
   * Capacidade de converter ao inserir e coverter ao buscar dados.
   * Existe vários conversores pré definido no using Microsoft.EntityFrameworkCore.Storage.ValueConversion
   * ValueConverter<> da a possibilidade de fazer conversores customizados.
-- Propriedade de sombra:
+- Propriedade de sombra/Shadow Property:
   * Ao Omitir a FK e deixar somente a prop de navegação o entity entende o relacionamento e cria a coluna DepartamentId
   * Configurando fluent api shadow property
   * Insert e consulta Shadow Property
+- Owned Types/Tipos de propriedade
+  * 
