@@ -86,7 +86,8 @@ static class Program
         //Esquema();
         //ConversorDeValor();
         //ConversorCustomizado();
-        PropriedadeDeSombra();
+        //PropriedadeDeSombra();
+        TrabalhandoComPropriedadeDeSombra();
 
         #endregion
 
@@ -852,6 +853,29 @@ static class Program
         using var db = new ApplicationContext();
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
+    }
+
+    static void TrabalhandoComPropriedadeDeSombra()
+    {
+        using var db = new ApplicationContext();
+
+        /*
+         * INSERT SHADOW PROPERTY
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        var departamento = new Department
+        {
+            Description = "Departamento propriedade de sombra."
+        };
+        db.Departments.Add(departamento);
+        //Shadow prop
+        db.Entry(departamento).Property("LastUpdate").CurrentValue = DateTime.Now;
+
+        db.SaveChanges();
+        */
+
+        var departamentos = db.Departments.Where(p => EF.Property<DateTime>(p, "LastUpdate") < DateTime.Now).ToArray();
     }
 
     #endregion

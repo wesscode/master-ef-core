@@ -52,3 +52,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * ValueConverter<> da a possibilidade de fazer conversores customizados.
 - Propriedade de sombra:
   * Ao Omitir a FK e deixar somente a prop de navegação o entity entende o relacionamento e cria a coluna DepartamentId
+  * Configurando fluent api shadow property
+  * Insert e consulta Shadow Property
