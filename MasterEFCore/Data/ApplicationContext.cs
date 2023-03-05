@@ -24,6 +24,8 @@ namespace MasterEFCore.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /*
+              *COLLATIONS* 
             //SQL_Latin1_General:regras básicas de agrupamento utilizado pelo o windowns.
             //CP1: codificação ANSI 1252 que é utilizada no windons.
             //CI: Especifica que a collation é Case Insensitive ou CS:Case Sensitive.
@@ -32,7 +34,10 @@ namespace MasterEFCore.Data
             modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AI");
             //Definindo Colletion Especifica.
             modelBuilder.Entity<Department>().Property(p => p.Description).UseCollation("SQL_Latin1_General_CP1_CS_AS");
+            */
 
+            /*
+             *SEQUENCES*
             modelBuilder
                 .HasSequence<int>("MinhaSequencia", "sequencia")
                 .StartsAt(1) //inicia em 1
@@ -42,6 +47,16 @@ namespace MasterEFCore.Data
                 .IsCyclic(); //qnd cehagr ao máximo, reinicia para o valor mínimo definido.
 
             modelBuilder.Entity<Department>().Property(p => p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencia.MinhaSequencia");
+            */
+
+            modelBuilder
+                .Entity<Department>()
+                //.HasIndex(d => d.Description); //indice simples
+                .HasIndex(d => new { d.Description, d.Active }) //indice composto
+                .HasDatabaseName("idx_meu_indice_composto")
+                .HasFilter("Description IS NOT NULL") //Filtro para criar indice
+                .HasFillFactor(80) //Fator de preenchimento, armazenamento max de uma pág no sql é de 8k
+                .IsUnique(); 
         }
 
         #region MODULO INICIAL ATE PROCEDURES

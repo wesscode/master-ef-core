@@ -753,7 +753,7 @@ static class Program
             new Department
             {
                 Description = "Departamento 01",
-                Active = true,
+                Active = false,
                 IsDeleted = false
             },
         new Department
