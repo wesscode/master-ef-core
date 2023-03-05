@@ -62,12 +62,18 @@ namespace MasterEFCore.Data
                 .IsUnique(); 
             */
 
+            /*
+             * PROPAGACAO DE DADOS
             //HasData habilita Indentity insert, onde posso passar valor pra minha chave primaria mesmo a mesma sendo auto increment.
             modelBuilder.Entity<Estate>().HasData(new[]
             {
                 new Estate { Id= 1, Name="São Paulo"},
                 new Estate { Id= 2, Name="Sergipe"},
             });
+            */
+
+            modelBuilder.HasDefaultSchema("cadastros");
+            modelBuilder.Entity<Estate>().ToTable("Estates", "SegundoEsquema");
         }
 
         #region MODULO INICIAL ATE PROCEDURES

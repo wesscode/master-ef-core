@@ -84,7 +84,9 @@ static class Program
 
         //TesteCollations();
 
-        PropagarDados();
+        //PropagarDados();
+
+        Esquema();
 
         #endregion
 
@@ -815,5 +817,14 @@ static class Program
         var script = db.Database.GenerateCreateScript();
         Console.WriteLine(script);
     }
+
+    static void Esquema()
+    {
+        using var db = new ApplicationContext();
+
+        var script = db.Database.GenerateCreateScript();
+        Console.WriteLine(script);
+    }
+
     #endregion
 }
