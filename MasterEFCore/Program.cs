@@ -78,6 +78,11 @@ static class Program
         //TempoComandoGeral();
         #endregion
 
+        #region MODULO MODELO DE DADOS
+        //Collations();
+        //TesteCollations();
+        #endregion
+
     }
 
     #region MODULO INICIAL ATÉ TIPO DE CARREGAMENTO
@@ -734,6 +739,66 @@ static class Program
         using var db = new ApplicationContext();
 
         var departamentos = db.Departments.Where(x => x.Id > 0).ToArray();
+    }
+    #endregion
+
+    #region MODULO MODELO DE DADOS
+    static void Collations()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        db.Departments.AddRange(
+            new Department
+            {
+                Description = "Departamento 01",
+                Active = true,
+                IsDeleted = false
+            },
+        new Department
+        {
+            Description = "departamento 01",
+            Active = true,
+            IsDeleted = false,
+            EmployeeList = new List<Employee>
+            {
+                new Employee
+                {
+                    Name="employee",
+                    RG="123",
+                    CPF="321",
+                },
+                new Employee
+                {
+                    Name="Employee",
+                    RG="456",
+                    CPF="654",
+                }
+            }
+        });
+
+        db.SaveChanges();
+    }
+    static void TesteCollations()
+    {
+        using var db = new ApplicationContext();
+
+        var departmentList = db.Departments.Where(x => x.Description == "Departamento 01").ToList();
+        var employeeList = db.Employees.Where(x => x.Name == "employee").ToList();
+
+        foreach (var item1 in departmentList)
+        {
+
+            Console.WriteLine("department: " + item1.Description);
+        }
+
+        foreach (var item2 in employeeList)
+        {
+            Console.WriteLine("EMPLOYEE " + item2.Name);
+
+        }
+
     }
     #endregion
 }

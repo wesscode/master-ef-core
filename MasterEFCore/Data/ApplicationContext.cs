@@ -22,6 +22,19 @@ namespace MasterEFCore.Data
                                             
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //SQL_Latin1_General:regras básicas de agrupamento utilizado pelo o windowns.
+            //CP1: codificação ANSI 1252 que é utilizada no windons.
+            //CI: Especifica que a collation é Case Insensitive ou CS:Case Sensitive.
+            //AI: Especifica Acentuação insensitive ou AS: Acentuação Sensitive.
+            //Definindo Colletion Global
+            modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AI");
+
+            //Definindo Colletion Especifica.
+            modelBuilder.Entity<Department>().Property(p => p.Description).UseCollation("SQL_Latin1_General_CP1_CS_AS");
+        }
+
         #region MODULO INICIAL ATE PROCEDURES
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{

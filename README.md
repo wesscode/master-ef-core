@@ -25,3 +25,7 @@ Carregamento adiantado => (.Include())
 carregamento explícito => ( carregamento em um momento posterior. )
 carregamento lento => ( dados relacionados são carregados por demanda, quando a propriedade de navegação for acessado.)
 ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
+
+- Modulo Modelo de dados:
+- Collations: A forma que banco interpreta os dados.
+
