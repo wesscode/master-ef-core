@@ -79,7 +79,7 @@ static class Program
         #endregion
 
         #region MODULO MODELO DE DADOS
-        //Collations();
+        Collations();
         //TesteCollations();
         #endregion
 

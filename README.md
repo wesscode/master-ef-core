@@ -27,5 +27,10 @@ carregamento lento => ( dados relacionados são carregados por demanda, quando a
 ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 
 - Modulo Modelo de dados:
-- Collations: A forma que banco interpreta os dados.
+- Collations: A forma que banco de dados interpreta os dados.
+- Sequences: Sequencia de registros customizadas via efcore.
+   * tipo suportados: int, long, byte, decimal.
+   * Drop sequence Name_Sequence
+   * Consultar sequences sqlserver: select * from sys.sequence .
+
 

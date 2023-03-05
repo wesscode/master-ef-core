@@ -30,9 +30,18 @@ namespace MasterEFCore.Data
             //AI: Especifica Acentuação insensitive ou AS: Acentuação Sensitive.
             //Definindo Colletion Global
             modelBuilder.UseCollation("SQL_Latin1_General_CP1_CI_AI");
-
             //Definindo Colletion Especifica.
             modelBuilder.Entity<Department>().Property(p => p.Description).UseCollation("SQL_Latin1_General_CP1_CS_AS");
+
+            modelBuilder
+                .HasSequence<int>("MinhaSequencia", "sequencia")
+                .StartsAt(1) //inicia em 1
+                .IncrementsBy(2) //increment em em 2
+                .HasMin(1) //valor min da sequencia
+                .HasMax(10) //valor max da sequencia
+                .IsCyclic(); //qnd cehagr ao máximo, reinicia para o valor mínimo definido.
+
+            modelBuilder.Entity<Department>().Property(p => p.Id).HasDefaultValueSql("NEXT VALUE FOR sequencia.MinhaSequencia");
         }
 
         #region MODULO INICIAL ATE PROCEDURES
