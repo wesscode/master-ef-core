@@ -33,7 +33,7 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
    * Sequência de registros customizadas via efcore.
    * tipo suportados: int, long, byte, decimal.
    * Drop sequence Name_Sequence
-   * Consultar sequences sqlserver: select * from sys.sequence
+   * Consultar sequences sqlserver: select * from sys.sequences
 - Índices:
   * simples e compostos
   * aplicar filtros para criar o índice
