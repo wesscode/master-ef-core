@@ -89,7 +89,8 @@ static class Program
         //PropriedadeDeSombra();
         //TrabalhandoComPropriedadeDeSombra();
         //TiposDePropriedades();
-        Relacionamento1Para1();
+        //Relacionamento1Para1();
+        Relacionamento1ParaMuitos();
 
         #endregion
 
@@ -907,7 +908,7 @@ static class Program
         Estate estate = new Estate
         {
             Name = "Sergipe",
-            Governador= new Governador { Name = "Wesley Alves" }
+            Governador = new Governador { Name = "Wesley Alves" }
         };
 
         db.Estates.Add(estate);
@@ -917,8 +918,47 @@ static class Program
 
         estados.ForEach(e =>
         {
-            Console.WriteLine($"Estado: {e.Name}, Governador: {e.Governador.Name }");
+            Console.WriteLine($"Estado: {e.Name}, Governador: {e.Governador.Name}");
         });
+    }
+
+    static void Relacionamento1ParaMuitos()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var estado = new Estate
+            {
+                Name = "Sergipe",
+                Governador = new Governador { Name = "Wesley Alves" }
+            };
+
+            estado.Cities.Add(new City { Name = "Itabaiana" });
+
+            db.Estates.Add(estado);
+            db.SaveChanges();
+        }
+
+        using (var db = new ApplicationContext())
+        {
+            var estados = db.Estates.ToList();
+
+            estados[0].Cities.Add(new City { Name = "Aracaju" });
+
+            db.SaveChanges();
+
+            foreach (var estado in db.Estates.Include(c => c.Cities).AsNoTracking())
+            {
+                Console.WriteLine($"Estado: {estado.Name}, Governador: {estado.Governador.Name}");
+
+                foreach (var cidade in estado.Cities)
+                {
+                    Console.WriteLine($"\t Cidade: {cidade.Name}");
+                }
+            }
+        }
     }
 
     #endregion

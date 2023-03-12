@@ -62,3 +62,6 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Configurando entidade FluentApi em outro Arquivo
   * IEntityTypeConfiguration
   * AutoInclude
+- Relacionamento 1 Para muitos.
+  * Configurando relacionamentos na fluent Api
+  * Conhecendo OnDelete(), IsRequired()
