@@ -88,7 +88,8 @@ static class Program
         //ConversorCustomizado();
         //PropriedadeDeSombra();
         //TrabalhandoComPropriedadeDeSombra();
-        TiposDePropriedades();
+        //TiposDePropriedades();
+        Relacionamento1Para1();
 
         #endregion
 
@@ -895,6 +896,29 @@ static class Program
 
         db.Clients.Add(client);
         db.SaveChanges();
+    }
+
+    static void Relacionamento1Para1()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        Estate estate = new Estate
+        {
+            Name = "Sergipe",
+            Governador= new Governador { Name = "Wesley Alves" }
+        };
+
+        db.Estates.Add(estate);
+        db.SaveChanges();
+
+        var estados = db.Estates.AsNoTracking().ToList();
+
+        estados.ForEach(e =>
+        {
+            Console.WriteLine($"Estado: {e.Name}, Governador: {e.Governador.Name }");
+        });
     }
 
     #endregion

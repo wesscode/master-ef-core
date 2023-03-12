@@ -1,9 +1,11 @@
-﻿using MasterEFCore.Conversores;
+﻿using MasterEFCore.Configurations;
+using MasterEFCore.Conversores;
 using MasterEFCore.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace MasterEFCore.Data
 {
@@ -110,15 +112,12 @@ namespace MasterEFCore.Data
             modelBuilder.Entity<Department>().Property<DateTime>("LastUpdate");
             */
 
-            modelBuilder.Entity<Client>(p =>
-            {
-                p.OwnsOne(x => x.Adress, end =>
-                {
-                    end.Property(p => p.District).HasColumnName("District"); //Seleciono a property para da um nome de coluna.
 
-                    end.ToTable("Adress"); //Criar tabela adress com fk para client. Sem essa config Adress vira props em client.
-                });
-            });
+            /*MANEIRAS DE CHAMAR CONFIGURAÇÕES DA ENTIDADE EM OUTRO ARQUIVO */
+            //modelBuilder.ApplyConfiguration(new ClientConfiguration()); //chamando arquivo separado um a um.
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //chamando todas as configuration que fora implementadas no assembly. forma 1
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); //chamando todas as configuration que fora implementadas no assembly. forma 2
+
 
         }
 
