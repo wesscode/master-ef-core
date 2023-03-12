@@ -58,3 +58,7 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Configurada no FluentAPI, criando um modelo de dado(classe) complexa.
   * EX: Referência classeA a ClasseB onde a ClasseB passa a ser propriedades da classeA.
   * Config .ToTable("ClasseB") é criada classe com as prop com fk para ClasseA. Tabela essa criada pelo o entity com o conceito Shadow Property.
+- Relacionamento 1 Para 1
+  * Configurando entidade FluentApi em outro Arquivo
+  * IEntityTypeConfiguration
+  * AutoInclude
