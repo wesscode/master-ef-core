@@ -21,6 +21,12 @@ namespace MasterEFCore.Configurations
             builder
                 .Navigation(x => x.Governador)
                 .AutoInclude(); //após essa config, não precisa criar .include explicitamente na consulta.
+
+            builder
+                .HasMany(c => c.Cities)
+                .WithOne(e => e.Estate)
+                .IsRequired(false); //habilitando para que possa inserir uma cidade mesmo sem um estado.
+                //.OnDelete(DeleteBehavior.Restrict) //por default vem delete cascade
         }
     }
 }
