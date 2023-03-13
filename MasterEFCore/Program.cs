@@ -90,7 +90,8 @@ static class Program
         //TrabalhandoComPropriedadeDeSombra();
         //TiposDePropriedades();
         //Relacionamento1Para1();
-        Relacionamento1ParaMuitos();
+        //Relacionamento1ParaMuitos();
+        RelacionamentoMuitosParaMuitos();
 
         #endregion
 
@@ -956,6 +957,45 @@ static class Program
                 foreach (var cidade in estado.Cities)
                 {
                     Console.WriteLine($"\t Cidade: {cidade.Name}");
+                }
+            }
+        }
+    }
+
+    static void RelacionamentoMuitosParaMuitos()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var ator1 = new Actor { Name = "Rafael" };
+            var ator2 = new Actor { Name = "Pires" };
+            var ator3 = new Actor { Name = "Bruno" };
+
+            var filme1 = new Movie { Description = "A volta dos que não foram." };
+            var filme2 = new Movie { Description = "De volta para o futuro." };
+            var filme3 = new Movie { Description = "Poeira em alto mar filme." };
+
+            ator1.MovieList.Add(filme1);
+            ator1.MovieList.Add(filme2);
+
+            ator2.MovieList.Add(filme1);
+
+            filme3.ActorList.Add(ator1);
+            filme3.ActorList.Add(ator2);
+            filme3.ActorList.Add(ator3);
+
+            db.AddRange(ator1, ator2, filme3);
+            db.SaveChanges();
+
+            foreach (var ator in db.Actors.Include(e => e.MovieList))
+            {
+                Console.WriteLine($"Ator: {ator.Name}");
+
+                foreach (var movie in ator.MovieList)
+                {
+                    Console.WriteLine($"\tFilme: {movie.Description}");
                 }
             }
         }
