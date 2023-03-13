@@ -65,3 +65,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Relacionamento 1 Para muitos.
   * Configurando relacionamentos na fluent Api
   * Conhecendo OnDelete(), IsRequired()
+- Relacionamento Muitos para Muitos.
+  * Configurando relacionamentos na fluent Api
