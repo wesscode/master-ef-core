@@ -67,3 +67,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Conhecendo OnDelete(), IsRequired()
 - Relacionamento Muitos para Muitos.
   * Configurando relacionamentos na fluent Api
+  * Customizando nome tabela, nome coluna tabela relacional
+  * Adicionando colunas na tabela relacional utilizando o conceito ShadowProperty. 
