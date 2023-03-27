@@ -91,7 +91,8 @@ static class Program
         //TiposDePropriedades();
         //Relacionamento1Para1();
         //Relacionamento1ParaMuitos();
-        RelacionamentoMuitosParaMuitos();
+        //RelacionamentoMuitosParaMuitos();
+        CampoDeApoio();
 
         #endregion
 
@@ -1001,5 +1002,24 @@ static class Program
         }
     }
 
+    static void CampoDeApoio()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var documento = new Document();
+            documento.SetCPF("1234566733");
+
+            db.Documents.Add(documento);
+            db.SaveChanges();
+
+            foreach (var doc in db.Documents.AsNoTracking())
+            {
+                Console.WriteLine($"CPF -> {doc.GetCPF()}");
+            }
+        }
+    }
     #endregion
 }
