@@ -21,6 +21,12 @@ namespace MasterEFCore.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Document> Documents { get; set; }
 
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Student> Students { get; set; }
+
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             const string strConnection = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=MasterEFCore; Integrated Security=True;pooling=True";

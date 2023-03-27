@@ -92,7 +92,8 @@ static class Program
         //Relacionamento1Para1();
         //Relacionamento1ParaMuitos();
         //RelacionamentoMuitosParaMuitos();
-        CampoDeApoio();
+        //CampoDeApoio();
+        ExemploTPH();
 
         #endregion
 
@@ -1021,5 +1022,47 @@ static class Program
             }
         }
     }
+
+    static void ExemploTPH()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var pessoa = new Person { Name = "Fulano de Tal" };
+
+            var instrutor = new Instructor { Name = "Rafael Almeida", Tecnology = ".NET", Desde = DateTime.Now };
+
+            var aluno = new Student { Name = "Maria Thysbe", Age = 31, ContractDate = DateTime.Now.AddDays(-1) };
+
+            db.AddRange(pessoa, instrutor, aluno);
+            db.SaveChanges();
+
+            var pessoas = db.Persons.AsNoTracking().ToArray();
+            var instrutores = db.Instructors.AsNoTracking().ToArray();
+            //var alunos = db.Students.AsNoTracking().ToArray();
+            var alunos = db.Persons.OfType<Student>().AsNoTracking().ToArray(); //Forma de consulta, sem precisar adicionar tabelas de herança ao DbContext
+
+            Console.WriteLine("Pessoas ***************");
+            foreach (var p in pessoas)
+            {
+                Console.WriteLine($"Id: {p.Id} -> {p.Name}");
+            }
+
+            Console.WriteLine("Instrutores ***************");
+            foreach (var p in instrutores)
+            {
+                Console.WriteLine($"Id: {p.Id} -> {p.Name}, Tecnologia: {p.Tecnology}, Desde: {p.Desde}");
+            }
+
+            Console.WriteLine("Alunos ***************");
+            foreach (var p in alunos)
+            {
+                Console.WriteLine($"Id: {p.Id} -> {p.Name}, Idade: {p.Age}, Data do Contrato: {p.ContractDate}");
+            }
+        }
+    }
+
     #endregion
 }

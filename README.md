@@ -68,4 +68,8 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Relacionamento Muitos para Muitos.
   * Configurando relacionamentos na fluent Api
   * Customizando nome tabela, nome coluna tabela relacional
-  * Adicionando colunas na tabela relacional utilizando o conceito ShadowProperty. 
+  * Adicionando colunas na tabela relacional utilizando o conceito ShadowProperty.
+- Modelo de dados com TPH
+  * Quando temos uma entidade como principal e outras entidades herdam dela com campos adicionais.
+  * Entity cria uma tabela só com campo adicional(Discriminator), na tabela principal para identificar cada registro.
+  * 
