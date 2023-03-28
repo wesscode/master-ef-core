@@ -19,12 +19,15 @@ namespace MasterEFCore.Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [NotMapped]
+        public string PropriedadeTeste { get; set; }
         [InverseProperty("AeroportoPartida")]
         public ICollection<Voo> VoosDePartida { get; set; }
         [InverseProperty("AeroportoChegada")]
         public ICollection<Voo> VoosDeChegada { get; set; }
     }
 
+    [NotMapped]
     public class Voo 
     {
         public int Id { get; set; }
