@@ -79,9 +79,11 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Cria tabela para cadas entidade com fk para a tabela principal.
 - Sacola de Propriedades
   * Tem como objetivo compartilhar um tipo de Clr.
-- Atributos - DataAnnotations
+
+## Módulo Atributos - DataAnnotations:
   * DataAnnotations é uma subscrita da FluentAPI
   * Configura o modelo de dados com anotações
+  * Alguns atributos, Required, Table, Column,TypeName, MaxLength, Key
 - Atributo InverseProperty
   * Permite identificar ao entity com qual fk o atributo de sua tabela de deve se relacionar.
   * Atributo esse que pode ser ultilizado tanto na classe dependente como na classe principal, seria equivalente ao HasOne().HasMany(property); no fluent api.
