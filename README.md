@@ -97,3 +97,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Criar index simples ou composto unico via anotation.
 - Atributo Comment
   * Quando adicionado sobre a entitade um comentário é adicionado na tabela. Também pode colocar comment para um determinado campo.
+- Atributo BackingField
+  * Campo de apoio.
