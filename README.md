@@ -69,7 +69,11 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Configurando relacionamentos na fluent Api
   * Customizando nome tabela, nome coluna tabela relacional
   * Adicionando colunas na tabela relacional utilizando o conceito ShadowProperty.
-- Modelo de dados com TPH
+- Configurando Modelo de dados com TPH(Tabela por hierarquia)
   * Quando temos uma entidade como principal e outras entidades herdam dela com campos adicionais.
   * Entity cria uma tabela só com campo adicional(Discriminator), na tabela principal para identificar cada registro.
-  * 
+  * Não é possível definir propriedades obrigatórias para tipos derivados, sendo necessário que todas as prop que não são da classe base, sejam nullable.
+- Configurando Modelo de dados com TPT(Tabela por tipo)
+  * Tem como objetivo criar uma tabela base e uma tabela específica para cada modelo de dado.
+  * Consigo colocar restrição especifícas para cada Entidade.
+  * Cria tabela para cadas entidade com fk para a tabela principal.
