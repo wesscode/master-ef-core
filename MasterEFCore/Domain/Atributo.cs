@@ -7,11 +7,13 @@ namespace MasterEFCore.Domain
     public class Atributo
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column("MinhaDescricao", TypeName = "VARCHAR(100)")]
         public string Description { get; set; }
-        [Required]
+        //[Required]
         [MaxLength(255)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public string Observation { get; set; }
     }
 

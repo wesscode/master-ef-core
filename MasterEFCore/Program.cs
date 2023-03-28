@@ -1025,6 +1025,7 @@ static class Program
         }
     }
 
+
     static void ExemploTPH()
     {
         using (var db = new ApplicationContext())
@@ -1098,8 +1099,18 @@ static class Program
     {
         using (var db = new ApplicationContext())
         {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
             var script = db.Database.GenerateCreateScript();
             Console.WriteLine(script);
+
+            db.Atributos.Add(new Atributo
+            {
+                Description = "Exemplo",
+                Observation = "Observacao"
+            });
+            db.SaveChanges();
         }
     }
 
