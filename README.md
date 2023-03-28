@@ -85,3 +85,6 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Atributo InverseProperty
  * Permite identificar ao entity com qual fk o atributo de sua tabela de deve se relacionar.
  * Atributo esse que pode ser ultilizado tanto na classe dependente como na classe principal, seria equivalente ao HasOne().HasMany(property); no fluent api.
+- Atributo NotMapped
+ * Entity ignora classe ou prop que possuir essa anotação, logo não gerando no banco.
+ 
