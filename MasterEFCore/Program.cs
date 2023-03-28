@@ -94,7 +94,8 @@ static class Program
         //RelacionamentoMuitosParaMuitos();
         //CampoDeApoio();
         //ExemploTPH();
-        PacotesDePropriedades();
+        //PacotesDePropriedades();
+        Atributos();
 
         #endregion
 
@@ -1091,6 +1092,14 @@ static class Program
             {
                 Console.WriteLine($"Chave: {dic["Chave"]} - Valor: {dic["Valor"]}");
             }
+        }
+    }
+    static void Atributos()
+    {
+        using (var db = new ApplicationContext())
+        {
+            var script = db.Database.GenerateCreateScript();
+            Console.WriteLine(script);
         }
     }
 

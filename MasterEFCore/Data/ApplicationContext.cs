@@ -25,7 +25,7 @@ namespace MasterEFCore.Data
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Dictionary<string, object>> Configuracoes => Set<Dictionary<string, object>>("Configuracoes");
-
+        public DbSet<Atributo> Atributos { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -79,3 +79,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Cria tabela para cadas entidade com fk para a tabela principal.
 - Sacola de Propriedades
   * Tem como objetivo compartilhar um tipo de Clr.
+- Atributos - DataAnnotations
+  * DataAnnotations é uma subscrita da FluentAPI
