@@ -93,7 +93,8 @@ static class Program
         //Relacionamento1ParaMuitos();
         //RelacionamentoMuitosParaMuitos();
         //CampoDeApoio();
-        ExemploTPH();
+        //ExemploTPH();
+        PacotesDePropriedades();
 
         #endregion
 
@@ -1060,6 +1061,35 @@ static class Program
             foreach (var p in alunos)
             {
                 Console.WriteLine($"Id: {p.Id} -> {p.Name}, Idade: {p.Age}, Data do Contrato: {p.ContractDate}");
+            }
+        }
+    }
+
+    static void PacotesDePropriedades()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            var configuracao = new Dictionary<string, object>
+            {
+                ["Chave"] = "SenhaBancoDeDados",
+                ["Valor"] = Guid.NewGuid().ToString()
+            };
+
+            db.Configuracoes.Add(configuracao);
+            db.SaveChanges();
+
+            var configuracoes = db
+                .Configuracoes
+                .AsNoTracking()
+                .Where(x => x["Chave"] == "SenhaBancoDeDados")
+                .ToArray();
+
+            foreach (var dic in configuracoes)
+            {
+                Console.WriteLine($"Chave: {dic["Chave"]} - Valor: {dic["Valor"]}");
             }
         }
     }

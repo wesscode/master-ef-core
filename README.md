@@ -77,3 +77,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Tem como objetivo criar uma tabela base e uma tabela específica para cada modelo de dado.
   * Consigo colocar restrição especifícas para cada Entidade.
   * Cria tabela para cadas entidade com fk para a tabela principal.
+- Sacola de Propriedades
+  * Tem como objetivo compartilhar um tipo de Clr.

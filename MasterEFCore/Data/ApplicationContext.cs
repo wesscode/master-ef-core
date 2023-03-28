@@ -24,6 +24,7 @@ namespace MasterEFCore.Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Dictionary<string, object>> Configuracoes => Set<Dictionary<string, object>>("Configuracoes");
 
 
 
@@ -127,7 +128,18 @@ namespace MasterEFCore.Data
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //chamando todas as configuration que fora implementadas no assembly. forma 1
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); //chamando todas as configuration que fora implementadas no assembly. forma 2
 
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("Configuracoes", p =>
+            {
+                p.Property<int>("Id");
 
+                p.Property<string>("Chave")
+                .HasColumnType("VARCHAR(40)")
+                .IsRequired();
+
+                p.Property<string>("Valor")
+               .HasColumnType("VARCHAR(40)")
+               .IsRequired();
+            });
         }
 
         #region MODULO INICIAL ATE PROCEDURES
