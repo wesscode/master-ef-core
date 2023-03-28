@@ -83,11 +83,11 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * DataAnnotations é uma subscrita da FluentAPI
   * Configura o modelo de dados com anotações
 - Atributo InverseProperty
- * Permite identificar ao entity com qual fk o atributo de sua tabela de deve se relacionar.
- * Atributo esse que pode ser ultilizado tanto na classe dependente como na classe principal, seria equivalente ao HasOne().HasMany(property); no fluent api.
+  * Permite identificar ao entity com qual fk o atributo de sua tabela de deve se relacionar.
+  * Atributo esse que pode ser ultilizado tanto na classe dependente como na classe principal, seria equivalente ao HasOne().HasMany(property); no fluent api.
 - Atributo NotMapped
- * Entity ignora classe ou prop que possuir essa anotação, logo não gerando no banco.
+  * Entity ignora classe ou prop que possuir essa anotação, logo não gerando no banco.
 - Atributo DatabaseGenerated
- * Geralmete aplicada ao campo Key.
- * Para configurar se o campo vai ser identity, None, Computed.
- * Computer: o campo n recebe valor nem no insert nem no update, somente leitura.
+  * Geralmete aplicada ao campo Key.
+  * Para configurar se o campo vai ser identity, None, Computed.
+  * Computer: o campo n recebe valor nem no insert nem no update, somente leitura.
