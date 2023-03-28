@@ -79,7 +79,6 @@ static class Program
         #endregion
 
         #region MODULO MODELO DE DADOS
-
         //Collations();
         //TesteCollations();
         //PropagarDados();
@@ -95,6 +94,10 @@ static class Program
         //CampoDeApoio();
         //ExemploTPH();
         //PacotesDePropriedades();
+        #endregion
+
+        #region Modulo DataAnnotations
+
         Atributos();
 
         #endregion
@@ -1095,6 +1098,10 @@ static class Program
             }
         }
     }
+    #endregion
+
+    #region Modulo DataAnnotations
+
     static void Atributos()
     {
         using (var db = new ApplicationContext())
@@ -1113,6 +1120,5 @@ static class Program
             db.SaveChanges();
         }
     }
-
     #endregion
 }

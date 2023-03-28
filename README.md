@@ -93,3 +93,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Geralmete aplicada ao campo Key.
   * Para configurar se o campo vai ser identity, None, Computed.
   * Computer: o campo n recebe valor nem no insert nem no update, somente leitura.
+- Atributo Index
+  * Criar index simples ou composto unico via anotation.

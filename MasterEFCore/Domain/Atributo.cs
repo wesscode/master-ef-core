@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MasterEFCore.Domain
 {
     [Table("TabelaAtributos")]
+    [Index(nameof(Description), nameof(Id), IsUnique = true)]
     public class Atributo
     {
         [Key]
@@ -30,7 +32,7 @@ namespace MasterEFCore.Domain
     }
 
     [NotMapped]
-    public class Voo 
+    public class Voo
     {
         public int Id { get; set; }
         public string Description { get; set; }
