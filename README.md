@@ -95,3 +95,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Computer: o campo n recebe valor nem no insert nem no update, somente leitura.
 - Atributo Index
   * Criar index simples ou composto unico via anotation.
+- Atributo Comment
+  * Quando adicionado sobre a entitade um comentário é adicionado na tabela. Também pode colocar comment para um determinado campo.

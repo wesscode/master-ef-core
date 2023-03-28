@@ -6,12 +6,14 @@ namespace MasterEFCore.Domain
 {
     [Table("TabelaAtributos")]
     [Index(nameof(Description), nameof(Id), IsUnique = true)]
+    [Comment("Comentário para minha tabela.")]
     public class Atributo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column("MinhaDescricao", TypeName = "VARCHAR(100)")]
+        [Comment("Comentário para meu campo.")]
         public string Description { get; set; }
         //[Required]
         [MaxLength(255)]
