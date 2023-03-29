@@ -96,10 +96,14 @@ static class Program
         //PacotesDePropriedades();
         #endregion
 
-        #region Modulo DataAnnotations
+        #region MODULO DATAANNOTATIONS
 
-        Atributos();
+        //Atributos();
 
+        #endregion
+
+        #region MODULO EF FUNCTION
+        FuncoesDeDatas();
         #endregion
 
     }
@@ -762,6 +766,7 @@ static class Program
     #endregion
 
     #region MODULO MODELO DE DADOS
+   
     static void Collations()
     {
         using var db = new ApplicationContext();
@@ -890,7 +895,7 @@ static class Program
         var departamentos = db.Departments.Where(p => EF.Property<DateTime>(p, "LastUpdate") < DateTime.Now).ToArray();
     }
 
-    static void TiposDePropriedades()
+    static void TiposDePropriedades() //Owner Types
     {
         using var db = new ApplicationContext();
         db.Database.EnsureDeleted();
@@ -1098,9 +1103,10 @@ static class Program
             }
         }
     }
+
     #endregion
 
-    #region Modulo DataAnnotations
+    #region Modulo MODULO DATAANNOTATIONS
 
     static void Atributos()
     {
@@ -1119,6 +1125,64 @@ static class Program
             });
             db.SaveChanges();
         }
+    }
+    #endregion
+
+    #region MODULO EF FUNCTION
+    static void FuncoesDeDatas()
+    {
+        ApagarCriarBancoDeDados();
+
+        using (var db = new ApplicationContext())
+        {
+            var script = db.Database.GenerateCreateScript();
+            Console.WriteLine(script);
+
+            var dados = db.Funcoes.AsNoTracking().Select(p => new
+            {
+                Dias = EF.Functions.DateDiffDay(DateTime.Now, p.Data1),
+                Meses = EF.Functions.DateDiffMonth(DateTime.Now, p.Data1),
+                Data = EF.Functions.DateFromParts(2021, 1, 2),
+                DataValida = EF.Functions.IsDate(p.Data2),
+            });
+
+            foreach (var f in dados)
+            {
+                Console.WriteLine(f);
+            }
+
+        }
+    }
+    static void ApagarCriarBancoDeDados()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        db.Funcoes.AddRange(
+        new Funcao
+        {
+            Data1 = DateTime.Now.AddDays(2),
+            Data2 = "2021-01-01",
+            Description1 = "Bala 1",
+            Description2 = "Bala 1"
+        },
+        new Funcao
+        {
+            Data1 = DateTime.Now.AddDays(1),
+            Data2 = "XX21-01-01",
+            Description1 = "Bola 2",
+            Description2 = "Bola 2"
+        },
+        new Funcao
+        {
+            Data1 = DateTime.Now.AddDays(1),
+            Data2 = "XX21-01-01",
+            Description1 = "Tela",
+            Description2 = "Tela"
+        });
+
+        db.SaveChanges();
     }
     #endregion
 }

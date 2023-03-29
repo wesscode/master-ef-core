@@ -11,6 +11,8 @@ namespace MasterEFCore.Data
 {
     public class ApplicationContext : DbContext
     {
+        #region MODULO INICIAL ATÉ DATAANOTATIONS
+        
         //private readonly StreamWriter _writer = new StreamWriter(@"C:\Users\wesll\source\desenvolvedor-io\master-ef-core\MasterEFCore\meu_log_do_ef_core.txt", append: true);
         public DbSet<Department> Departments { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -20,16 +22,17 @@ namespace MasterEFCore.Data
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Document> Documents { get; set; }
-
         public DbSet<Person> Persons { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Dictionary<string, object>> Configuracoes => Set<Dictionary<string, object>>("Configuracoes");
         public DbSet<Atributo> Atributos { get; set; }
         public DbSet<Aeroporto> Aeroportos { get; set; }
-        public DbSet<Voo> Voos{ get; set; }
+        public DbSet<Voo> Voos { get; set; }
+       
+        #endregion
 
-
+        public DbSet<Funcao> Funcoes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -39,11 +42,12 @@ namespace MasterEFCore.Data
                 .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
-
         }
 
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region MODULO MODELO DE DADOS ATÉ DATAANNOTATION
             /*
               *COLLATIONS* 
             //SQL_Latin1_General:regras básicas de agrupamento utilizado pelo o windowns.
@@ -127,8 +131,9 @@ namespace MasterEFCore.Data
 
 
             /*MANEIRAS DE CHAMAR CONFIGURAÇÕES DA ENTIDADE EM OUTRO ARQUIVO */
-            //modelBuilder.ApplyConfiguration(new ClientConfiguration()); //chamando arquivo separado um a um.
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //chamando todas as configuration que fora implementadas no assembly. forma 1
+            //modelBuilder.ApplyConfiguration(new ClientConfiguration()); //chamando arquivo separado um a um. Para cada config gerar uma linha dessa.
+            
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //chamando todas as configuration que foram implementadas no assembly. forma 1
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); //chamando todas as configuration que fora implementadas no assembly. forma 2
 
             modelBuilder.SharedTypeEntity<Dictionary<string, object>>("Configuracoes", p =>
@@ -143,6 +148,8 @@ namespace MasterEFCore.Data
                .HasColumnType("VARCHAR(40)")
                .IsRequired();
             });
+
+            #endregion
         }
 
         #region MODULO INICIAL ATE PROCEDURES

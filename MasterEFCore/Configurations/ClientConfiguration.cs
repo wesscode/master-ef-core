@@ -8,11 +8,12 @@ namespace MasterEFCore.Configurations
     {
         public void Configure(EntityTypeBuilder<Client> builder)
         {
+            //Endereço compoe a tabela client.
             builder.OwnsOne(x => x.Adress, end =>
             {
                 end.Property(p => p.District).HasColumnName("District"); //Seleciono a property para da um nome de coluna.
 
-                end.ToTable("Adress"); //Criar tabela adress com fk para client. Sem essa config Adress vira props em client.
+                end.ToTable("Adress"); //Criar tabela adress com fk para client. Sem essa config Adress vira colunas na tabela client.
             });
         }
     }
