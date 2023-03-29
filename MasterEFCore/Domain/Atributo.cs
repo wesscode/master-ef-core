@@ -21,6 +21,14 @@ namespace MasterEFCore.Domain
         public string Observation { get; set; }
     }
 
+    [Keyless]
+    public class RelatorioFinanceiro
+    {
+        public string Description { get; set; }
+        public decimal Total { get; set; }
+        public DateTime Data { get; set; }
+    }
+
     public class Aeroporto
     {
         public int Id { get; set; }

@@ -99,3 +99,6 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Quando adicionado sobre a entitade um comentário é adicionado na tabela. Também pode colocar comment para um determinado campo.
 - Atributo BackingField
   * Campo de apoio.
+- Atributo Keyless
+  * Quando o entity estiver fazendo o mappeamento do modelo de dados ele não considere a chave primaria.
+  * Consultar dados de uma tabela que não possui chave ou seja tabelas de projeções ou views. ex consulta de relatório etc.  
