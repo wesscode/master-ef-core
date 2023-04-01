@@ -105,6 +105,7 @@ static class Program
         #region MODULO EF FUNCTION
         //FuncoesDeDatas();
         FuncaoLike();
+        FuncaoDataLength();
         #endregion
 
     }
@@ -767,7 +768,7 @@ static class Program
     #endregion
 
     #region MODULO MODELO DE DADOS
-   
+
     static void Collations()
     {
         using var db = new ApplicationContext();
@@ -1206,6 +1207,26 @@ static class Program
             {
                 Console.WriteLine(descricao);
             }
+        }
+    }
+    static void FuncaoDataLength()
+    {
+        using (var db = new ApplicationContext())
+        {
+            var resultado = db.Funcoes
+                .AsNoTracking()
+                .Select(p => new
+                {
+                    TotalBytesCampoData = EF.Functions.DataLength(p.Data1),
+                    TotalBytes1 = EF.Functions.DataLength(p.Description1),
+                    TotalBytes2 = EF.Functions.DataLength(p.Description2),
+                    Total1 = p.Description1.Length,
+                    Total2 = p.Description2.Length
+                })
+                .FirstOrDefault();
+
+            Console.WriteLine("Resultado: ");
+            Console.WriteLine(resultado);
         }
     }
     #endregion
