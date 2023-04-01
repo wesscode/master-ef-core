@@ -103,7 +103,8 @@ static class Program
         #endregion
 
         #region MODULO EF FUNCTION
-        FuncoesDeDatas();
+        //FuncoesDeDatas();
+        FuncaoLike();
         #endregion
 
     }
@@ -1183,6 +1184,29 @@ static class Program
         });
 
         db.SaveChanges();
+    }
+
+    static void FuncaoLike()
+    {
+        using (var db = new ApplicationContext())
+        {
+            var script = db.Database.GenerateCreateScript();
+            Console.WriteLine(script);
+
+            var dados = db.Funcoes
+                .AsNoTracking()
+                //.Where(p => EF.Functions.Like(p.Description1, "Bo%")) //like onde inicia com BO
+                .Where(p => EF.Functions.Like(p.Description1, "B[ao]%")) //like onde inicia com Ba ou Bo 
+                .Select(x => x.Description1)
+                .ToArray();
+
+            Console.WriteLine("Resultado: ");
+
+            foreach (var descricao in dados)
+            {
+                Console.WriteLine(descricao);
+            }
+        }
     }
     #endregion
 }
