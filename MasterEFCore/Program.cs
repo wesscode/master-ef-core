@@ -1282,6 +1282,7 @@ static class Program
         {
             var consulta = db
                 .Funcoes
+                .TagWith("Use NOLOCK")
                 .FirstOrDefault();
 
             Console.WriteLine($"Consultas: {consulta?.Description1}");
