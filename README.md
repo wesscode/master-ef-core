@@ -110,5 +110,8 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * DateDiffDay, DateFromParts, IsDate, DateDiffMonth etc..
 - Like
 - DataLength
+  * Conta quantidade de bytes armazeados.
+  * se o campo for nvarchar(unicode) o mesmo armazena 2 bytes para cada caracter.
 - Property
 - Collate
+  * Difereciar maiúsculas de minúsculas em uma consulta.

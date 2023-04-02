@@ -106,7 +106,8 @@ static class Program
         //FuncoesDeDatas();
         //FuncaoLike();
         //FuncaoDataLength();
-        FuncaoProperty();
+        //FuncaoProperty();
+        FucaoCollate();
         #endregion
 
     }
@@ -1246,6 +1247,23 @@ static class Program
 
             Console.WriteLine("Resultado: ");
             Console.WriteLine(propriedadeSombra);
+        }
+    }
+    static void FucaoCollate()
+    {
+        using (var db = new ApplicationContext())
+        {
+            var consulta1 = db
+                .Funcoes
+                .FirstOrDefault(p => EF.Functions.Collate(p.Description1, "SQL_Latin1_General_CP1_CS_AS") == "tela");
+
+            var consulta2 = db
+                .Funcoes
+                .FirstOrDefault(p => EF.Functions.Collate(p.Description1, "SQL_Latin1_General_CP1_CI_AS") == "tela");
+
+            Console.WriteLine($"Consulta1: {consulta1?.Description1}");
+
+            Console.WriteLine($"Consulta2: {consulta2?.Description1}");
         }
     }
 
