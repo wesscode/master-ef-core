@@ -107,7 +107,11 @@ static class Program
         //FuncaoLike();
         //FuncaoDataLength();
         //FuncaoProperty();
-        FucaoCollate();
+        //FucaoCollate();
+        #endregion
+
+        #region MODULO INTERCEPTAÇÃO
+
         #endregion
 
     }
@@ -1267,5 +1271,9 @@ static class Program
         }
     }
 
+    #endregion
+
+    #region MODULO INTERCEPTAÇÃO
+        
     #endregion
 }

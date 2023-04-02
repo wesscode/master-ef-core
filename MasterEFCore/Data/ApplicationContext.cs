@@ -47,7 +47,7 @@ namespace MasterEFCore.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region MODULO MODELO DE DADOS ATÉ EF FUNCTIOS
+            #region MODULO MODELO DE DADOS ATÉ EF FUNCTIONS
             /*
               *COLLATIONS* 
             //SQL_Latin1_General:regras básicas de agrupamento utilizado pelo o windowns.
@@ -101,7 +101,6 @@ namespace MasterEFCore.Data
             modelBuilder.Entity<Estate>().ToTable("Estates", "SegundoEsquema");
             */
 
-
             /*
              * CONVERSION
             var conversao = new ValueConverter<Versao, string>(p => p.ToString(), p => (Versao)Enum.Parse(typeof(Versao), p));
@@ -129,7 +128,6 @@ namespace MasterEFCore.Data
             modelBuilder.Entity<Department>().Property<DateTime>("LastUpdate");
             */
 
-
             /*MANEIRAS DE CHAMAR CONFIGURAÇÕES DA ENTIDADE EM OUTRO ARQUIVO */
             //modelBuilder.ApplyConfiguration(new ClientConfiguration()); //chamando arquivo separado um a um. Para cada config gerar uma linha dessa.
             
@@ -156,7 +154,6 @@ namespace MasterEFCore.Data
                 .HasColumnType("VARCHAR(100)")
                 .HasDefaultValueSql("'Teste'");
             });
-
             #endregion
         }
 

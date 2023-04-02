@@ -115,3 +115,11 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Property
 - Collate
   * Difereciar maiúsculas de minúsculas em uma consulta.
+
+ ## Módulo Interceptação: 
+- IDbCommandInterceptor
+  * Implementa métodos no momento em que o comando está sendo criado ou sendo executado o comando no banco de dados.
+- IDbConnectionInterceptor
+  * Fornece métodos no momento que está abrindo uma conexão, que está fechando uma conexão. pode manipular a abertura de conexão.
+- IDbTransactionInterceptor
+  * Fornece o momento exato que está sendo criado uma transação ou quando está utilizando uma transação existente ou revertendo uma transação.   
