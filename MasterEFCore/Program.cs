@@ -112,6 +112,8 @@ static class Program
 
         #region MODULO INTERCEPTAÇÃO
 
+        TesteInterceptacao();
+
         #endregion
 
     }
@@ -1274,6 +1276,16 @@ static class Program
     #endregion
 
     #region MODULO INTERCEPTAÇÃO
-        
+    static void TesteInterceptacao()
+    {
+        using (var db = new ApplicationContext())
+        {
+            var consulta = db
+                .Funcoes
+                .FirstOrDefault();
+
+            Console.WriteLine($"Consultas: {consulta?.Description1}");
+        }
+    }
     #endregion
 }
