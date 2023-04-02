@@ -47,7 +47,7 @@ namespace MasterEFCore.Data
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            #region MODULO MODELO DE DADOS ATÉ DATAANNOTATION
+            #region MODULO MODELO DE DADOS ATÉ EF FUNCTIOS
             /*
               *COLLATIONS* 
             //SQL_Latin1_General:regras básicas de agrupamento utilizado pelo o windowns.
@@ -147,6 +147,14 @@ namespace MasterEFCore.Data
                 p.Property<string>("Valor")
                .HasColumnType("VARCHAR(40)")
                .IsRequired();
+            });
+
+            //EX Modulo EF FUNCTIONs
+            modelBuilder.Entity<Funcao>(conf =>
+            {
+                conf.Property<string>("PropriedadeSombra")
+                .HasColumnType("VARCHAR(100)")
+                .HasDefaultValueSql("'Teste'");
             });
 
             #endregion

@@ -104,8 +104,9 @@ static class Program
 
         #region MODULO EF FUNCTION
         //FuncoesDeDatas();
-        FuncaoLike();
-        FuncaoDataLength();
+        //FuncaoLike();
+        //FuncaoDataLength();
+        FuncaoProperty();
         #endregion
 
     }
@@ -1131,30 +1132,6 @@ static class Program
     #endregion
 
     #region MODULO EF FUNCTION
-    static void FuncoesDeDatas()
-    {
-        ApagarCriarBancoDeDados();
-
-        using (var db = new ApplicationContext())
-        {
-            var script = db.Database.GenerateCreateScript();
-            Console.WriteLine(script);
-
-            var dados = db.Funcoes.AsNoTracking().Select(p => new
-            {
-                Dias = EF.Functions.DateDiffDay(DateTime.Now, p.Data1),
-                Meses = EF.Functions.DateDiffMonth(DateTime.Now, p.Data1),
-                Data = EF.Functions.DateFromParts(2021, 1, 2),
-                DataValida = EF.Functions.IsDate(p.Data2),
-            });
-
-            foreach (var f in dados)
-            {
-                Console.WriteLine(f);
-            }
-
-        }
-    }
     static void ApagarCriarBancoDeDados()
     {
         using var db = new ApplicationContext();
@@ -1186,7 +1163,30 @@ static class Program
 
         db.SaveChanges();
     }
+    static void FuncoesDeDatas()
+    {
+        ApagarCriarBancoDeDados();
 
+        using (var db = new ApplicationContext())
+        {
+            var script = db.Database.GenerateCreateScript();
+            Console.WriteLine(script);
+
+            var dados = db.Funcoes.AsNoTracking().Select(p => new
+            {
+                Dias = EF.Functions.DateDiffDay(DateTime.Now, p.Data1),
+                Meses = EF.Functions.DateDiffMonth(DateTime.Now, p.Data1),
+                Data = EF.Functions.DateFromParts(2021, 1, 2),
+                DataValida = EF.Functions.IsDate(p.Data2),
+            });
+
+            foreach (var f in dados)
+            {
+                Console.WriteLine(f);
+            }
+
+        }
+    }
     static void FuncaoLike()
     {
         using (var db = new ApplicationContext())
@@ -1229,5 +1229,25 @@ static class Program
             Console.WriteLine(resultado);
         }
     }
+    static void FuncaoProperty()
+    {
+        ApagarCriarBancoDeDados();
+
+        using (var db = new ApplicationContext())
+        {
+            var resultado = db
+                .Funcoes
+                .FirstOrDefault(p => EF.Property<string>(p, "PropriedadeSombra") == "Teste");
+
+            var propriedadeSombra = db
+                .Entry(resultado)
+                .Property<string>("PropriedadeSombra")
+                .CurrentValue;
+
+            Console.WriteLine("Resultado: ");
+            Console.WriteLine(propriedadeSombra);
+        }
+    }
+
     #endregion
 }
