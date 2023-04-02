@@ -122,4 +122,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - IDbConnectionInterceptor
   * Fornece métodos no momento que está abrindo uma conexão, que está fechando uma conexão. pode manipular a abertura de conexão.
 - IDbTransactionInterceptor
-  * Fornece o momento exato que está sendo criado uma transação ou quando está utilizando uma transação existente ou revertendo uma transação.   
+  * Fornece o momento exato que está sendo criado uma transação ou quando está utilizando uma transação existente ou revertendo uma transação.
+-  optionsBuilder.AddInterceptors(new InterceptadorDeComandos()), Registrando o intercept o pipeline do entity. 

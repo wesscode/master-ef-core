@@ -1,6 +1,7 @@
 ﻿using MasterEFCore.Configurations;
 using MasterEFCore.Conversores;
 using MasterEFCore.Domain;
+using MasterEFCore.Interceptadores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -41,7 +42,8 @@ namespace MasterEFCore.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging();
+                .EnableSensitiveDataLogging()
+                .AddInterceptors(new InterceptadorDeComandos()); //Registrando o intercept o pipeline do entity.
         }
 
         
