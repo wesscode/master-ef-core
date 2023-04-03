@@ -129,3 +129,15 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Interceptando abertura de conexão com banco de dados
 - Interceptando alterações
   * Remover, alterar, inserir
+
+ ## Módulo Transações
+  * Sigla(ACID): Atomicidade, Consistencia, Isolação, Durabilidade.
+  * A: faz tudo ou não faz nada(bem resumido)
+  * C: Garantir que o banco esteja consistente antes e depois da transação
+  * I: Uma trasação em andamento deve permanecer totalmente isolada das outras operações. 
+  * D: Garantir que as transações executadas sejam gravadas no banco, salvando-as em permanentemente até o serviço do banco voltar e só ai executar as pendências.
+- Comportamento padrão EFCore
+- Gerenciando transação manualmente
+- Revertendo uma transação
+- Salvando ponto de uma transação
+- Usando TransactionScope

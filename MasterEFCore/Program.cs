@@ -111,10 +111,12 @@ static class Program
         #endregion
 
         #region MODULO INTERCEPTAÇÃO
-
         //TesteInterceptacao();
-        TesteInterceptacaoSaveChanges();
+        //TesteInterceptacaoSaveChanges();
+        #endregion
 
+        #region MODULO TRANSAÇÕES
+       
         #endregion
 
     }
@@ -1305,5 +1307,9 @@ static class Program
             db.SaveChanges();
         }
     }
+    #endregion
+
+    #region MODULO TRANSAÇÕES
+
     #endregion
 }
