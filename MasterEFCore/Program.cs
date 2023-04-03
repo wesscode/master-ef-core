@@ -118,7 +118,8 @@ static class Program
         #region MODULO TRANSAÇÕES
         //ComportamentoPadrao();
         //GerenciandoTransacaoManualmente();
-        ReverterTransacao();
+        //ReverterTransacao();
+        SalvarPontoTransacao();
         #endregion
 
     }
@@ -1312,6 +1313,50 @@ static class Program
     #endregion
 
     #region MODULO TRANSAÇÕES
+    static void SalvarPontoTransacao()
+    {
+        CadastrarLivro();
+
+        using (var db = new ApplicationContext())
+        {
+            var transacao = db.Database.BeginTransaction();
+
+            try
+            {
+                var livro = db.Books.FirstOrDefault(p => p.Id == 1);
+                livro.Autor = "Rafael Almeida";
+                db.SaveChanges();
+
+                transacao.CreateSavepoint("desfazer_apenas_insercao"); //criando ponto de salvamento, para qnd dar rollback salvar somente o que foi alterado até aqui.
+
+                db.Books.Add(
+                   new Book
+                   {
+                       Titulo = "ASP.NET CORE Enterprise Applications",
+                       Autor = "Eduardo Pires"
+                   });
+                db.SaveChanges();
+
+                db.Books.Add(
+                    new Book
+                    {
+                        Titulo = "Dominando o entity framework core",
+                        Autor = "Rafael Almeida".PadLeft(16, '*')
+                    });
+                db.SaveChanges();
+
+                transacao.Commit();
+            }
+            catch (DbUpdateException e)
+            {
+                transacao.RollbackToSavepoint("desfazer_apenas_insercao"); //rollback apartir do ponto definido.
+                if (e.Entries.Count(p => p.State == EntityState.Added) == e.Entries.Count) //verificando count de entidades com o estado de added se é igual o count que estou enviando para a base, realizo o commit.
+                {
+                    transacao.Commit();
+                }
+            }
+        }
+    }
     static void ReverterTransacao()
     {
         CadastrarLivro();
