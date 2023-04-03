@@ -112,7 +112,8 @@ static class Program
 
         #region MODULO INTERCEPTAÇÃO
 
-        TesteInterceptacao();
+        //TesteInterceptacao();
+        TesteInterceptacaoSaveChanges();
 
         #endregion
 
@@ -1286,6 +1287,22 @@ static class Program
                 .FirstOrDefault();
 
             Console.WriteLine($"Consultas: {consulta?.Description1}");
+        }
+    }
+
+    static void TesteInterceptacaoSaveChanges()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            db.Funcoes.Add(new Funcao
+            {
+                Description1 = "Teste"
+            });
+
+            db.SaveChanges();
         }
     }
     #endregion

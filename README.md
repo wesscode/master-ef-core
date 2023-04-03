@@ -128,3 +128,4 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Aplicando hint NOLOCK nas consultas
 - Interceptando abertura de conexão com banco de dados
 - Interceptando alterações
+  * Remover, alterar, inserir
