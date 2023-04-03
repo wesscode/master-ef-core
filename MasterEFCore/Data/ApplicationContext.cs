@@ -34,7 +34,7 @@ namespace MasterEFCore.Data
         #endregion
 
         public DbSet<Funcao> Funcoes { get; set; }
-        public DbSet<Book> books { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

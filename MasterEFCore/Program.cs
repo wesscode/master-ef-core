@@ -116,7 +116,9 @@ static class Program
         #endregion
 
         #region MODULO TRANSAÇÕES
-        ComportamentoPadrao();
+        //ComportamentoPadrao();
+        //GerenciandoTransacaoManualmente();
+        ReverterTransacao();
         #endregion
 
     }
@@ -1310,16 +1312,78 @@ static class Program
     #endregion
 
     #region MODULO TRANSAÇÕES
+    static void ReverterTransacao()
+    {
+        CadastrarLivro();
+
+        using (var db = new ApplicationContext())
+        {
+            var transacao = db.Database.BeginTransaction();
+
+            try
+            {
+                var livro = db.Books.FirstOrDefault(p => p.Id == 1);
+                livro.Autor = "Rafael Almeida";
+
+                db.SaveChanges();
+
+                db.Books.Add(
+                    new Book
+                    {
+                        Titulo = "Dominando o entity framework core",
+                        Autor = "Rafael Almeida".PadLeft(16, '*')
+                    });
+
+                db.SaveChanges();
+
+                transacao.Commit();
+            }
+            catch (Exception e)
+            {
+                transacao.Rollback();
+            }
+        }
+    }
+
+    static void GerenciandoTransacaoManualmente()
+    {
+        CadastrarLivro();
+
+        using (var db = new ApplicationContext())
+        {
+            var transacao = db.Database.BeginTransaction();
+
+
+            var livro = db.Books.FirstOrDefault(p => p.Id == 1);
+            livro.Autor = "Rafael Almeida";
+
+            db.SaveChanges();
+
+            Console.ReadKey();
+
+            db.Books.Add(
+                new Book
+                {
+                    Titulo = "Dominando o entity framework core",
+                    Autor = "Rafael Almeida"
+                });
+
+            db.SaveChanges();
+
+            transacao.Commit();
+        }
+    }
+
     static void ComportamentoPadrao()
     {
         CadastrarLivro();
 
         using (var db = new ApplicationContext())
         {
-            var livro = db.books.FirstOrDefault(p => p.Id == 1);
+            var livro = db.Books.FirstOrDefault(p => p.Id == 1);
             livro.Autor = "Rafael Almeida";
 
-            db.books.Add(
+            db.Books.Add(
                 new Book
                 {
                     Titulo = "Dominando o entity framework core",
@@ -1337,7 +1401,7 @@ static class Program
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            db.books.Add(
+            db.Books .Add(
                 new Book
                 {
                     Titulo = "Introdução ao entity framework core",
