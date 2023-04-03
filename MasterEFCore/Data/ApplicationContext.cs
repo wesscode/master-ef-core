@@ -34,6 +34,7 @@ namespace MasterEFCore.Data
         #endregion
 
         public DbSet<Funcao> Funcoes { get; set; }
+        public DbSet<Book> books { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,13 +43,17 @@ namespace MasterEFCore.Data
             optionsBuilder
                 .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
-                .EnableSensitiveDataLogging()
-                .AddInterceptors(new InterceptadorDeComandos()) //Registrando o intercept o pipeline do entity.
-                .AddInterceptors(new InterceptadorDeConexao())
-                .AddInterceptors(new InterceptadorPersistencia());
+                .EnableSensitiveDataLogging();
+
+
+            /*
+             * Modulo Interceptações
+            .AddInterceptors(new InterceptadorDeComandos()) //Registrando o intercept o pipeline do entity.    
+            .AddInterceptors(new InterceptadorDeConexao())
+            .AddInterceptors(new InterceptadorPersistencia());*/
         }
 
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region MODULO MODELO DE DADOS ATÉ EF FUNCTIONS

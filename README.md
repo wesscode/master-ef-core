@@ -137,7 +137,10 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * I: Uma trasação em andamento deve permanecer totalmente isolada das outras operações. 
   * D: Garantir que as transações executadas sejam gravadas no banco, salvando-as em permanentemente até o serviço do banco voltar e só ai executar as pendências.
 - Comportamento padrão EFCore
+  * todas as operações que são executadas no banco após chamar o savechages por padrão é executada dentro de uma transação.
 - Gerenciando transação manualmente
 - Revertendo uma transação
 - Salvando ponto de uma transação
 - Usando TransactionScope
+- Ferramentas:
+  * SQL Profile: Ferramenta para monitorar todos os comandos que estão sendo enviados para sua base de dados.

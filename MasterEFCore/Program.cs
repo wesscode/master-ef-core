@@ -116,7 +116,7 @@ static class Program
         #endregion
 
         #region MODULO TRANSAÇÕES
-       
+        ComportamentoPadrao();
         #endregion
 
     }
@@ -1310,6 +1310,42 @@ static class Program
     #endregion
 
     #region MODULO TRANSAÇÕES
+    static void ComportamentoPadrao()
+    {
+        CadastrarLivro();
 
+        using (var db = new ApplicationContext())
+        {
+            var livro = db.books.FirstOrDefault(p => p.Id == 1);
+            livro.Autor = "Rafael Almeida";
+
+            db.books.Add(
+                new Book
+                {
+                    Titulo = "Dominando o entity framework core",
+                    Autor = "Rafael Almeida"
+                });
+
+            db.SaveChanges();
+        }
+    }
+
+    static void CadastrarLivro()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Database.EnsureDeleted();
+            db.Database.EnsureCreated();
+
+            db.books.Add(
+                new Book
+                {
+                    Titulo = "Introdução ao entity framework core",
+                    Autor = "Rafael"
+                });
+
+            db.SaveChanges();
+        }
+    }
     #endregion
 }
