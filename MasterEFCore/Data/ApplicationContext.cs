@@ -43,7 +43,8 @@ namespace MasterEFCore.Data
                 .UseSqlServer(strConnection)
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging()
-                .AddInterceptors(new InterceptadorDeComandos()); //Registrando o intercept o pipeline do entity.
+                .AddInterceptors(new InterceptadorDeComandos()) //Registrando o intercept o pipeline do entity.
+                .AddInterceptors(new InterceptadorDeConexao());
         }
 
         
