@@ -124,17 +124,21 @@ static class Program
         TransactionScope();
         #endregion
 
+        #region MODULO UDFs
+        FuncaoLEFT();
+        #endregion
+
     }
 
     #region MODULO INICIAL ATÉ TIPO DE CARREGAMENTO
-    static void EnsureCreatedAndDelete()
+    /*
+     static void EnsureCreatedAndDelete()
     {
         //cria e dropa o banco em tempo de execução.
         using var db = new ApplicationContext();
         //db.Database.EnsureCreated();
         db.Database.EnsureDeleted();
     }
-
     static void GapDoEnsureCreated()
     {
         //gap ao ter multiplos contextos, ele so entende e executa o primeiro.
@@ -148,7 +152,6 @@ static class Program
         var databaseCreator = db2.GetService<IRelationalDatabaseCreator>();
         databaseCreator.CreateTables();
     }
-
     //checando se estar conectando ao banco
     static void HealthCheckDatabase()
     {
@@ -176,8 +179,6 @@ static class Program
         }
         #endregion
     }
-
-
     static int _count;
     static void GerenciarEstadoDaConexao(bool gerenciarEstadoConexao)
     {
@@ -204,7 +205,6 @@ static class Program
 
         Console.WriteLine(mensagem);
     }
-
     static void ExecuteSQL()
     {
         using var db = new ApplicationContext();
@@ -223,7 +223,6 @@ static class Program
         //terceira opção
         db.Database.ExecuteSqlInterpolated($"UPDATE Departments SET description={description} WHERE id=1");
     }
-
     static void SqlInjection()
     {
         using var db = new ApplicationContext();
@@ -256,7 +255,6 @@ static class Program
             Console.WriteLine($"Id: {departament.Id}, Descrição: {departament.Description}");
         }
     }
-
     static void ObterMigracoesPendentes()
     {
         //migração que foi gerada mas ainda não foi aplicada ao banco.
@@ -270,14 +268,12 @@ static class Program
             Console.WriteLine($"Migração: {migracao}");
         }
     }
-
     static void AplicarMigracaoEmTempoDeExecucao()
     {
         //ao executar o projeto, consulta as migracoes pendentes e aplica todas as migrações pendentes(update database em tempo de execução).
         var db = new ApplicationContext();
         db.Database.Migrate();
     }
-
     static void ObterTodasMigracoes()
     {
         //traz todas as migrações existentes na sua aplicação em tempo de execução.
@@ -291,7 +287,6 @@ static class Program
             Console.WriteLine($"Migração: {migracao}");
         }
     }
-
     static void ObterMigracoesJaAplicadas()
     {
         //traz todas as migrações existentes na sua aplicação em tempo de execução.
@@ -305,7 +300,6 @@ static class Program
             Console.WriteLine($"Migração: {migracao}");
         }
     }
-
     static void ScriptGeralDoBancoDeDados()
     {
         using var db = new ApplicationContext();
@@ -313,9 +307,11 @@ static class Program
 
         Console.WriteLine(script);
     }
+     */
 
     #region TIPOS DE CARREGAMENTOS
-    static void SetupTiposCarregamentos(ApplicationContext db)
+    /*
+     static void SetupTiposCarregamentos(ApplicationContext db)
     {
         if (!db.Departments.Any())
         {
@@ -460,331 +456,334 @@ static class Program
             }
         }
     }
+     */
     #endregion
 
     #endregion
 
     #region MODULO CONSULTAS E PROCEDURES
-    static void ConsultaViaProcedure()
-    {
+    /*
+       static void ConsultaViaProcedure()
+      {
 
-        using var db = new ApplicationContext();
+          using var db = new ApplicationContext();
 
-        var dep = new SqlParameter("@dep", "Departamento");
-        var departamentos = db.Departments
-            //.FromSqlRaw("EXECUTE GetDepartments @dep", dep)
-            .FromSqlInterpolated($"EXECUTE GetDepartments {dep}")
-            .ToList();
-        foreach (var departamento in departamentos)
-        {
-            Console.WriteLine($"Descricao: {departamento.Description}");
-        }
-    }
-    static void CriarStoreProcedureDeConsulta()
-    {
-        var criaConsultaDepartamentos = @"
-            CREATE OR ALTER PROCEDURE GetDepartments
-                @Description VARCHAR(50)
-            AS 
-            BEGIN
-              SELECT * FROM Departments WHERE Description LIKE @Description + '%'
-            END
-            ";
+          var dep = new SqlParameter("@dep", "Departamento");
+          var departamentos = db.Departments
+              //.FromSqlRaw("EXECUTE GetDepartments @dep", dep)
+              .FromSqlInterpolated($"EXECUTE GetDepartments {dep}")
+              .ToList();
+          foreach (var departamento in departamentos)
+          {
+              Console.WriteLine($"Descricao: {departamento.Description}");
+          }
+      }
+      static void CriarStoreProcedureDeConsulta()
+      {
+          var criaConsultaDepartamentos = @"
+              CREATE OR ALTER PROCEDURE GetDepartments
+                  @Description VARCHAR(50)
+              AS 
+              BEGIN
+                SELECT * FROM Departments WHERE Description LIKE @Description + '%'
+              END
+              ";
 
-        using var db = new ApplicationContext();
-        db.Database.ExecuteSqlRaw(criaConsultaDepartamentos);
-    }
-    static void InserirDadosViaProcedure()
-    {
-        using var db = new ApplicationContext();
-        db.Database.ExecuteSqlRaw("EXECUTE CreateDepartment @p0, @p1", "Departamento via Procedure II", true);
-    }
-    static void CriarStoreProcedure()
-    {
-        var criarDepartamento = @"
-            CREATE OR ALTER PROCEDURE CreateDepartment
-                @Description VARCHAR(50),
-                @Active bit
-            AS 
-            BEGIN
-                INSERT INTO 
-                    Departments(Description, Active, IsDeleted) 
-                VALUES (@Description, @Active, 0);
-            END
-            ";
+          using var db = new ApplicationContext();
+          db.Database.ExecuteSqlRaw(criaConsultaDepartamentos);
+      }
+      static void InserirDadosViaProcedure()
+      {
+          using var db = new ApplicationContext();
+          db.Database.ExecuteSqlRaw("EXECUTE CreateDepartment @p0, @p1", "Departamento via Procedure II", true);
+      }
+      static void CriarStoreProcedure()
+      {
+          var criarDepartamento = @"
+              CREATE OR ALTER PROCEDURE CreateDepartment
+                  @Description VARCHAR(50),
+                  @Active bit
+              AS 
+              BEGIN
+                  INSERT INTO 
+                      Departments(Description, Active, IsDeleted) 
+                  VALUES (@Description, @Active, 0);
+              END
+              ";
 
-        using var db = new ApplicationContext();
-        db.Database.ExecuteSqlRaw(criarDepartamento);
-    }
+          using var db = new ApplicationContext();
+          db.Database.ExecuteSqlRaw(criarDepartamento);
+      }
+      static void DivisaoDeConsulta()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-    static void DivisaoDeConsulta()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          var departaments = db.Departments
+              .Include(e => e.EmployeeList)
+              .Where(p => p.Id < 3)
+              //.AsSplitQuery() //splitQuery Local
+              //.AsSingleQuery() //desativa splitQueyGlobal
+              .ToList();
 
-        var departaments = db.Departments
-            .Include(e => e.EmployeeList)
-            .Where(p => p.Id < 3)
-            //.AsSplitQuery() //splitQuery Local
-            //.AsSingleQuery() //desativa splitQueyGlobal
-            .ToList();
+          foreach (var department in departaments)
+          {
+              Console.WriteLine($"Descrição: {department.Description}");
+              foreach (var employee in department.EmployeeList)
+              {
+                  Console.WriteLine($"\tNome: {employee.Name}");
+              }
+          }
+      }
+      static void EntendendoConsulta1NN1()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        foreach (var department in departaments)
-        {
-            Console.WriteLine($"Descrição: {department.Description}");
-            foreach (var employee in department.EmployeeList)
-            {
-                Console.WriteLine($"\tNome: {employee.Name}");
-            }
-        }
-    }
-    static void EntendendoConsulta1NN1()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          var funcionarioList = db
+             .Employees
+             .Include(e => e.Department)
+             .ToList();
 
-        var funcionarioList = db
-           .Employees
-           .Include(e => e.Department)
-           .ToList();
-
-        foreach (var employee in funcionarioList)
-        {
-            Console.WriteLine($"Descrição: {employee.Name} / Descrição Dep: {employee.Department.Description}");
-        }
+          foreach (var employee in funcionarioList)
+          {
+              Console.WriteLine($"Descrição: {employee.Name} / Descrição Dep: {employee.Department.Description}");
+          }
 
 
-        //var departamentList = db
-        //    .Departments
-        //    .Include(e => e.EmployeeList)
-        //    .ToList();
+          //var departamentList = db
+          //    .Departments
+          //    .Include(e => e.EmployeeList)
+          //    .ToList();
 
-        //foreach (var department in departamentList)
-        //{
-        //    Console.WriteLine($"Descrição: {department.Description}");
+          //foreach (var department in departamentList)
+          //{
+          //    Console.WriteLine($"Descrição: {department.Description}");
 
-        //    foreach (var employee in department.EmployeeList)
-        //    {
-        //        Console.WriteLine($"\tName: {employee.Name}");
-        //    }
-        //}
-    }
-    static void ConsultaComTag()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          //    foreach (var employee in department.EmployeeList)
+          //    {
+          //        Console.WriteLine($"\tName: {employee.Name}");
+          //    }
+          //}
+      }
+      static void ConsultaComTag()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        var departamentList = db
-            .Departments
-            .TagWith(@"Estou Enviando um comentário para o servidor!
-                       Segundo comentário!
-                       Terceiro comentário!")
-            .ToList();
+          var departamentList = db
+              .Departments
+              .TagWith(@"Estou Enviando um comentário para o servidor!
+                         Segundo comentário!
+                         Terceiro comentário!")
+              .ToList();
 
-        foreach (var department in departamentList)
-        {
-            Console.WriteLine($"Descrição: {department.Description}");
-        }
-    }
-    static void ConsultaInterpolada()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          foreach (var department in departamentList)
+          {
+              Console.WriteLine($"Descrição: {department.Description}");
+          }
+      }
+      static void ConsultaInterpolada()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        var id = 1;
-        var departamentList = db
-            .Departments
-            .FromSqlInterpolated($"SELECT * FROM Departments WHERE id >{id}")
-            .ToList();
+          var id = 1;
+          var departamentList = db
+              .Departments
+              .FromSqlInterpolated($"SELECT * FROM Departments WHERE id >{id}")
+              .ToList();
 
-        foreach (var department in departamentList)
-        {
-            Console.WriteLine($"Descrição: {department.Description}");
-        }
-    }
-    static void ConsultaParametrizada()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          foreach (var department in departamentList)
+          {
+              Console.WriteLine($"Descrição: {department.Description}");
+          }
+      }
+      static void ConsultaParametrizada()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        //passar parametros assim
-        //int id = 0;
+          //passar parametros assim
+          //int id = 0;
 
-        //OU
-        var id = new SqlParameter
-        {
-            Value = 1,
-            SqlDbType = System.Data.SqlDbType.Int
-        };
+          //OU
+          var id = new SqlParameter
+          {
+              Value = 1,
+              SqlDbType = System.Data.SqlDbType.Int
+          };
 
-        var departamentList = db
-            .Departments
-            //.FromSqlRaw("SELECT * FROM Departments WITH(NOLOCK)") //WITH(NOLOCK) traz leitura suja misturados com dados confirmados, ajuda na peformance.
-            .FromSqlRaw("SELECT * FROM Departments WHERE id >{0}", id)
-            .Where(x => !x.IsDeleted) //consulta raw, fazendo composição com o Linq
-            .ToList();
+          var departamentList = db
+              .Departments
+              //.FromSqlRaw("SELECT * FROM Departments WITH(NOLOCK)") //WITH(NOLOCK) traz leitura suja misturados com dados confirmados, ajuda na peformance.
+              .FromSqlRaw("SELECT * FROM Departments WHERE id >{0}", id)
+              .Where(x => !x.IsDeleted) //consulta raw, fazendo composição com o Linq
+              .ToList();
 
-        foreach (var department in departamentList)
-        {
-            Console.WriteLine($"Descrição: {department.Description}");
+          foreach (var department in departamentList)
+          {
+              Console.WriteLine($"Descrição: {department.Description}");
 
-        }
-    }
-    static void ConsultaProjetada()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          }
+      }
+      static void ConsultaProjetada()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        var departamentList = db
-            .Departments
-            .Where(x => x.Id > 0)
-            .Select(p => new
-            {
-                p.Description,
-                Funcionarios = p.EmployeeList.Select(n => n.Name)
-            })
-            .ToList();
+          var departamentList = db
+              .Departments
+              .Where(x => x.Id > 0)
+              .Select(p => new
+              {
+                  p.Description,
+                  Funcionarios = p.EmployeeList.Select(n => n.Name)
+              })
+              .ToList();
 
-        foreach (var department in departamentList)
-        {
-            Console.WriteLine($"Descrição: {department.Description}");
-            foreach (var funcionario in department.Funcionarios)
-            {
-                Console.WriteLine($"Nome: {funcionario}");
-            }
-        }
-    }
-    static void IgnoreFiltroGlobal()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          foreach (var department in departamentList)
+          {
+              Console.WriteLine($"Descrição: {department.Description}");
+              foreach (var funcionario in department.Funcionarios)
+              {
+                  Console.WriteLine($"Nome: {funcionario}");
+              }
+          }
+      }
+      static void IgnoreFiltroGlobal()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        var departamentList = db.Departments.IgnoreQueryFilters().Where(x => x.Id > 0).ToList();
+          var departamentList = db.Departments.IgnoreQueryFilters().Where(x => x.Id > 0).ToList();
 
-        foreach (var department in departamentList)
-        {
-            Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
-        }
-    }
-    static void FiltroGlobal()
-    {
-        using var db = new ApplicationContext();
-        Setup(db);
+          foreach (var department in departamentList)
+          {
+              Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
+          }
+      }
+      static void FiltroGlobal()
+      {
+          using var db = new ApplicationContext();
+          Setup(db);
 
-        var departamentList = db.Departments.Where(x => x.Id > 0).ToList();
+          var departamentList = db.Departments.Where(x => x.Id > 0).ToList();
 
-        foreach (var department in departamentList)
-        {
-            Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
-        }
-    }
-    static void Setup(ApplicationContext db)
-    {
-        if (db.Database.EnsureCreated())
-        {
-            db.Departments.AddRange(
-            new Department
-            {
-                Description = "Departamento 01",
-                Active = true,
-                IsDeleted = true,
+          foreach (var department in departamentList)
+          {
+              Console.WriteLine($"Descrição: {department.Description} \t Excluido: {department.IsDeleted}");
+          }
+      }
+      static void Setup(ApplicationContext db)
+      {
+          if (db.Database.EnsureCreated())
+          {
+              db.Departments.AddRange(
+              new Department
+              {
+                  Description = "Departamento 01",
+                  Active = true,
+                  IsDeleted = true,
 
-                EmployeeList = new List<Employee>
-                {
-                    new Employee
-                    {
-                        Name = "Junior Silveira",
-                        CPF = "85545569989",
-                        RG = "2100062"
-                    }
-                }
-            },
-            new Department
-            {
-                Description = "Departamento 02",
-                Active = true,
-                EmployeeList = new List<Employee>
-                {
-                    new Employee
-                    {
-                        Name = "Bruno Mesquita",
-                        CPF = "555555533333",
-                        RG = "8997778"
-                    },
-                    new Employee
-                    {
-                        Name = "João Gomes",
-                        CPF = "77777777777",
-                        RG = "445454544"
-                    }
-                }
-            });
-            db.SaveChanges();
-            db.ChangeTracker.Clear();
-        }
-    }
-
+                  EmployeeList = new List<Employee>
+                  {
+                      new Employee
+                      {
+                          Name = "Junior Silveira",
+                          CPF = "85545569989",
+                          RG = "2100062"
+                      }
+                  }
+              },
+              new Department
+              {
+                  Description = "Departamento 02",
+                  Active = true,
+                  EmployeeList = new List<Employee>
+                  {
+                      new Employee
+                      {
+                          Name = "Bruno Mesquita",
+                          CPF = "555555533333",
+                          RG = "8997778"
+                      },
+                      new Employee
+                      {
+                          Name = "João Gomes",
+                          CPF = "77777777777",
+                          RG = "445454544"
+                      }
+                  }
+              });
+              db.SaveChanges();
+              db.ChangeTracker.Clear();
+          }
+      }
+     */
     #endregion
 
     #region MODULO INFRAESTRUTURA
-    static void ExecutarEstrategiaResiliencia()
-    {
-        using var db = new ApplicationContext();
+    /*
+      static void ExecutarEstrategiaResiliencia()
+     {
+         using var db = new ApplicationContext();
 
-        var strategy = db.Database.CreateExecutionStrategy();
-        strategy.Execute(() =>
-        {
-            using var transaction = db.Database.BeginTransaction();
+         var strategy = db.Database.CreateExecutionStrategy();
+         strategy.Execute(() =>
+         {
+             using var transaction = db.Database.BeginTransaction();
 
-            db.Departments.Add(new Department { Description = "Departamento Transacao" });
-            db.SaveChanges();
+             db.Departments.Add(new Department { Description = "Departamento Transacao" });
+             db.SaveChanges();
 
-            transaction.Commit();
-        });
-    }
+             transaction.Commit();
+         });
+     }
 
-    static void TempoComandoGeral()
-    {
-        //TEMPO LIMITE DE UM COMANDO.
-        using var db = new ApplicationContext();
+     static void TempoComandoGeral()
+     {
+         //TEMPO LIMITE DE UM COMANDO.
+         using var db = new ApplicationContext();
 
-        db.Database.SetCommandTimeout(10);
-        db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
-    }
+         db.Database.SetCommandTimeout(10);
+         db.Database.ExecuteSqlRaw("WAITFOR DELAY '00:00:07'; SELECT 1");
+     }
 
-    static void HabilitandoBatchSize()
-    {
-        using var db = new ApplicationContext();
-        db.Database.EnsureDeleted();
-        db.Database.EnsureCreated();
+     static void HabilitandoBatchSize()
+     {
+         using var db = new ApplicationContext();
+         db.Database.EnsureDeleted();
+         db.Database.EnsureCreated();
 
-        for (var i = 0; i < 50; i++)
-        {
-            db.Departments.Add(new Department
-            {
-                Description = "Departamento " + i
-            });
-        }
-        db.SaveChanges();
-    }
+         for (var i = 0; i < 50; i++)
+         {
+             db.Departments.Add(new Department
+             {
+                 Description = "Departamento " + i
+             });
+         }
+         db.SaveChanges();
+     }
 
-    static void DadosSensiveis()
-    {
-        using var db = new ApplicationContext();
-        var descricao = "Departamento";
-        var departamentos = db.Departments.Where(x => x.Description == descricao).ToArray();
-    }
+     static void DadosSensiveis()
+     {
+         using var db = new ApplicationContext();
+         var descricao = "Departamento";
+         var departamentos = db.Departments.Where(x => x.Description == descricao).ToArray();
+     }
 
-    static void ConsultarDepartamentos()
-    {
-        using var db = new ApplicationContext();
+     static void ConsultarDepartamentos()
+     {
+         using var db = new ApplicationContext();
 
-        var departamentos = db.Departments.Where(x => x.Id > 0).ToArray();
-    }
+         var departamentos = db.Departments.Where(x => x.Id > 0).ToArray();
+     }
+     */
     #endregion
 
     #region MODULO MODELO DE DADOS
-
+    /*
     static void Collations()
     {
         using var db = new ApplicationContext();
@@ -881,6 +880,7 @@ static class Program
 
         var conversorDevolvido = db.Conversores.AsNoTracking().FirstOrDefault(p => p.Status == Status.Devolvido);
     }
+   
 
     static void PropriedadeDeSombra()
     {
@@ -888,7 +888,7 @@ static class Program
         db.Database.EnsureDeleted();
         db.Database.EnsureCreated();
     }
-
+     */
     static void TrabalhandoComPropriedadeDeSombra()
     {
         using var db = new ApplicationContext();
@@ -910,9 +910,9 @@ static class Program
         */
 
         //GET SHADOW PROPERTY
-        var departamentos = db.Departments.Where(p => EF.Property<DateTime>(p, "LastUpdate") < DateTime.Now).ToArray();
+        //var departamentos = db.Departments.Where(p => EF.Property<DateTime>(p, "LastUpdate") < DateTime.Now).ToArray();
     }
-
+    /*
     static void TiposDePropriedades() //Owner Types
     {
         using var db = new ApplicationContext();
@@ -1121,11 +1121,11 @@ static class Program
             }
         }
     }
-
+    */
     #endregion
 
     #region Modulo MODULO DATAANNOTATIONS
-
+    /*
     static void Atributos()
     {
         using (var db = new ApplicationContext())
@@ -1144,6 +1144,7 @@ static class Program
             db.SaveChanges();
         }
     }
+    */
     #endregion
 
     #region MODULO EF FUNCTION
@@ -1280,7 +1281,6 @@ static class Program
             Console.WriteLine($"Consulta2: {consulta2?.Description1}");
         }
     }
-
     #endregion
 
     #region MODULO INTERCEPTAÇÃO
@@ -1296,7 +1296,6 @@ static class Program
             Console.WriteLine($"Consultas: {consulta?.Description1}");
         }
     }
-
     static void TesteInterceptacaoSaveChanges()
     {
         using (var db = new ApplicationContext())
@@ -1507,6 +1506,21 @@ static class Program
                 });
 
             db.SaveChanges();
+        }
+    }
+    #endregion
+
+    #region MODULO UDFs
+    static void FuncaoLEFT()
+    {
+        CadastrarLivro();
+
+        using var db = new ApplicationContext();
+
+        var resultado = db.Books.Select(p => ApplicationContext.Left(p.Titulo, 10));
+        foreach (var parteTitulo in resultado)
+        {
+            Console.WriteLine(parteTitulo);
         }
     }
     #endregion

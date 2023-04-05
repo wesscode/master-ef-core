@@ -145,3 +145,12 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Classe que possui sua própria instrutura para gerenciar as transações automaticamente, sendo assim o transactionScope, diminui a complexidade do código. 
 - Ferramentas:
   * SQL Profile: Ferramenta para monitorar todos os comandos que estão sendo enviados para sua base de dados.
+
+## Módulo UDF'S
+  * Função Definida pelo o usuário.
+- Built-In Function
+  * Função incorporada no banco de dados.
+- Registrando Funções via Data Annotations
+- Registrando funções via Fluent API
+- Função definida pelo o usuário
+- Customizando uma função  

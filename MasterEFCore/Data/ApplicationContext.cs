@@ -13,24 +13,24 @@ namespace MasterEFCore.Data
     public class ApplicationContext : DbContext
     {
         #region MODULO INICIAL ATÉ DATAANOTATIONS
-        
+
         //private readonly StreamWriter _writer = new StreamWriter(@"C:\Users\wesll\source\desenvolvedor-io\master-ef-core\MasterEFCore\meu_log_do_ef_core.txt", append: true);
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<Estate> Estates { get; set; }
-        public DbSet<Conversor> Conversores { get; set; }
-        public DbSet<Client> Clients { get; set; }
-        public DbSet<Actor> Actors { get; set; }
-        public DbSet<Movie> Movies { get; set; }
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Person> Persons { get; set; }
-        public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Dictionary<string, object>> Configuracoes => Set<Dictionary<string, object>>("Configuracoes");
-        public DbSet<Atributo> Atributos { get; set; }
-        public DbSet<Aeroporto> Aeroportos { get; set; }
-        public DbSet<Voo> Voos { get; set; }
-       
+        //public DbSet<Department> Departments { get; set; }
+        //public DbSet<Employee> Employees { get; set; }
+        //public DbSet<Estate> Estates { get; set; }
+        //public DbSet<Conversor> Conversores { get; set; }
+        //public DbSet<Client> Clients { get; set; }
+        //public DbSet<Actor> Actors { get; set; }
+        //public DbSet<Movie> Movies { get; set; }
+        //public DbSet<Document> Documents { get; set; }
+        //public DbSet<Person> Persons { get; set; }
+        //public DbSet<Instructor> Instructors { get; set; }
+        //public DbSet<Student> Students { get; set; }
+        //public DbSet<Dictionary<string, object>> Configuracoes => Set<Dictionary<string, object>>("Configuracoes");
+        //public DbSet<Atributo> Atributos { get; set; }
+        //public DbSet<Aeroporto> Aeroportos { get; set; }
+        //public DbSet<Voo> Voos { get; set; }
+
         #endregion
 
         public DbSet<Funcao> Funcoes { get; set; }
@@ -45,13 +45,22 @@ namespace MasterEFCore.Data
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
-
             /*
              * Modulo Interceptações
             .AddInterceptors(new InterceptadorDeComandos()) //Registrando o intercept o pipeline do entity.    
             .AddInterceptors(new InterceptadorDeConexao())
             .AddInterceptors(new InterceptadorPersistencia());*/
         }
+
+        #region MODULO UDFs
+
+        [DbFunction(name: "LEFT", IsBuiltIn = true)]
+        public static string Left(string dados, int quantidade)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -139,7 +148,8 @@ namespace MasterEFCore.Data
 
             /*MANEIRAS DE CHAMAR CONFIGURAÇÕES DA ENTIDADE EM OUTRO ARQUIVO */
             //modelBuilder.ApplyConfiguration(new ClientConfiguration()); //chamando arquivo separado um a um. Para cada config gerar uma linha dessa.
-            
+
+            /*
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); //chamando todas as configuration que foram implementadas no assembly. forma 1
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationContext).Assembly); //chamando todas as configuration que fora implementadas no assembly. forma 2
 
@@ -163,6 +173,8 @@ namespace MasterEFCore.Data
                 .HasColumnType("VARCHAR(100)")
                 .HasDefaultValueSql("'Teste'");
             });
+
+            */
             #endregion
         }
 
