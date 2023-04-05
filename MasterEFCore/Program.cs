@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Transactions;
 
 static class Program
 {
@@ -119,7 +120,8 @@ static class Program
         //ComportamentoPadrao();
         //GerenciandoTransacaoManualmente();
         //ReverterTransacao();
-        SalvarPontoTransacao();
+        //SalvarPontoTransacao();
+        TransactionScope();
         #endregion
 
     }
@@ -1313,6 +1315,60 @@ static class Program
     #endregion
 
     #region MODULO TRANSAÇÕES
+    static void TransactionScope()
+    {
+        CadastrarLivro();
+        
+        //definindo nv de isolamento.
+        var transactionOptions = new TransactionOptions
+        {
+            IsolationLevel= IsolationLevel.ReadCommitted,
+        };
+
+        using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions))
+        {
+            ConsultarAtualizar();
+            CadastrarLivroEnterprise();
+            CadastrarLivroEnterprise();
+
+            scope.Complete();
+        }
+    }
+    static void ConsultarAtualizar()
+    {
+        using (var db = new ApplicationContext())
+        {
+            var livro = db.Books.FirstOrDefault(p => p.Id == 1);
+            livro.Autor = "Rafael Almeida";
+            db.SaveChanges();
+        }
+    }
+    static void CadastrarLivroEnterprise()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Books.Add(
+                new Book
+                {
+                    Titulo = "ASP.NET Core Enterprise Applications.",
+                    Autor = "Eduardo Pires"
+                });
+            db.SaveChanges();
+        }
+    }
+    static void CadastrarLivroDominandoEFCore()
+    {
+        using (var db = new ApplicationContext())
+        {
+            db.Books.Add(
+                new Book
+                {
+                    Titulo = "Dominando Entity Framework Core",
+                    Autor = "Rafael Almeida"
+                });
+            db.SaveChanges();
+        }
+    }
     static void SalvarPontoTransacao()
     {
         CadastrarLivro();
@@ -1389,7 +1445,6 @@ static class Program
             }
         }
     }
-
     static void GerenciandoTransacaoManualmente()
     {
         CadastrarLivro();
@@ -1418,7 +1473,6 @@ static class Program
             transacao.Commit();
         }
     }
-
     static void ComportamentoPadrao()
     {
         CadastrarLivro();
@@ -1438,7 +1492,6 @@ static class Program
             db.SaveChanges();
         }
     }
-
     static void CadastrarLivro()
     {
         using (var db = new ApplicationContext())
@@ -1446,7 +1499,7 @@ static class Program
             db.Database.EnsureDeleted();
             db.Database.EnsureCreated();
 
-            db.Books .Add(
+            db.Books.Add(
                 new Book
                 {
                     Titulo = "Introdução ao entity framework core",

@@ -142,5 +142,6 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Revertendo uma transação
 - Salvando ponto de uma transação
 - Usando TransactionScope
+  * Classe que possui sua própria instrutura para gerenciar as transações automaticamente, sendo assim o transactionScope, diminui a complexidade do código. 
 - Ferramentas:
   * SQL Profile: Ferramenta para monitorar todos os comandos que estão sendo enviados para sua base de dados.
