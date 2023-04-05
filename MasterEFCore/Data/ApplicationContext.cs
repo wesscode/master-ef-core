@@ -1,6 +1,7 @@
 ﻿using MasterEFCore.Configurations;
 using MasterEFCore.Conversores;
 using MasterEFCore.Domain;
+using MasterEFCore.Funcoes;
 using MasterEFCore.Interceptadores;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -53,18 +54,23 @@ namespace MasterEFCore.Data
         }
 
         #region MODULO UDFs
-
-        [DbFunction(name: "LEFT", IsBuiltIn = true)]
-        public static string Left(string dados, int quantidade)
-        {
-            throw new NotImplementedException();
-        }
-
+        /*
+         * quando o método está dentro do meu contexto(aplicationContexto) não é necessário implementar o metodo. Porém se a mesma implementação for criada em uma classe externa é obrigatório implementar o método. 
+            [DbFunction(name: "LEFT", IsBuiltIn = true)]
+            public static string Left(string dados, int quantidade)
+            {
+                throw new NotImplementedException();
+            }
+         */
         #endregion
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region MODULO UDFs
+            MinhasFuncoes.RegistrarFuncoes(modelBuilder);
+            #endregion
+
             #region MODULO MODELO DE DADOS ATÉ EF FUNCTIONS
             /*
               *COLLATIONS* 

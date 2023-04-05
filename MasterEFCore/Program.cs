@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MasterEFCore.Data;
 using MasterEFCore.Domain;
+using MasterEFCore.Funcoes;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -1517,7 +1518,8 @@ static class Program
 
         using var db = new ApplicationContext();
 
-        var resultado = db.Books.Select(p => ApplicationContext.Left(p.Titulo, 10));
+        //var resultado = db.Books.Select(p => ApplicationContext.Left(p.Titulo, 10));
+        var resultado = db.Books.Select(p => MinhasFuncoes.Left(p.Titulo, 10));
         foreach (var parteTitulo in resultado)
         {
             Console.WriteLine(parteTitulo);
