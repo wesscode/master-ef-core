@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 using System.Reflection;
 
 namespace MasterEFCore.Data
@@ -68,7 +69,15 @@ namespace MasterEFCore.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region MODULO UDFs
-            MinhasFuncoes.RegistrarFuncoes(modelBuilder);
+            //Registrando metodo de função  via DataAnnotations
+            //MinhasFuncoes.RegistrarFuncoes(modelBuilder);
+
+            //Registrando metodo de função via fluent api
+            modelBuilder
+                .HasDbFunction(_minhaFuncao)
+                .HasName("LEFT") //nome de tradução no banco
+                .IsBuiltIn(); //methodo incorporado, nativo do próprio banco de dados.
+
             #endregion
 
             #region MODULO MODELO DE DADOS ATÉ EF FUNCTIONS
@@ -183,6 +192,12 @@ namespace MasterEFCore.Data
             */
             #endregion
         }
+
+        #region MODULO UDFs
+        //methodInfo fazendo o discover da funcao
+        private static MethodInfo _minhaFuncao = typeof(MinhasFuncoes)
+            .GetRuntimeMethod("Left", new[] { typeof(string), typeof(int)});
+        #endregion
 
         #region MODULO INICIAL ATE PROCEDURES
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
