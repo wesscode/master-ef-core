@@ -126,7 +126,8 @@ static class Program
         #endregion
 
         #region MODULO UDFs
-        FuncaoLEFT();
+        //FuncaoLEFT();
+        FuncaoDefinidaPeloUsuario();
         #endregion
 
     }
@@ -1512,6 +1513,25 @@ static class Program
     #endregion
 
     #region MODULO UDFs
+    static void FuncaoDefinidaPeloUsuario()
+    {
+        CadastrarLivro();
+
+        using var db = new ApplicationContext();
+
+        db.Database.ExecuteSqlRaw(@"
+            CREATE FUNCTION ConverterParaLetrasMaiusculas(@dados VARCHAR(100))
+            RETURNS VARCHAR(100)
+                BEGIN
+                    RETURN UPPER(@dados)
+                END");
+
+        var resultado = db.Books.Select(p => MinhasFuncoes.LetrasMaiusculas(p.Titulo));
+        foreach (var parteTitulo in resultado)
+        {
+            Console.WriteLine(parteTitulo);
+        }
+    }
     static void FuncaoLEFT()
     {
         CadastrarLivro();

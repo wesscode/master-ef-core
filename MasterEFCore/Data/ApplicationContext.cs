@@ -78,6 +78,11 @@ namespace MasterEFCore.Data
                 .HasName("LEFT") //nome de tradução no banco
                 .IsBuiltIn(); //methodo incorporado, nativo do próprio banco de dados.
 
+            modelBuilder
+                .HasDbFunction(_letrasMaiusculas)
+                .HasName("ConverterParaLetrasMaiusculas")
+                .HasSchema("dbo"); 
+
             #endregion
 
             #region MODULO MODELO DE DADOS ATÉ EF FUNCTIONS
@@ -194,9 +199,14 @@ namespace MasterEFCore.Data
         }
 
         #region MODULO UDFs
+
         //methodInfo fazendo o discover da funcao
         private static MethodInfo _minhaFuncao = typeof(MinhasFuncoes)
             .GetRuntimeMethod("Left", new[] { typeof(string), typeof(int)});
+
+        private static MethodInfo _letrasMaiusculas = typeof(MinhasFuncoes)
+            .GetRuntimeMethod(nameof(MinhasFuncoes.LetrasMaiusculas), new[] { typeof(string) });
+
         #endregion
 
         #region MODULO INICIAL ATE PROCEDURES
