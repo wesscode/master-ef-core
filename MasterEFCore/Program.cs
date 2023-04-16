@@ -134,7 +134,9 @@ static class Program
         //ConsultaNaoRastreada();
         //ConsultaComResolucaoDeIdentidade();
         //ConsultaCustomizada();
-        ConsultaProjetadaERastreada();
+        //ConsultaProjetadaERastreada();
+        //Inserir_200_Departamentos_Com_1MB();
+        ConsultaProjetada();
         #endregion
 
     }
@@ -1617,14 +1619,15 @@ static class Program
         db.SaveChanges();
     }
 
-    static void ConsultaProjetada()
+    static void ConsultaProjetada() //executar primeiro Inserir_200_Departamentos_Com_1MB() para inserir a imagem.
     {
         using var db = new ApplicationContext();
 
-        //var departamentos = db.Departamentos.ToArray();
-        var departamentos = db.Departamentos.Select(p => p.Description).ToArray();
+        //var departamentos = db.Departamentos.ToArray(); //NÃO PROJETADA 333MB 
+        var departamentos = db.Departamentos.Select(p => p.Description).ToArray(); //PROJETADA 73MB
 
-        var memoria = (System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024) + " MB";
+        
+        var memoria = (System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024) + " MB"; //para saber o quanto de memória essa consulta está consumido, buscado o processo atual.
 
         Console.WriteLine(memoria);
     }
@@ -1648,6 +1651,31 @@ static class Program
         });
 
         db.SaveChanges();
+    }
+    static void Inserir_200_Departamentos_Com_1MB()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        var random = new Random();
+
+        db.Departamentos.AddRange(Enumerable.Range(1, 200).Select(p =>
+            new Department
+            {
+                Description = "Departamento Teste",
+                Image = getBytes()
+            }));
+
+        db.SaveChanges();
+
+        byte[] getBytes()
+        {
+            var buffer = new byte[1024 * 1024];
+            random.NextBytes(buffer);
+
+            return buffer;
+        }
     }
     #endregion
 }

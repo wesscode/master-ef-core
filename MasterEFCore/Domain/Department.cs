@@ -14,6 +14,8 @@ namespace MasterEFCore.Domain
         public bool Active { get; set; }
         public bool IsDeleted { get; set; }
 
+        public byte[] Image { get; set; } //attr módulo performance
+
         public List<Employee> EmployeeList { get; set; }
 
         public Department()
