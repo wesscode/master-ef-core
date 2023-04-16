@@ -128,7 +128,7 @@ static class Program
         // FuncaoDefinidaPeloUsuario();
         #endregion
 
-        #region MODULO PEFORMANCE
+        #region MODULO PERFORMANCE
         //Setup();
         //ConsultaRastreada();
         //ConsultaNaoRastreada();
@@ -1562,7 +1562,7 @@ static class Program
     */
     #endregion
 
-    #region MODULO PEFORMANCE
+    #region MODULO PERFORMANCE
     static void ConsultaRastreada()
     {
         using var db = new ApplicationContext();

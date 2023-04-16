@@ -38,7 +38,7 @@ namespace MasterEFCore.Data
         //public DbSet<Book> Books { get; set; }
         #endregion
 
-        #region MODULO PEFORMANCE
+        #region MODULO PERFORMANCE
         public DbSet<Department> Departamentos { get; set; }
         public DbSet<Employee> Funcionarios { get; set; }
         #endregion
