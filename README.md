@@ -162,4 +162,8 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - AsNoTrackingWithIdentityResolution  
   * Consulta não traqueada com resolução, indicada para gerenciar memória evitando explosão cartesiaa quando fazer uma consultas não traqueadas onde a informação de uma tabela se repete nos demais.
   * Exemplo consulta de N => 1
+- Configurando Tracking de forma global
+  * UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution) no OnModelCreating
+- Configurando Tracking no método enquanto o a instância do contexto for válida.
+  * db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
 ## Módulo Migrations

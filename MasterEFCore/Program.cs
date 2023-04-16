@@ -132,7 +132,8 @@ static class Program
         //Setup();
         //ConsultaRastreada();
         //ConsultaNaoRastreada();
-        ConsultaComResolucaoDeIdentidade();
+        //ConsultaComResolucaoDeIdentidade();
+        ConsultaCustomizada();
         #endregion
 
     }
@@ -1588,7 +1589,7 @@ static class Program
     {
         using var db = new ApplicationContext();
 
-        db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+        db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll; //Configurando Tracking no método enquanto o a instância do contexto for válida.
 
         var funcionarios = db.Funcionarios
             //.AsNoTrackingWithIdentityResolution()

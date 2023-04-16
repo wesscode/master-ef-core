@@ -49,6 +49,7 @@ namespace MasterEFCore.Data
 
             optionsBuilder
                 .UseSqlServer(strConnection)
+                .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution) //configurado tracking de forma global
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
 
