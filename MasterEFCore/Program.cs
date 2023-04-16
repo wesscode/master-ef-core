@@ -133,7 +133,8 @@ static class Program
         //ConsultaRastreada();
         //ConsultaNaoRastreada();
         //ConsultaComResolucaoDeIdentidade();
-        ConsultaCustomizada();
+        //ConsultaCustomizada();
+        ConsultaProjetadaERastreada();
         #endregion
 
     }
@@ -1595,6 +1596,37 @@ static class Program
             //.AsNoTrackingWithIdentityResolution()
             .Include(p => p.Department)
             .ToList();
+    }
+
+    static void ConsultaProjetadaERastreada()
+    {
+        using var db = new ApplicationContext();
+
+        var departamentos = db.Departamentos
+            .Include(p => p.EmployeeList)
+            .Select(p => new
+            {
+                //alias
+                Departamento = p,
+                TotalFuncionarios = p.EmployeeList.Count()
+            })
+            .ToList();
+
+        departamentos[0].Departamento.Description = "Departamento Teste Atualizado";
+
+        db.SaveChanges();
+    }
+
+    static void ConsultaProjetada()
+    {
+        using var db = new ApplicationContext();
+
+        //var departamentos = db.Departamentos.ToArray();
+        var departamentos = db.Departamentos.Select(p => p.Description).ToArray();
+
+        var memoria = (System.Diagnostics.Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024) + " MB";
+
+        Console.WriteLine(memoria);
     }
 
     static void Setup()
