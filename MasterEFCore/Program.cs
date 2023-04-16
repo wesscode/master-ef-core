@@ -125,12 +125,14 @@ static class Program
 
         #region MODULO UDFs
         //FuncaoLEFT();
-       // FuncaoDefinidaPeloUsuario();
+        // FuncaoDefinidaPeloUsuario();
         #endregion
 
         #region MODULO PEFORMANCE
         //Setup();
-        ConsultaRastreada();
+        //ConsultaRastreada();
+        //ConsultaNaoRastreada();
+        ConsultaComResolucaoDeIdentidade();
         #endregion
 
     }
@@ -1564,6 +1566,34 @@ static class Program
         using var db = new ApplicationContext();
 
         var funcionarios = db.Funcionarios.Include(p => p.Department).ToList();
+    }
+    static void ConsultaNaoRastreada()
+    {
+        using var db = new ApplicationContext();
+
+        var funcionarios = db.Funcionarios.AsNoTracking().Include(p => p.Department).ToList();
+    }
+
+    static void ConsultaComResolucaoDeIdentidade()
+    {
+        using var db = new ApplicationContext();
+
+        var funcionarios = db.Funcionarios
+            .AsNoTrackingWithIdentityResolution()
+            .Include(p => p.Department)
+            .ToList();
+    }
+
+    static void ConsultaCustomizada()
+    {
+        using var db = new ApplicationContext();
+
+        db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
+
+        var funcionarios = db.Funcionarios
+            //.AsNoTrackingWithIdentityResolution()
+            .Include(p => p.Department)
+            .ToList();
     }
 
     static void Setup()

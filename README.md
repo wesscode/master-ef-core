@@ -155,8 +155,11 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Função definida pelo o usuário
 - Customizando uma função  
 ## Módulo Peformance
-- Tracking e AsNoTracking
-  * Consulta traqueada o entity gerar uma instancia local da entidade.
-  * Consulta não traqueada o entity não gera instacia, so retorna e o ciclo de vida se encerra.
-  * 
+- Tracking 
+  * Consulta traqueada o entity gerar uma instâcia local da entidade em cache e reutiliza quando pra evitar idas ao banco de informações que você já trouxe.
+- AsNoTracking
+  * Consulta não traqueada o entity não gera instâcia, so retorna e o ciclo de vida se encerra. Indicada para consultas de leituras.
+- AsNoTrackingWithIdentityResolution  
+  * Consulta não traqueada com resolução, indicada para gerenciar memória evitando explosão cartesiaa quando fazer uma consultas não traqueadas onde a informação de uma tabela se repete nos demais.
+  * Exemplo consulta de N => 1
 ## Módulo Migrations
