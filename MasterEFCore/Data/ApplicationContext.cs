@@ -15,7 +15,6 @@ namespace MasterEFCore.Data
     public class ApplicationContext : DbContext
     {
         #region MODULO INICIAL ATÉ DATAANOTATIONS
-
         //private readonly StreamWriter _writer = new StreamWriter(@"C:\Users\wesll\source\desenvolvedor-io\master-ef-core\MasterEFCore\meu_log_do_ef_core.txt", append: true);
         //public DbSet<Department> Departments { get; set; }
         //public DbSet<Employee> Employees { get; set; }
@@ -32,11 +31,17 @@ namespace MasterEFCore.Data
         //public DbSet<Atributo> Atributos { get; set; }
         //public DbSet<Aeroporto> Aeroportos { get; set; }
         //public DbSet<Voo> Voos { get; set; }
-
         #endregion
 
-        public DbSet<Funcao> Funcoes { get; set; }
-        public DbSet<Book> Books { get; set; }
+        #region MODULO EF FUNCTION ATÉ UDFs
+        //public DbSet<Funcao> Funcoes { get; set; }
+        //public DbSet<Book> Books { get; set; }
+        #endregion
+
+        #region MODULO PEFORMANCE
+        public DbSet<Department> Departamentos { get; set; }
+        public DbSet<Employee> Funcionarios { get; set; }
+        #endregion
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -81,7 +86,7 @@ namespace MasterEFCore.Data
             modelBuilder
                 .HasDbFunction(_letrasMaiusculas)
                 .HasName("ConverterParaLetrasMaiusculas")
-                .HasSchema("dbo"); 
+                .HasSchema("dbo");
 
             #endregion
 
@@ -202,7 +207,7 @@ namespace MasterEFCore.Data
 
         //methodInfo fazendo o discover da funcao
         private static MethodInfo _minhaFuncao = typeof(MinhasFuncoes)
-            .GetRuntimeMethod("Left", new[] { typeof(string), typeof(int)});
+            .GetRuntimeMethod("Left", new[] { typeof(string), typeof(int) });
 
         private static MethodInfo _letrasMaiusculas = typeof(MinhasFuncoes)
             .GetRuntimeMethod(nameof(MinhasFuncoes.LetrasMaiusculas), new[] { typeof(string) });

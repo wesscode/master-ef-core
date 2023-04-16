@@ -154,3 +154,9 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Registrando funções via Fluent API
 - Função definida pelo o usuário
 - Customizando uma função  
+## Módulo Peformance
+- Tracking e AsNoTracking
+  * Consulta traqueada o entity gerar uma instancia local da entidade.
+  * Consulta não traqueada o entity não gera instacia, so retorna e o ciclo de vida se encerra.
+  * 
+## Módulo Migrations

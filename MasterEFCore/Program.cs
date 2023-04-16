@@ -99,9 +99,7 @@ static class Program
         #endregion
 
         #region MODULO DATAANNOTATIONS
-
         //Atributos();
-
         #endregion
 
         #region MODULO EF FUNCTION
@@ -122,12 +120,17 @@ static class Program
         //GerenciandoTransacaoManualmente();
         //ReverterTransacao();
         //SalvarPontoTransacao();
-        TransactionScope();
+        //TransactionScope();
         #endregion
 
         #region MODULO UDFs
         //FuncaoLEFT();
-        FuncaoDefinidaPeloUsuario();
+       // FuncaoDefinidaPeloUsuario();
+        #endregion
+
+        #region MODULO PEFORMANCE
+        //Setup();
+        ConsultaRastreada();
         #endregion
 
     }
@@ -1150,6 +1153,7 @@ static class Program
     #endregion
 
     #region MODULO EF FUNCTION
+    /*
     static void ApagarCriarBancoDeDados()
     {
         using var db = new ApplicationContext();
@@ -1283,9 +1287,11 @@ static class Program
             Console.WriteLine($"Consulta2: {consulta2?.Description1}");
         }
     }
+    */
     #endregion
 
     #region MODULO INTERCEPTAÇÃO
+    /*
     static void TesteInterceptacao()
     {
         using (var db = new ApplicationContext())
@@ -1313,17 +1319,19 @@ static class Program
             db.SaveChanges();
         }
     }
+    */
     #endregion
 
     #region MODULO TRANSAÇÕES
+    /*
     static void TransactionScope()
     {
         CadastrarLivro();
-        
+
         //definindo nv de isolamento.
         var transactionOptions = new TransactionOptions
         {
-            IsolationLevel= IsolationLevel.ReadCommitted,
+            IsolationLevel = IsolationLevel.ReadCommitted,
         };
 
         using (var scope = new TransactionScope(TransactionScopeOption.Required, transactionOptions))
@@ -1510,9 +1518,11 @@ static class Program
             db.SaveChanges();
         }
     }
+    */
     #endregion
 
     #region MODULO UDFs
+    /*
     static void FuncaoDefinidaPeloUsuario()
     {
         CadastrarLivro();
@@ -1544,6 +1554,37 @@ static class Program
         {
             Console.WriteLine(parteTitulo);
         }
+    }
+    */
+    #endregion
+
+    #region MODULO PEFORMANCE
+    static void ConsultaRastreada()
+    {
+        using var db = new ApplicationContext();
+
+        var funcionarios = db.Funcionarios.Include(p => p.Department).ToList();
+    }
+
+    static void Setup()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        db.Departamentos.Add(new Department
+        {
+            Description = "Departamento Teste",
+            Active = true,
+            EmployeeList = Enumerable.Range(1, 100).Select(p => new Employee
+            {
+                CPF = p.ToString().PadLeft(11, '0'),
+                Name = $"Funcionando {p}",
+                RG = p.ToString()
+            }).ToList()
+        });
+
+        db.SaveChanges();
     }
     #endregion
 }
