@@ -164,6 +164,44 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Exemplo consulta de N => 1
 - Configurando Tracking de forma global
   * UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution) no OnModelCreating
-- Configurando Tracking no método enquanto o a instância do contexto for válida.
+- Configurando Tracking no método enquanto o instância do contexto for válida.
   * db.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
 ## Módulo Migrations
+- Microsoft.EntityFrameworkCore.Design
+  * Possui um conjunto de metódos responsaveis e capaz de criar arquivos de migrações e gerar scripts que serão executados no banco de dados.
+- Microsoft.EntityFrameworkCore.Tools
+  * Possui um super set de comandos powershell para executar e aplicar as migrações no banco de dados.
+- Global Tool EntityFrameworkCore 
+  * Instalar o EF CLI de forma global para aplicar as migrações via prompt de comando.
+  * dotnet tool install --global dotnet-ef --version 5.0.3
+- ARQUIVOS DE MIGRAÇÃO
+- PrimeiraMigracao.cs
+  * Arquivo contém todas as ações que acontecerão no banco de dados.
+  * Metódo UP: mudanças que estão acontecendo. Podendo customizar e colocar consultas etc.
+  * Metódo DOWN: Reverte o up
+- PrimeiraMigracao.Design.cs
+  * Possui todas as configurações e metadados, cópia do modelo de dados no momento da geração da migração com as alterações recente no modelo de dados.
+- ApplicationContextSnapshot.cs
+  * Foto do estado atual do modelo de dados, atualizado a cada migração criada. Permite o efcore identifique as mudanças necessárias.
+- Gerando Script de migração
+  * dotnet ef migrations script -p CaminhoProjeto -o CaminhoOndeDesejaCriarScript
+  * obs: verificar se gera sempre a ultima migração criada, ou de todas as migrações.
+- Gerando scripts de migração Idempotentes
+  * Evitar problemas de concorrência aplicando validações de existencia no script gerado.
+  * dotnet ef migrations script -p CaminhoProjeto -o CaminhoDesejaCriarScriptIdem potente.SQL -i
+- Aplicando Migrações no banco de dados
+  * 1° e mais segura: pegando o script sql, entregando a um dba para que o mesmo possa aplicar no banco.
+  * 2° aplicando via prompt de comando: dotnet ef database update -p CaminhoProjeto -v
+  * 3° em tempo de execução instanciando o contexto da aplicação e executando o comando db.Database.Migrate();
+- Desfazendo migrações
+  * dotnet ef migrations update NomeDaMigracaoAteOndeQuerReverter
+  * Se passar nome de uma migração após o comando UPDATE logo o entity entenderá e dará rollback/reverter as migrações aplicadas no banco até a migração informada.
+  * Migrações desfeitas os arquivos físicos ficam como PENDENTES, logo pode se removidas através do comando: dotnet ef migrations remove.
+- Verificando Migrações Pendentes
+  * 1° via prompt de comando: dotnet ef migrations list
+  * 2° em tempo de execução instanciando o contexto da aplicação e executando o comando db.Database.GetPendingMigrations();
+- Engenharia Reversa/Scafollding
+  * Processo utilizado para criar um modelo de dados no EFCore, com base em um banco de dados já EXISTENTE.
+  * Banco precisa está bem modelado.
+  * Começa lendo os schemas, ler as informações das tabelas existentes, colunas, restrições e por fim os indices.
+  * Com base nas informações coletadas o EFCore cria suas classes com suas relações e o CONTEXTO.
