@@ -205,3 +205,18 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Banco precisa está bem modelado.
   * Começa lendo os schemas, ler as informações das tabelas existentes, colunas, restrições e por fim os indices.
   * Com base nas informações coletadas o EFCore cria suas classes com suas relações e o CONTEXTO.
+  * COMANDO: 
+    dotnet ef dbcontext scafolld "StringDeConexao" Microsoft.EntityFrameworkCore.SqlServer
+    --table Pessoas --use-database-names --data-annotations --context-dir .\PastaOndeQueroPorOContexto
+    --output-dir .\LocalOndeQueroQueGereMinhasEntidades --namespace Meu.NameSpace
+    --context-namespace Meu.NameSpace.Contexto
+
+  
+  * Entendo prefixos do comando:
+  * --table TabelaX: Especificando qual tabela vc quer gerar no scafolld, se tiver mais uma tabela o comando deve ser repetido para cada tabela.
+  * --use-database-names: Força o EFCore preservar o nome de tabelas, colunas, indices o max possível na hora do scafolld.
+  * --data-annotations: Especificando para que o efcore utilize o max possivel com dataAnnotations na modelagem das classes.
+  * --context-dir: Especifica o diretório que o contexto deve ser criado.
+  * --output-dir: Especifica o diretório onde deve ser criado o modelo de dados(entidades).
+  * --namespace: Especifica o namespace para as ENTIDADES.
+  * --context-namespace: Especifica o namespace para o CONTEXTO.
