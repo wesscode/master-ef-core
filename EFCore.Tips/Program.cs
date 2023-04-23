@@ -11,8 +11,22 @@ static class Program
         //ToQueryString();
         //DebugView();
         //Clear();
-        ConsultaFiltrada();
+        //ConsultaFiltrada();
+        SingleOrDefaultVsFirstOrDefault();
     }
+    static void SingleOrDefaultVsFirstOrDefault()
+    {
+        using var db = new ApplicationContext();
+
+        Console.WriteLine("SingleOrDefault:");
+
+        _ = db.Departamentos.SingleOrDefault(p => p.Id > 2);
+
+        Console.WriteLine("FirstOrDefault:");
+
+        _ = db.Departamentos.FirstOrDefault(p => p.Id > 2);
+    }
+
     static void ConsultaFiltrada()
     {
         using var db = new ApplicationContext();

@@ -234,4 +234,10 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Limpar objetos que estão sendo rastreado pelo o contexto sem precisar instanciar um novo contexto.
 - Include com consulta filtrada.
   * Aplicar filtros nas propriedades de navegação.
+- SingleOrDefault vs FirstOrDefault
+  * SingleOrDefault: Retorna um único elemento de uma sequência ou um valor padrão se esse elemento não for encontrado. Ocorrerá exceção quando existir mais de um elemento no resultado da consulta.
+  * Sendo utilizado mais em regras de negócio.
+
+  * FirstOrDefault: Retorna o primeiro elemento de uma sequência ou um valor padrão se nenhum elemento for encontrado.
+  * Sendo utilizado em consultas simples.
 

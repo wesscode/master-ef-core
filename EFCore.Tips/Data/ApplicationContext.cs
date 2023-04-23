@@ -1,5 +1,6 @@
 ﻿using EFCore.Tips.Domain;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace EFCore.Tips.Data
         {
             optionsBuilder
                 .UseSqlServer("Data Source=(localdb)\\mssqllocaldb; Database=tips; Integrated Security=true")
+                .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
     }
