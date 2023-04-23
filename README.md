@@ -1,5 +1,5 @@
-# master-ef-core
-demo master EntityFrameworkCore6.
+# Master EF Core
+demo master Entity Framework Core.
 
 Microsoft.EntityFrameworkCore.SqlServer => habilita uso do sqlserver com o entity na minha aplicação.
 Microsoft.EntityFramewoekCore.Tools => (superset)habilita fazer os comandos de migrações, bagagem de comandos.
@@ -104,7 +104,7 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Consultar dados de uma tabela que não possui chave ou seja tabelas de projeções ou views. ex consulta de relatório etc.  
   * Não rastreadas pelo o entity, então não pode adicionar dados.
 
-  ## Módulo EF Functions:
+## Módulo EF Functions:
   * As EF functions so pode ser utilizado somente em consultas onde o entity vai traduzir para suas consultas.
 - Função de datas
   * DateDiffDay, DateFromParts, IsDate, DateDiffMonth etc..
@@ -116,7 +116,7 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Collate
   * Difereciar maiúsculas de minúsculas em uma consulta.
 
- ## Módulo Interceptação: 
+## Módulo Interceptação: 
 - IDbCommandInterceptor
   * Implementa métodos no momento em que o comando está sendo criado ou sendo executado o comando no banco de dados.
 - IDbConnectionInterceptor
@@ -130,7 +130,7 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Interceptando alterações
   * Remover, alterar, inserir
 
- ## Módulo Transações
+## Módulo Transações
   * Sigla(ACID): Atomicidade, Consistencia, Isolação, Durabilidade.
   * A: faz tudo ou não faz nada(bem resumido)
   * C: Garantir que o banco esteja consistente antes e depois da transação
@@ -220,3 +220,6 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * --output-dir: Especifica o diretório onde deve ser criado o modelo de dados(entidades).
   * --namespace: Especifica o namespace para as ENTIDADES.
   * --context-namespace: Especifica o namespace para o CONTEXTO.
+
+  # Dicas e Truques MasterEFCore
+  
