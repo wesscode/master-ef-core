@@ -9,7 +9,29 @@ static class Program
     static void Main(string[] args)
     {
         //ToQueryString();
-        DebugView();
+        //DebugView();
+        //Clear();
+        ConsultaFiltrada();
+    }
+    static void ConsultaFiltrada()
+    {
+        using var db = new ApplicationContext();
+
+        var sql = db
+            .Departamentos
+            .Include(p => p.Colaboradores.Where(c => c.Nome.Contains("Teste")))
+            .ToQueryString();
+
+        Console.WriteLine(sql);
+    }
+
+    static void Clear()
+    {
+        using var db = new ApplicationContext();
+
+        db.Departamentos.Add(new Departamento { Descricao = "TESTE DebugView" });
+
+        db.ChangeTracker.Clear(); //Redefine o estado do contexto.
     }
     static void DebugView()
     {

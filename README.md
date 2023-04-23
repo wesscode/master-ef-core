@@ -229,4 +229,9 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Método de extensão utilizado para obter a instrução SQL pura que será executada apartir de uma instrução Linq.
 - DebugView
   * Conhecendo auxiliar DebugView, ao debugar o código em Locals, terá variavel _db_ e _query_ dentro de cada uma possui a variavel DebugView que terá informações do obj e a query que irá executar.
+- Redefinir estado do Contexto.
+  * db.ChangeTracker.Clear()
+  * Limpar objetos que estão sendo rastreado pelo o contexto sem precisar instanciar um novo contexto.
+- Include com consulta filtrada.
+  * Aplicar filtros nas propriedades de navegação.
 
