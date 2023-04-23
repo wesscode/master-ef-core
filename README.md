@@ -221,5 +221,10 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * --namespace: Especifica o namespace para as ENTIDADES.
   * --context-namespace: Especifica o namespace para o CONTEXTO.
 
-  # Dicas e Truques MasterEFCore
-  
+# EFCore.Tips
+  Conhecendo dicas e truques com efcore.
+
+## Dicas e Truques 
+- ToQueryString()
+  * Método de extensão utilizado para obter a instrução SQL pura que será executada apartir de uma instrução Linq.
+
