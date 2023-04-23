@@ -13,6 +13,7 @@ namespace EFCore.Tips.Data
     {
         public DbSet<Colaborador> Colaboradores { get; set; }
         public DbSet<Departamento> Departamentos{ get; set; }
+        public DbSet<UsuarioFuncao> UsuarioFuncoes{ get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,6 +21,12 @@ namespace EFCore.Tips.Data
                 .UseSqlServer("Data Source=(localdb)\\mssqllocaldb; Database=tips; Integrated Security=true")
                 .LogTo(Console.WriteLine, LogLevel.Information)
                 .EnableSensitiveDataLogging();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //equivalente ao dataAnnotation KeyLess
+            //modelBuilder.Entity<UsuarioFuncao>().HasNoKey();
         }
     }
 }

@@ -12,7 +12,16 @@ static class Program
         //DebugView();
         //Clear();
         //ConsultaFiltrada();
-        SingleOrDefaultVsFirstOrDefault();
+        //SingleOrDefaultVsFirstOrDefault();
+        SemChavePrimaria();
+    }
+    static void SemChavePrimaria()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated(); //efcore cria e gerencia migrações das tabelas sem pk, porém o recurso está limitado a somente consulta.
+
+        var usuarioFuncoes = db.UsuarioFuncoes.Where(p => p.UsuarioId == Guid.NewGuid()).ToArray();
     }
     static void SingleOrDefaultVsFirstOrDefault()
     {

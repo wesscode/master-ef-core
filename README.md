@@ -240,4 +240,8 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 
   * FirstOrDefault: Retorna o primeiro elemento de uma sequência ou um valor padrão se nenhum elemento for encontrado.
   * Sendo utilizado em consultas simples.
+- Consulta em tabelas sem chave primária
+  * EFCore consegue gereciar migrações com esse tipo de tabela.
+  * O recurso é limitado a somente CONSULTAS logo não podendo persistir dados na mesma.
+
 
