@@ -14,6 +14,7 @@ namespace EFCore.Tips.Data
         public DbSet<Colaborador> Colaboradores { get; set; }
         public DbSet<Departamento> Departamentos{ get; set; }
         public DbSet<UsuarioFuncao> UsuarioFuncoes{ get; set; }
+        public DbSet<DepartamentoRelatorio> DepartamentoRelatorio { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +28,15 @@ namespace EFCore.Tips.Data
         {
             //equivalente ao dataAnnotation KeyLess
             //modelBuilder.Entity<UsuarioFuncao>().HasNoKey();
+
+            modelBuilder.Entity<DepartamentoRelatorio>(e =>
+            {
+                e.HasNoKey();
+
+                e.ToView("vw_departamento_relatorio"); //essa anotação avisamos ao efcore que não deve criar tabela e sim consumir uma view que já existe.
+
+                e.Property(p => p.Departamento).HasColumnName("Descricao");
+            });
         }
     }
 }

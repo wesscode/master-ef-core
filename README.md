@@ -243,5 +243,9 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Consulta em tabelas sem chave primária
   * EFCore consegue gereciar migrações com esse tipo de tabela.
   * O recurso é limitado a somente CONSULTAS logo não podendo persistir dados na mesma.
+- Usando views de seus bancos de dados
+  * view é um tipo de exibição de dado criada atráves do resultado de uma consulta.
+  * atráves o da aotação .ToView("nome-da-view") na fluent api, o efcore entende que a entidade que está sendo exposta não deve ser gerada uma tabela e sim cosumir uma view existente.
+  * após a entidade mapeada para uma view podemos executar consultas na mesma aplicado filtros etc, consumindo a view mappeada.
 
 

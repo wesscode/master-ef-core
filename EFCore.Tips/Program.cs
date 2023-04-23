@@ -13,7 +13,59 @@ static class Program
         //Clear();
         //ConsultaFiltrada();
         //SingleOrDefaultVsFirstOrDefault();
-        SemChavePrimaria();
+        //SemChavePrimaria();
+        ToView();
+    }
+
+    static void ToView()
+    {
+        using var db = new ApplicationContext();
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        //criando view e sua consulta
+        db.Database.ExecuteSqlRaw(
+            @"CREATE VIEW vw_departamento_relatorio AS
+                SELECT
+                    d.Descricao, count(c.Id) as Colaboradores
+                FROM Departamentos d 
+                LEFT JOIN Colaboradores c ON c.DepartamentoId=d.Id
+                GROUP BY d.Descricao");
+
+        //adicionando departamentos e colaboradores.
+        var departamentos = Enumerable.Range(1, 10)
+            .Select(p => new Departamento
+            {
+                Descricao = $"Departamento {p}",
+                Colaboradores = Enumerable.Range(1, p)
+                    .Select(c => new Colaborador
+                    {
+                        Nome = $"Colaborador {p}-{c}"
+                    }).ToList()
+            });
+
+        //adicionando departameto sem colaborador
+        var departamento = new Departamento
+        {
+            Descricao = $"Departamento Sem Colaborador"
+        };
+
+        //salvando
+        db.Departamentos.Add(departamento);
+        db.Departamentos.AddRange(departamentos);
+        db.SaveChanges();
+
+
+        //consultando view relatório.
+        var relatorio = db.DepartamentoRelatorio
+            .Where(p => p.Colaboradores < 4)
+            .OrderBy(p => p.Departamento)
+            .ToList();
+
+        foreach (var dep in relatorio)
+        {
+            Console.WriteLine($"{dep.Departamento} [ Colaboradores: {dep.Colaboradores}]");
+        }
     }
     static void SemChavePrimaria()
     {
