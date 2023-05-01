@@ -16,7 +16,25 @@ static class Program
         //SemChavePrimaria();
         //ToView();
         //NaoUnicode();
-        OperadoresDeAgregacao();
+        //OperadoresDeAgregacao();
+        OperadoresDeAgregacaoNoAgrupamento();
+    }
+    static void OperadoresDeAgregacaoNoAgrupamento()
+    {
+        using var db = new ApplicationContext();
+
+        //utilizando filtro com base no agrupamento.
+        var sql = db.Departamentos
+            .GroupBy(p => p.Descricao)
+            .Where(p => p.Count() > 1)
+            .Select(p =>
+                new
+                {
+                    Descricao = p.Key,
+                    Contador = p.Count()
+                }).ToQueryString();
+
+        Console.WriteLine(sql);
     }
     static void OperadoresDeAgregacao()
     {

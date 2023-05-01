@@ -254,3 +254,5 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 - Aplicando conversão de nomenclatura
   * Definindo padrão de nomeclatura do banco com efcore.
   * Nome de tabela, indices, colunas, pk's, fk's.
+- Operadores de agregacao
+- Operadores de agregacao no agrupamento
