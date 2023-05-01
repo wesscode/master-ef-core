@@ -256,3 +256,9 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Nome de tabela, indices, colunas, pk's, fk's.
 - Operadores de agregacao
 - Operadores de agregacao no agrupamento
+- Contadores de eventos no DOTNET
+  * pacote dotnet-counters
+  * Esse pacote permite executar um processo que monitora nossa aplicação, no exemplo estamos monitorando o Efcore, seus eventos e contextos que estão em execução na aplicação.
+  * Na aplicação pegar o PID do processo.
+  * em modo debug abri um console com o seguinte comando na raiz do projeto.
+    * dotnet counters monitor -p {PID} --counters Microsoft.EntittFrameworkCore

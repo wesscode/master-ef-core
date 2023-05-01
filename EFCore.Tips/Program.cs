@@ -17,8 +17,38 @@ static class Program
         //ToView();
         //NaoUnicode();
         //OperadoresDeAgregacao();
-        OperadoresDeAgregacaoNoAgrupamento();
+        //OperadoresDeAgregacaoNoAgrupamento();
+        ContadorDeEventos();
     }
+
+    static void ContadorDeEventos()
+    {
+        using var db = new ApplicationContext();
+
+        db.Database.EnsureDeleted();
+        db.Database.EnsureCreated();
+
+        //id do processo atual(PID).
+        Console.WriteLine($" PID: {System.Diagnostics.Process.GetCurrentProcess().Id}");
+
+        //enquanto não precionar ESC
+        while (Console.ReadKey().Key != ConsoleKey.Escape)
+        {
+            var departamento = new Departamento
+            {
+                Descricao = $"Departamento Sem Colaborador"
+            };
+
+            //persiste
+            db.Departamentos.Add(departamento);
+            db.SaveChanges();
+            //buscas
+            _ = db.Departamentos.Find(1);
+            _ = db.Departamentos.AsNoTracking().FirstOrDefault();
+        }
+
+    }
+
     static void OperadoresDeAgregacaoNoAgrupamento()
     {
         using var db = new ApplicationContext();
