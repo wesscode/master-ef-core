@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EFCore.Testes.Domain
 {
-    public class Departamentos
+    public class Departamento
     {
         public int Id { get; set; }
         public string Descricao { get; set; }

@@ -265,5 +265,9 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 
 # EFCore.Testes
 Criando testes utilizando provider InMemory e SQLite com EFCore.
+
+## Testes
 - Criando testes usando provider InMemory
-  * 
+  * InMemory so armazena dados temporários, logo quando o contexto é descartado todos os dados tbm serão descartados.
+  * Provider InMemory Possui limitações que não da pra ser aplicado nos testes    
+    * calculos e datas: EF.Functions, so funciona no provider SqlServer, pq são funções executadas pelo o próprio banco.
