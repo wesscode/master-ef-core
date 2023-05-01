@@ -261,4 +261,9 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * Esse pacote permite executar um processo que monitora nossa aplicação, no exemplo estamos monitorando o Efcore, seus eventos e contextos que estão em execução na aplicação.
   * Na aplicação pegar o PID do processo.
   * em modo debug abri um console com o seguinte comando na raiz do projeto.
-    * dotnet counters monitor -p {PID} --counters Microsoft.EntittFrameworkCore
+    * dotnet counters monitor -p {PID} --counters Microsoft.EntittFrameworkCore.
+
+# EFCore.Testes
+Criando testes utilizando provider InMemory e SQLite com EFCore.
+- Criando testes usando provider InMemory
+  * 
