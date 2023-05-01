@@ -277,6 +277,10 @@ Criando testes utilizando provider InMemory e SQLite com EFCore.
 Sobrescrevendo comportamentos do efcore no momento em que está produzindo as query no banco de dados. 
 
 ## Módulo Sobrescrevendo comportamentos do EFCore
+- Gerador de SQL customizado.
+- Criando Factory do gerador customizado.
+- Usando o gerador de SQL customizado.
+  * Customizando o comportamento default do efcore, podemos customizar ao visitar uma table, coluna, alterar o script gerado, interceptando e adicionando hints nas instruções diretamente na factory de criação interna do entity.
 
 
 # EFCore.Diagnostic
