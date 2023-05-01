@@ -21,5 +21,21 @@ namespace EFCore.QuerySqlGenerator
 
             return table;
         }
+
+        public class MySqlServerQuerySqlGeneratorFactory : SqlServerQuerySqlGeneratorFactory
+        {
+            private readonly QuerySqlGeneratorDependencies _dependencies;
+            private readonly IRelationalTypeMappingSource _typeMappingSource;
+            public MySqlServerQuerySqlGeneratorFactory(QuerySqlGeneratorDependencies dependencies, IRelationalTypeMappingSource typeMappingSource) : base(dependencies, typeMappingSource)
+            {
+                _dependencies = dependencies;
+                _typeMappingSource = typeMappingSource;
+            }
+
+            public override Microsoft.EntityFrameworkCore.Query.QuerySqlGenerator Create()
+            {
+                return new MySqlServerQuerySqlGenerator(_dependencies, _typeMappingSource);
+            }
+        }
     }
 }
