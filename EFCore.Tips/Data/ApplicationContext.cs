@@ -1,4 +1,5 @@
 ﻿using EFCore.Tips.Domain;
+using EFCore.Tips.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -48,6 +49,9 @@ namespace EFCore.Tips.Data
             {
                 property.SetIsUnicode(false); //retiro padrão unicode por default.
             }
+
+            //invocando o metodo de extensão
+            modelBuilder.ToSnakeCaseNames();
         }
     }
 }

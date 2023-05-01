@@ -251,4 +251,6 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * atributo string que não foi mappeado tamanho, por default o efcore cria a prop no banco como nvarchar(MAX).
   * nvarchar é o padrão Unicode e armazena o dobro de bytes do tipo varchar.
   * Fazendo filtro dos attr que não possuem configuração mappeada conseguimos aplicar e forçar o entity a criar essas props com VARCHAR.
-
+- Aplicando conversão de nomenclatura
+  * Definindo padrão de nomeclatura do banco com efcore.
+  * Nome de tabela, indices, colunas, pk's, fk's.
