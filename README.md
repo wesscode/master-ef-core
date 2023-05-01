@@ -272,3 +272,11 @@ Criando testes utilizando provider InMemory e SQLite com EFCore.
   * Provider InMemory Possui limitações que não da pra ser aplicado nos testes    
     * calculos e datas: EF.Functions, so funciona no provider SqlServer, pq são funções executadas pelo o próprio banco.
 - Criando testes usando provider SQLite.  
+
+# EFCore.SqlServerGenerator
+Sobrescrevendo comportamentos do efcore no momento em que está produzindo as query no banco de dados. 
+
+## Módulo Sobrescrevendo comportamentos do EFCore
+
+
+# EFCore.Diagnostic
