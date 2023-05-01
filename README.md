@@ -224,7 +224,7 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 # EFCore.Tips
   Conhecendo dicas e truques com efcore.
 
-## Dicas e Truques 
+## Módulo Dicas e Truques 
 - ToQueryString()
   * Método de extensão utilizado para obter a instrução SQL pura que será executada apartir de uma instrução Linq.
 - DebugView
@@ -247,5 +247,8 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * view é um tipo de exibição de dado criada atráves do resultado de uma consulta.
   * atráves o da aotação .ToView("nome-da-view") na fluent api, o efcore entende que a entidade que está sendo exposta não deve ser gerada uma tabela e sim cosumir uma view existente.
   * após a entidade mapeada para uma view podemos executar consultas na mesma aplicado filtros etc, consumindo a view mappeada.
-
+- Forçando o uso do VARCHAR
+  * atributo string que não foi mappeado tamanho, por default o efcore cria a prop no banco como nvarchar(MAX).
+  * nvarchar é o padrão Unicode e armazena o dobro de bytes do tipo varchar.
+  * Fazendo filtro dos attr que não possuem configuração mappeada conseguimos aplicar e forçar o entity a criar essas props com VARCHAR.
 

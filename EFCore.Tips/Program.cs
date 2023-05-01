@@ -14,7 +14,15 @@ static class Program
         //ConsultaFiltrada();
         //SingleOrDefaultVsFirstOrDefault();
         //SemChavePrimaria();
-        ToView();
+        //ToView();
+        NaoUnicode();
+    }
+
+    static void NaoUnicode()
+    {
+        using var db = new ApplicationContext();
+        var sql = db.Database.GenerateCreateScript();
+        Console.WriteLine(sql);
     }
 
     static void ToView()

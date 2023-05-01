@@ -12,8 +12,8 @@ namespace EFCore.Tips.Data
     public class ApplicationContext : DbContext
     {
         public DbSet<Colaborador> Colaboradores { get; set; }
-        public DbSet<Departamento> Departamentos{ get; set; }
-        public DbSet<UsuarioFuncao> UsuarioFuncoes{ get; set; }
+        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<UsuarioFuncao> UsuarioFuncoes { get; set; }
         public DbSet<DepartamentoRelatorio> DepartamentoRelatorio { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -32,11 +32,22 @@ namespace EFCore.Tips.Data
             modelBuilder.Entity<DepartamentoRelatorio>(e =>
             {
                 e.HasNoKey();
-
                 e.ToView("vw_departamento_relatorio"); //essa anotação avisamos ao efcore que não deve criar tabela e sim consumir uma view que já existe.
-
                 e.Property(p => p.Departamento).HasColumnName("Descricao");
             });
+
+            //GetEntityTypes: obtendo tipos das entidades.
+            //SelectMany(e => e.GetProperties(): selecionando as properties
+            //Where(p => p.ClrType == typeof(string): onde tipo da prop igual string
+            //&& p.GetColumnType() == null: e tipo da coluna não definido ainda.
+            var properties = modelBuilder.Model
+                .GetEntityTypes()
+                .SelectMany(e => e.GetProperties())
+                .Where(p => p.ClrType == typeof(string) && p.GetColumnType() == null);
+            foreach (var property in properties)
+            {
+                property.SetIsUnicode(false); //retiro padrão unicode por default.
+            }
         }
     }
 }
