@@ -15,9 +15,27 @@ static class Program
         //SingleOrDefaultVsFirstOrDefault();
         //SemChavePrimaria();
         //ToView();
-        NaoUnicode();
+        //NaoUnicode();
+        OperadoresDeAgregacao();
     }
+    static void OperadoresDeAgregacao()
+    {
+        using var db = new ApplicationContext();
 
+        var sql = db.Departamentos
+            .GroupBy(p => p.Descricao)
+            .Select(p =>
+                new
+                {
+                    Descricao = p.Key,
+                    Contador = p.Count(),
+                    Media = p.Average(p => p.Id),
+                    Maximo = p.Max(p => p.Id),
+                    Soma = p.Sum(p => p.Id)
+                }).ToQueryString();
+
+        Console.WriteLine(sql);
+    }
     static void NaoUnicode()
     {
         using var db = new ApplicationContext();
