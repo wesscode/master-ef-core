@@ -18,8 +18,8 @@ namespace EFCore.QuerySqlGenerator.Data
         {
             optionsBuilder
                 .UseSqlServer("Data Source=(localdb)\\mssqllocaldb; Database=SobrescrevendoComportamento; Integrated Security=true")
-                .ReplaceService<IQuerySqlGeneratorFactory, MySqlServerQuerySqlGeneratorFactory>() //fazer replace do serviço, informando o efcore que ele precisa utilizar esse serviço customizado, quando passar pelo o processamento de pipeline de criaçao de query.
-                .LogTo(Console.WriteLine)
+                //.ReplaceService<IQuerySqlGeneratorFactory, MySqlServerQuerySqlGeneratorFactory>() //fazer replace do serviço, informando o efcore que ele precisa utilizar esse serviço customizado, quando passar pelo o processamento de pipeline de criaçao de query.
+                //.LogTo(Console.WriteLine)
                 .EnableSensitiveDataLogging();
         }
     }
