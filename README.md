@@ -282,10 +282,9 @@ Sobrescrevendo comportamentos do efcore no momento em que está produzindo as qu
 - Usando o gerador de SQL customizado.
   * Customizando o comportamento default do efcore, podemos customizar ao visitar uma table, coluna, alterar o script gerado, interceptando e adicionando hints nas instruções diretamente na factory de criação interna do entity.
 
-# EFCore.Diagnostic
+## Módulo Diagnostic Source
 Fazer disgnostico de qualquer ferramenta que é utilizado no ecosistema dotnet. Exemplo as atividades do efcore, entender como é realizada internamente. Entender como criar um observador e se assinar no pipeline diagnostic source de frameworks utilizados no dotnet.
 
-## Diagnostic Source
 - É um padrão observer que tem como papel principal notificar os assinador do pipeline. Que por sua vez o efcore faz um bom uso dele.
-- Criar um interceptador
+- Criando um interceptador para o Diagnostic Source
 - Criar um listener
