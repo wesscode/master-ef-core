@@ -288,3 +288,5 @@ Fazer disgnostico de qualquer ferramenta que é utilizado no ecosistema dotnet. 
 - É um padrão observer que tem como papel principal notificar os assinador do pipeline. Que por sua vez o efcore faz um bom uso dele.
 - Criando um interceptador para o Diagnostic Source
 - Criar um listener
+- Assinando o listener e validando.
+  * Diagnostic Source não fica limitado em ouvir somente logs do entity e sim de demais ferramentas do dotnet, para ta contruindo uma lib de logs. 
