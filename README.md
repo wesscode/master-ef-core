@@ -188,13 +188,13 @@ ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
   * obs: verificar se gera sempre a ultima migração criada, ou de todas as migrações.
 - Gerando scripts de migração Idempotentes
   * Evitar problemas de concorrência aplicando validações de existencia no script gerado.
-  * dotnet ef migrations script -p CaminhoProjeto -o CaminhoDesejaCriarScriptIdem potente.SQL -i
+  * dotnet ef migrations script -p CaminhoProjeto -o CaminhoDesejaCriarScriptIdempotente.SQL -i
 - Aplicando Migrações no banco de dados
   * 1° e mais segura: pegando o script sql, entregando a um dba para que o mesmo possa aplicar no banco.
   * 2° aplicando via prompt de comando: dotnet ef database update -p CaminhoProjeto -v
   * 3° em tempo de execução instanciando o contexto da aplicação e executando o comando db.Database.Migrate();
 - Desfazendo migrações
-  * dotnet ef migrations update NomeDaMigracaoAteOndeQuerReverter
+  * dotnet ef database update NomeDaMigracaoAteOndeQuerReverter
   * Se passar nome de uma migração após o comando UPDATE logo o entity entenderá e dará rollback/reverter as migrações aplicadas no banco até a migração informada.
   * Migrações desfeitas os arquivos físicos ficam como PENDENTES, logo pode se removidas através do comando: dotnet ef migrations remove.
 - Verificando Migrações Pendentes
