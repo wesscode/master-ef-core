@@ -18,12 +18,12 @@ Pesquise os devidos pacotes.
   * Microsoft.EntityFramewoekCore.Design
   * Microsoft.EntityFramewoekCore.SqlServer
   * Microsoft.EntityFramewoekCore.Tools
-
+  
 ## Propriedades de navegação
 - Carregamento adiantado => (.Include())
 - Carregamento explícito => ( carregamento em um momento posterior. )
 - Carregamento lento => ( dados relacionados são carregados por demanda, quando a propriedade de navegação for acessado.)
-ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
+- ex: Model: Solicitation > SolicitationItem(propriedade de navegação)
 
 ## Módulo Modelo de dados:
 - Collations: 
