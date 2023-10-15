@@ -18,7 +18,7 @@ Pesquise os devidos pacotes.
   * Microsoft.EntityFramewoekCore.Design
   * Microsoft.EntityFramewoekCore.SqlServer
   * Microsoft.EntityFramewoekCore.Tools
-  * 
+  
 ## Propriedades de navegação
 - Carregamento adiantado => (.Include())
 - Carregamento explícito => ( carregamento em um momento posterior. )
